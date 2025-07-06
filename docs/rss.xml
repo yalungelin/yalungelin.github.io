@@ -1,5 +1,27 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>yalungelin</title><link>https://yalungelin.github.io</link><description>Workspace</description><copyright>yalungelin</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Sun, 06 Jul 2025 10:20:34 +0000</lastBuildDate><managingEditor>yalungelin</managingEditor><ttl>60</ttl><webMaster>yalungelin</webMaster><item><title>遥感Tif标签文件处理</title><link>https://yalungelin.github.io/post/yao-gan-Tif-biao-qian-wen-jian-chu-li.html</link><description>@[TOC](标签文件模式)
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>yalungelin</title><link>https://yalungelin.github.io</link><description>Workspace</description><copyright>yalungelin</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Sun, 06 Jul 2025 10:21:10 +0000</lastBuildDate><managingEditor>yalungelin</managingEditor><ttl>60</ttl><webMaster>yalungelin</webMaster><item><title>常见服务器阵列（RAID方案）</title><link>https://yalungelin.github.io/post/chang-jian-fu-wu-qi-zhen-lie-%EF%BC%88RAID-fang-an-%EF%BC%89.html</link><description>阵列类型取决于你对以下几个方面的需求权重：
+
+    数据安全性（容错能力）
+
+    读写性能
+
+    可用容量
+
+    管理复杂度
+一、常见RAID方案对比（基于4块4TB硬盘）
+| RAID类型             | 可用容量 | 容错能力              | 性能       | 是否推荐          |
+| ------------------ | ---- | ----------------- | -------- | ------------- |
+| RAID 0             | 16TB | 无                 | 最高       | ❌ 不推荐（无容错）    |
+| RAID 1+0 (RAID 10) | 8TB  | 可容忍1块每组的硬盘损坏（共2块） | 很好       | ✅ 推荐（性能+安全平衡） |
+| RAID 5             | 12TB | 可容忍1块硬盘损坏         | 一般读好、写较慢 | ✅ 推荐（容量+安全折中） |
+| RAID 6             | 8TB  | 可容忍2块硬盘损坏         | 写更慢，读好   | ✅ 推荐（极高安全性）   |
+
+二、建议方案
+推荐 1：RAID 10（RAID 1+0）
+
+    优点：
+
+        高读写性能。</description><guid isPermaLink="true">https://yalungelin.github.io/post/chang-jian-fu-wu-qi-zhen-lie-%EF%BC%88RAID-fang-an-%EF%BC%89.html</guid><pubDate>Sun, 06 Jul 2025 10:20:42 +0000</pubDate></item><item><title>遥感Tif标签文件处理</title><link>https://yalungelin.github.io/post/yao-gan-Tif-biao-qian-wen-jian-chu-li.html</link><description>@[TOC](标签文件模式)
 
 查看文件模式
 
