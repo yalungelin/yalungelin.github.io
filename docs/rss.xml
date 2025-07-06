@@ -1,2 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>yalungelin</title><link>https://yalungelin.github.io</link><description>Workspace</description><copyright>yalungelin</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Sun, 06 Jul 2025 10:02:04 +0000</lastBuildDate><managingEditor>yalungelin</managingEditor><ttl>60</ttl><webMaster>yalungelin</webMaster></channel></rss>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>yalungelin</title><link>https://yalungelin.github.io</link><description>Workspace</description><copyright>yalungelin</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Sun, 06 Jul 2025 10:09:24 +0000</lastBuildDate><managingEditor>yalungelin</managingEditor><ttl>60</ttl><webMaster>yalungelin</webMaster><item><title>Ubuntu 22.0安装MMSegmentation</title><link>https://yalungelin.github.io/post/Ubuntu%2022.0-an-zhuang-MMSegmentation.html</link><description>步骤 1. 创建一个 conda 环境，并激活
+
+conda create --name openmmlab python=3.8 -y
+conda activate openmmlab
+步骤 2. 安装 PyTorch
+
+安装低版本的pytorch，在继续安装MMSegmentation，才能避免报错。</description><guid isPermaLink="true">https://yalungelin.github.io/post/Ubuntu%2022.0-an-zhuang-MMSegmentation.html</guid><pubDate>Sun, 06 Jul 2025 10:07:28 +0000</pubDate></item><item><title>Mask2Former环境配置解决</title><link>https://yalungelin.github.io/post/Mask2Former-huan-jing-pei-zhi-jie-jue.html</link><description>第一步 GitHub上官方安装
+贴一下链接[mask2former](https://github.com/facebookresearch/Mask2Former/blob/9b0651c6c1d5b3af2e6da0589b719c514ec0d69a/INSTALL.md)
+要是设备（显卡）不是很新，可以先照着官方步骤进行安装。</description><guid isPermaLink="true">https://yalungelin.github.io/post/Mask2Former-huan-jing-pei-zhi-jie-jue.html</guid><pubDate>Sun, 06 Jul 2025 10:06:21 +0000</pubDate></item><item><title>解决CUDA环境问题</title><link>https://yalungelin.github.io/post/jie-jue-CUDA-huan-jing-wen-ti.html</link><description># 三种方式解决CUDA安装
+# 1.CUDA, pip/conda pytorch
+从系统的层面去安装CUDA工具包，然后用pip或者conda 安装pytorch
+缺点:得更新CUDA版本，Nvidia的GPU没有版本兼容性
+     得找相应的CUDA版本的包
+# 2.Nvidia driver, conda pytorch
+在本机上安装显卡驱动即可（一般本机都是有的，只需更新到最新），然后再通过conda来安装pytorch和CUDA
+![](https://i-blog.csdnimg.cn/blog_migrate/27021ded86b3139b3c45f5de8234b9d6.png)
+使用这个命令他会安装pytorch和对应的一个CUDA的工具包，系统只需要驱动即可
+缺点：如果用CUDA的编辑器来做开发，其中是少了很多包的，需额外安装。</description><guid isPermaLink="true">https://yalungelin.github.io/post/jie-jue-CUDA-huan-jing-wen-ti.html</guid><pubDate>Sun, 06 Jul 2025 10:05:12 +0000</pubDate></item></channel></rss>
