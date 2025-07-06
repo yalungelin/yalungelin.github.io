@@ -1,5 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>yalungelin</title><link>https://yalungelin.github.io</link><description>Workspace</description><copyright>yalungelin</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Sun, 06 Jul 2025 10:18:50 +0000</lastBuildDate><managingEditor>yalungelin</managingEditor><ttl>60</ttl><webMaster>yalungelin</webMaster><item><title>镜像云备份（持续更新）</title><link>https://yalungelin.github.io/post/jing-xiang-yun-bei-fen-%EF%BC%88-chi-xu-geng-xin-%EF%BC%89.html</link><description>阿里：
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>yalungelin</title><link>https://yalungelin.github.io</link><description>Workspace</description><copyright>yalungelin</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Sun, 06 Jul 2025 10:20:34 +0000</lastBuildDate><managingEditor>yalungelin</managingEditor><ttl>60</ttl><webMaster>yalungelin</webMaster><item><title>遥感Tif标签文件处理</title><link>https://yalungelin.github.io/post/yao-gan-Tif-biao-qian-wen-jian-chu-li.html</link><description>@[TOC](标签文件模式)
+
+查看文件模式
+
+```bash
+from PIL import Image
+Image.MAX_IMAGE_PIXELS = None
+
+img = Image.open(r'E:\tree\z1_labels_palette.tif')
+print(img.mode)
+```
+img.mode 是 'RGB' 就是RGB图；
+
+img.mode 是 'P' 就是调色板图；
+
+img.mode 是 'L' 是灰度图。</description><guid isPermaLink="true">https://yalungelin.github.io/post/yao-gan-Tif-biao-qian-wen-jian-chu-li.html</guid><pubDate>Sun, 06 Jul 2025 10:20:08 +0000</pubDate></item><item><title>镜像云备份（持续更新）</title><link>https://yalungelin.github.io/post/jing-xiang-yun-bei-fen-%EF%BC%88-chi-xu-geng-xin-%EF%BC%89.html</link><description>阿里：
 pip install xxx -i https://mirrors.aliyun.com/pypi/simple
 中科大：
 pip install xxx -i https://pypi.mirrors.ustc.edu.cn/simple/
