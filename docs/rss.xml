@@ -1,5 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>yalungelin</title><link>https://yalungelin.github.io</link><description>Workspace</description><copyright>yalungelin</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Sun, 06 Jul 2025 10:09:24 +0000</lastBuildDate><managingEditor>yalungelin</managingEditor><ttl>60</ttl><webMaster>yalungelin</webMaster><item><title>Ubuntu 22.0安装MMSegmentation</title><link>https://yalungelin.github.io/post/Ubuntu%2022.0-an-zhuang-MMSegmentation.html</link><description>步骤 1. 创建一个 conda 环境，并激活
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>yalungelin</title><link>https://yalungelin.github.io</link><description>Workspace</description><copyright>yalungelin</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Sun, 06 Jul 2025 10:12:28 +0000</lastBuildDate><managingEditor>yalungelin</managingEditor><ttl>60</ttl><webMaster>yalungelin</webMaster><item><title>Easy-GPU-PV一键安装hyper-v虚拟机</title><link>https://yalungelin.github.io/post/Easy-GPU-PV-yi-jian-an-zhuang-hyper-v-xu-ni-ji.html</link><description>一、hyper-v的开启
+我的设备为Win 11 专业版（建议专业版）
+家庭版升级专业版，[见此链接](https://github.com/massgravel/Microsoft-Activation-Scripts)
+启用或关闭Windows功能
+![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/21d04179b51c4002a9b65a20f38d9e61.png)
+
+![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/86e6f0ba6027427eb3b5e11001b64968.png)
+二、Easy-GPU-PV下载
+下载文件包，[链接](https://github.com/jamesstringerparsec/Easy-GPU-PV)
+三、使用
+确保您的系统满足先决条件。</description><guid isPermaLink="true">https://yalungelin.github.io/post/Easy-GPU-PV-yi-jian-an-zhuang-hyper-v-xu-ni-ji.html</guid><pubDate>Sun, 06 Jul 2025 10:12:01 +0000</pubDate></item><item><title>Ubuntu 22.0安装MMSegmentation</title><link>https://yalungelin.github.io/post/Ubuntu%2022.0-an-zhuang-MMSegmentation.html</link><description>步骤 1. 创建一个 conda 环境，并激活
 
 conda create --name openmmlab python=3.8 -y
 conda activate openmmlab
