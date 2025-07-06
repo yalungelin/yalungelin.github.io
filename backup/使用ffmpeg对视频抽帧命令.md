@@ -1,5 +1,6 @@
 [ffmpeg安装教程](https://blog.csdn.net/csdn_yudong/article/details/129182648)
 使用 `ffmpeg` 抽帧是个高效的方法，具体命令可以根据你的需求进行调整。以下是几种常见的抽帧方式：
+
 ### 1. **按固定间隔抽帧**
 如果你希望每秒抽取一帧，可以使用：
 ```bash
