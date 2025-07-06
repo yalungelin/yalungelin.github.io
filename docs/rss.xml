@@ -1,2 +1,55 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>yalungelin</title><link>https://yalungelin.github.io</link><description>Workspace</description><copyright>yalungelin</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Sun, 06 Jul 2025 09:39:46 +0000</lastBuildDate><managingEditor>yalungelin</managingEditor><ttl>60</ttl><webMaster>yalungelin</webMaster></channel></rss>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>yalungelin</title><link>https://yalungelin.github.io</link><description>Workspace</description><copyright>yalungelin</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Sun, 06 Jul 2025 09:51:35 +0000</lastBuildDate><managingEditor>yalungelin</managingEditor><ttl>60</ttl><webMaster>yalungelin</webMaster><item><title>遥感Tif标签文件处理</title><link>https://yalungelin.github.io/post/yao-gan-Tif-biao-qian-wen-jian-chu-li.html</link><description>标签文件模式
+查看文件模式
+
+```
+from PIL import Image
+Image.MAX_IMAGE_PIXELS = None
+
+img = Image.open(r'E:\tree\z1_labels_palette.tif')
+print(img.mode)
+```
+img.mode 是 ‘RGB’ 就是RGB图；
+
+img.mode 是 ‘P’ 就是调色板图；
+
+img.mode 是 ‘L’ 是灰度图。</description><guid isPermaLink="true">https://yalungelin.github.io/post/yao-gan-Tif-biao-qian-wen-jian-chu-li.html</guid><pubDate>Sun, 06 Jul 2025 09:47:18 +0000</pubDate></item><item><title>打包PyQt5应用为exe文件</title><link>https://yalungelin.github.io/post/da-bao-PyQt5-ying-yong-wei-exe-wen-jian.html</link><description>安装必要的工具
+首先，需要安装PyInstaller：
+
+pip install pyinstaller
+打包应用程序
+基本打包方法
+打开命令提示符，导航到包含main.py文件的目录
+执行打包命令：
+
+pyinstaller --name '工具' --windowed --icon=app_icon.ico main.py
+参数解释：
+
+–name - 指定生成的exe文件名称
+–windowed - 创建没有控制台窗口的GUI应用
+–icon - 应用程序图标
+高级打包方法（推荐）
+为了确保所有依赖关系都被正确打包，我建议创建一个规范文件：
+
+1.首先生成规范文件：
+
+pyi-makespec --name '工具' --windowed --icon=app_icon.ico main.py
+2. 编辑生成的.spec文件，添加必要的数据文件（如果有样式文件等）：
+
+# 在datas列表中添加所需的额外文件
+a = Analysis(
+    ['main.py'],
+    pathex=[],
+    binaries=[],
+    datas=[('style.qss', '.')],  # 添加样式文件
+    hiddenimports=[],
+    hookspath=[],
+    hooksconfig={},
+    runtime_hooks=[],
+    excludes=[],
+    win_no_prefer_redirects=False,
+    win_private_assemblies=False,
+    cipher=None,
+    noarchive=False,
+)
+如果在当前环境下，直接运行第三个步骤，忽略第二步。</description><guid isPermaLink="true">https://yalungelin.github.io/post/da-bao-PyQt5-ying-yong-wei-exe-wen-jian.html</guid><pubDate>Sun, 06 Jul 2025 09:36:31 +0000</pubDate></item></channel></rss>
