@@ -54,3 +54,50 @@ ffmpeg -i input.mp4 -vf "fps=5" -q:v 2 output_%04d.jpg
 ```bash
 ffmpeg -i input.mp4 -vf "fps=5" output_%04d.tif
 ```
+### 7.**批量处理视频抽帧**
+代码中视频分布在不同的文件夹中
+
+```c
+import os
+import subprocess
+
+def extract_frames_per_folder(input_root, output_root, frame_rate=1):
+    for folder_name in os.listdir(input_root):
+        folder_path = os.path.join(input_root, folder_name)
+        if not os.path.isdir(folder_path):
+            continue
+
+        # 查找当前文件夹下的视频文件
+        video_files = [f for f in os.listdir(folder_path)
+                       if f.lower().endswith(('.mp4', '.avi', '.mov', '.mkv'))]
+        if len(video_files) == 0:
+            print(f"⚠️ No video found in {folder_path}")
+            continue
+
+        video_file = video_files[0]  # 取第一个视频文件
+        video_path = os.path.join(folder_path, video_file)
+
+        # 输出目录为 output_root/子文件夹名/
+        output_dir = os.path.join(output_root, folder_name)
+        os.makedirs(output_dir, exist_ok=True)
+
+        output_pattern = os.path.join(output_dir, 'frame_%05d.jpg')
+
+        cmd = [
+            'ffmpeg',
+            '-i', video_path,
+            '-vf', f'fps={frame_rate}',
+            output_pattern
+        ]
+
+        print(f"Extracting frames from: {video_path}")
+        subprocess.run(cmd)
+
+# 示例调用
+extract_frames_per_folder(
+    input_root='path/to/root_videos',     # 视频所在根目录
+    output_root='path/to/output_frames',  # 帧保存根目录
+    frame_rate=1                          # 每秒提取 1 帧
+)
+
+```

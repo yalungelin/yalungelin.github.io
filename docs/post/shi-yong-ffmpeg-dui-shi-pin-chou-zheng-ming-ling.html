@@ -114,7 +114,50 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <hr>
 <h3>6. <strong>保存为 <code class="notranslate">.tif</code> 格式</strong></h3>
 <p>如果你需要 <code class="notranslate">.tif</code> 格式：</p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">ffmpeg -i input.mp4 -vf <span class="pl-s"><span class="pl-pds">"</span>fps=5<span class="pl-pds">"</span></span> output_%04d.tif</pre></div></div>
+<div class="highlight highlight-source-shell"><pre class="notranslate">ffmpeg -i input.mp4 -vf <span class="pl-s"><span class="pl-pds">"</span>fps=5<span class="pl-pds">"</span></span> output_%04d.tif</pre></div>
+<h3>7.<strong>批量处理视频抽帧</strong></h3>
+<p>代码中视频分布在不同的文件夹中</p>
+<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">import</span> <span class="pl-s1">os</span>
+<span class="pl-smi">import</span> <span class="pl-s1">subprocess</span>
+
+<span class="pl-smi">def</span> <span class="pl-en">extract_frames_per_folder</span>(<span class="pl-s1">input_root</span>, <span class="pl-s1">output_root</span>, <span class="pl-s1">frame_rate</span><span class="pl-c1">=</span><span class="pl-c1">1</span>):
+    <span class="pl-k">for</span> <span class="pl-smi">folder_name</span> <span class="pl-s1">in</span> <span class="pl-s1">os</span>.<span class="pl-en">listdir</span>(<span class="pl-smi">input_root</span>):
+        <span class="pl-s1">folder_path</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">input_root</span>, <span class="pl-s1">folder_name</span>)
+        <span class="pl-smi">if</span> <span class="pl-s1">not</span> <span class="pl-s1">os</span>.<span class="pl-s1">path</span>.<span class="pl-en">isdir</span>(<span class="pl-smi">folder_path</span>):
+            <span class="pl-k">continue</span>
+
+        # <span class="pl-s1">查找当前文件夹下的视频文件</span>
+        <span class="pl-s1">video_files</span> <span class="pl-c1">=</span> [<span class="pl-s1">f</span> <span class="pl-s1">for</span> <span class="pl-s1">f</span> <span class="pl-s1">in</span> <span class="pl-s1">os</span>.<span class="pl-en">listdir</span>(<span class="pl-s1">folder_path</span>)
+                       <span class="pl-s1">if</span> <span class="pl-s1">f</span>.<span class="pl-en">lower</span>().<span class="pl-en">endswith</span>((<span class="pl-c1">'.mp4'</span>, <span class="pl-c1">'.avi'</span>, <span class="pl-c1">'.mov'</span>, <span class="pl-c1">'.mkv'</span>))]
+        <span class="pl-smi">if</span> <span class="pl-s1">len</span>(<span class="pl-smi">video_files</span>) <span class="pl-c1">==</span> <span class="pl-c1">0</span>:
+            <span class="pl-s1">print</span>(<span class="pl-s1">f</span><span class="pl-s">"⚠️ No video found in {folder_path}"</span>)
+            <span class="pl-k">continue</span>
+
+        <span class="pl-s1">video_file</span> <span class="pl-c1">=</span> <span class="pl-s1">video_files</span>[<span class="pl-c1">0</span>]  # <span class="pl-s1">取第一个视频文件</span>
+        <span class="pl-s1">video_path</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">folder_path</span>, <span class="pl-s1">video_file</span>)
+
+        # <span class="pl-s1">输出目录为</span> <span class="pl-s1">output_root</span>/<span class="pl-s1">子文件夹名</span>/
+        <span class="pl-s1">output_dir</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">output_root</span>, <span class="pl-s1">folder_name</span>)
+        <span class="pl-s1">os</span>.<span class="pl-en">makedirs</span>(<span class="pl-s1">output_dir</span>, <span class="pl-s1">exist_ok</span><span class="pl-c1">=</span><span class="pl-s1">True</span>)
+
+        <span class="pl-s1">output_pattern</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">output_dir</span>, <span class="pl-c1">'frame_%05d.jpg'</span>)
+
+        <span class="pl-s1">cmd</span> <span class="pl-c1">=</span> [
+            <span class="pl-c1">'ffmpeg'</span>,
+            <span class="pl-c1">'-i'</span>, <span class="pl-s1">video_path</span>,
+            <span class="pl-c1">'-vf'</span>, <span class="pl-s1">f</span><span class="pl-c1">'fps={frame_rate}'</span>,
+            <span class="pl-s1">output_pattern</span>
+        ]
+
+        <span class="pl-en">print</span>(<span class="pl-s1">f</span><span class="pl-s">"Extracting frames from: {video_path}"</span>)
+        <span class="pl-s1">subprocess</span>.<span class="pl-en">run</span>(<span class="pl-s1">cmd</span>)
+
+# <span class="pl-s1">示例调用</span>
+<span class="pl-s1">extract_frames_per_folder</span>(
+    <span class="pl-s1">input_root</span><span class="pl-c1">=</span><span class="pl-c1">'path/to/root_videos'</span>,     # <span class="pl-s1">视频所在根目录</span>
+    <span class="pl-s1">output_root</span><span class="pl-c1">=</span>'<span class="pl-s1">path</span>/<span class="pl-s1">to</span>/<span class="pl-s1">output_frames</span>',  # 帧保存根目录
+    <span class="pl-s1">frame_rate</span><span class="pl-c1">=</span><span class="pl-c1">1</span>                          # <span class="pl-s1">每秒提取</span> <span class="pl-c1">1</span> <span class="pl-s1">帧</span>
+)</pre></div></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
