@@ -120,43 +120,58 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">import</span> <span class="pl-s1">os</span>
 <span class="pl-smi">import</span> <span class="pl-s1">subprocess</span>
 
-<span class="pl-smi">def</span> <span class="pl-en">extract_frames_per_folder</span>(<span class="pl-s1">input_root</span>, <span class="pl-s1">output_root</span>, <span class="pl-s1">frame_rate</span><span class="pl-c1">=</span><span class="pl-c1">1</span>):
-    <span class="pl-k">for</span> <span class="pl-smi">folder_name</span> <span class="pl-s1">in</span> <span class="pl-s1">os</span>.<span class="pl-en">listdir</span>(<span class="pl-smi">input_root</span>):
+<span class="pl-smi">def</span> <span class="pl-en">extract_all_frames_to_one_folder</span>(<span class="pl-s1">input_root</span>, <span class="pl-s1">output_dir</span>, <span class="pl-s1">frame_rate</span><span class="pl-c1">=</span><span class="pl-c1">1</span>):
+    <span class="pl-smi">os</span>.<span class="pl-en">makedirs</span>(<span class="pl-smi">output_dir</span>, <span class="pl-smi">exist_ok</span><span class="pl-c1">=</span><span class="pl-s1">True</span>)
+
+    <span class="pl-s1">for</span> <span class="pl-s1">folder_name</span> <span class="pl-s1">in</span> <span class="pl-s1">os</span>.<span class="pl-en">listdir</span>(<span class="pl-s1">input_root</span>):
         <span class="pl-s1">folder_path</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">input_root</span>, <span class="pl-s1">folder_name</span>)
         <span class="pl-smi">if</span> <span class="pl-s1">not</span> <span class="pl-s1">os</span>.<span class="pl-s1">path</span>.<span class="pl-en">isdir</span>(<span class="pl-smi">folder_path</span>):
             <span class="pl-k">continue</span>
 
-        # <span class="pl-s1">查找当前文件夹下的视频文件</span>
         <span class="pl-s1">video_files</span> <span class="pl-c1">=</span> [<span class="pl-s1">f</span> <span class="pl-s1">for</span> <span class="pl-s1">f</span> <span class="pl-s1">in</span> <span class="pl-s1">os</span>.<span class="pl-en">listdir</span>(<span class="pl-s1">folder_path</span>)
                        <span class="pl-s1">if</span> <span class="pl-s1">f</span>.<span class="pl-en">lower</span>().<span class="pl-en">endswith</span>((<span class="pl-c1">'.mp4'</span>, <span class="pl-c1">'.avi'</span>, <span class="pl-c1">'.mov'</span>, <span class="pl-c1">'.mkv'</span>))]
-        <span class="pl-smi">if</span> <span class="pl-s1">len</span>(<span class="pl-smi">video_files</span>) <span class="pl-c1">==</span> <span class="pl-c1">0</span>:
+        <span class="pl-s1">if</span> <span class="pl-s1">not</span> <span class="pl-s1">video_files</span>:
             <span class="pl-s1">print</span>(<span class="pl-s1">f</span><span class="pl-s">"No video found in {folder_path}"</span>)
             <span class="pl-k">continue</span>
 
-        <span class="pl-s1">video_file</span> <span class="pl-c1">=</span> <span class="pl-s1">video_files</span>[<span class="pl-c1">0</span>]  # <span class="pl-s1">取第一个视频文件</span>
+        <span class="pl-s1">video_file</span> <span class="pl-c1">=</span> <span class="pl-s1">video_files</span>[<span class="pl-c1">0</span>]
         <span class="pl-s1">video_path</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">folder_path</span>, <span class="pl-s1">video_file</span>)
 
-        # <span class="pl-s1">输出目录为</span> <span class="pl-s1">output_root</span>/<span class="pl-s1">子文件夹名</span>/
-        <span class="pl-s1">output_dir</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">output_root</span>, <span class="pl-s1">folder_name</span>)
-        <span class="pl-s1">os</span>.<span class="pl-en">makedirs</span>(<span class="pl-s1">output_dir</span>, <span class="pl-s1">exist_ok</span><span class="pl-c1">=</span><span class="pl-s1">True</span>)
+        # <span class="pl-s1">提取前缀</span>：<span class="pl-s1">video_001</span> <span class="pl-s1">或</span> <span class="pl-s1">abc</span>（<span class="pl-s1">你可以自定义</span>）
+        <span class="pl-s1">video_prefix</span> <span class="pl-c1">=</span> <span class="pl-s1">folder_name</span>  # <span class="pl-s1">或用</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">splitext</span>(<span class="pl-s1">video_file</span>)[<span class="pl-c1">0</span>]
 
-        <span class="pl-s1">output_pattern</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">output_dir</span>, <span class="pl-c1">'frame_%05d.jpg'</span>)
+        # <span class="pl-s1">临时输出到缓存文件夹</span>
+        <span class="pl-s1">temp_dir</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">output_dir</span>, <span class="pl-s">"_temp"</span>)
+        <span class="pl-s1">os</span>.<span class="pl-en">makedirs</span>(<span class="pl-s1">temp_dir</span>, <span class="pl-s1">exist_ok</span><span class="pl-c1">=</span><span class="pl-s1">True</span>)
 
+        <span class="pl-s1">temp_pattern</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">temp_dir</span>, <span class="pl-s">"frame_%05d.jpg"</span>)
+
+        # <span class="pl-s1">执行</span> <span class="pl-s1">FFmpeg</span>
         <span class="pl-s1">cmd</span> <span class="pl-c1">=</span> [
             <span class="pl-c1">'ffmpeg'</span>,
             <span class="pl-c1">'-i'</span>, <span class="pl-s1">video_path</span>,
             <span class="pl-c1">'-vf'</span>, <span class="pl-s1">f</span><span class="pl-c1">'fps={frame_rate}'</span>,
-            <span class="pl-s1">output_pattern</span>
+            <span class="pl-s1">temp_pattern</span>
         ]
-
-        <span class="pl-en">print</span>(<span class="pl-s1">f</span><span class="pl-s">"Extracting frames from: {video_path}"</span>)
+        <span class="pl-en">print</span>(<span class="pl-s1">f</span><span class="pl-s">"Extracting: {video_path}"</span>)
         <span class="pl-s1">subprocess</span>.<span class="pl-en">run</span>(<span class="pl-s1">cmd</span>)
 
+        # <span class="pl-s1">重命名临时帧并移动</span>
+        <span class="pl-k">for</span> <span class="pl-s1">i</span>, <span class="pl-s1">frame_name</span> <span class="pl-s1">in</span> <span class="pl-s1">enumerate</span>(<span class="pl-s1">sorted</span>(<span class="pl-s1">os</span>.<span class="pl-en">listdir</span>(<span class="pl-s1">temp_dir</span>))):
+            <span class="pl-s1">src</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">temp_dir</span>, <span class="pl-s1">frame_name</span>)
+            <span class="pl-s1">dst_name</span> <span class="pl-c1">=</span> <span class="pl-s1">f</span><span class="pl-s">"{video_prefix}_{frame_name}"</span>
+            <span class="pl-s1">dst</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">output_dir</span>, <span class="pl-s1">dst_name</span>)
+            <span class="pl-s1">os</span>.<span class="pl-en">rename</span>(<span class="pl-s1">src</span>, <span class="pl-s1">dst</span>)
+
+    # <span class="pl-s1">删除临时目录</span>
+    <span class="pl-k">if</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">exists</span>(<span class="pl-s1">temp_dir</span>):
+        <span class="pl-s1">os</span>.<span class="pl-en">rmdir</span>(<span class="pl-s1">temp_dir</span>)
+
 # <span class="pl-s1">示例调用</span>
-<span class="pl-s1">extract_frames_per_folder</span>(
-    <span class="pl-s1">input_root</span><span class="pl-c1">=</span><span class="pl-c1">'path/to/root_videos'</span>,     # <span class="pl-s1">视频所在根目录</span>
-    <span class="pl-s1">output_root</span><span class="pl-c1">=</span>'<span class="pl-s1">path</span>/<span class="pl-s1">to</span>/<span class="pl-s1">output_frames</span>',  # 帧保存根目录
-    <span class="pl-s1">frame_rate</span><span class="pl-c1">=</span><span class="pl-c1">1</span>                          # <span class="pl-s1">每秒提取</span> <span class="pl-c1">1</span> <span class="pl-s1">帧</span>
+<span class="pl-s1">extract_all_frames_to_one_folder</span>(
+    <span class="pl-s1">input_root</span><span class="pl-c1">=</span><span class="pl-c1">'path/to/input_videos'</span>,      # <span class="pl-s1">视频根目录</span>
+    <span class="pl-s1">output_dir</span><span class="pl-c1">=</span>'<span class="pl-s1">path</span>/<span class="pl-s1">to</span>/<span class="pl-s1">output_frames</span>',     # 所有帧统一输出到这个目录
+    <span class="pl-s1">frame_rate</span><span class="pl-c1">=</span><span class="pl-c1">1</span>                            # <span class="pl-s1">每秒提一帧</span>
 )</pre></div></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
