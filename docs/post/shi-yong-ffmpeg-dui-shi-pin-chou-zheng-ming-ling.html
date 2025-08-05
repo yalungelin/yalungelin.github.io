@@ -130,7 +130,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
         <span class="pl-s1">video_files</span> <span class="pl-c1">=</span> [<span class="pl-s1">f</span> <span class="pl-s1">for</span> <span class="pl-s1">f</span> <span class="pl-s1">in</span> <span class="pl-s1">os</span>.<span class="pl-en">listdir</span>(<span class="pl-s1">folder_path</span>)
                        <span class="pl-s1">if</span> <span class="pl-s1">f</span>.<span class="pl-en">lower</span>().<span class="pl-en">endswith</span>((<span class="pl-c1">'.mp4'</span>, <span class="pl-c1">'.avi'</span>, <span class="pl-c1">'.mov'</span>, <span class="pl-c1">'.mkv'</span>))]
         <span class="pl-smi">if</span> <span class="pl-s1">len</span>(<span class="pl-smi">video_files</span>) <span class="pl-c1">==</span> <span class="pl-c1">0</span>:
-            <span class="pl-s1">print</span>(<span class="pl-s1">f</span><span class="pl-s">"⚠️ No video found in {folder_path}"</span>)
+            <span class="pl-s1">print</span>(<span class="pl-s1">f</span><span class="pl-s">"No video found in {folder_path}"</span>)
             <span class="pl-k">continue</span>
 
         <span class="pl-s1">video_file</span> <span class="pl-c1">=</span> <span class="pl-s1">video_files</span>[<span class="pl-c1">0</span>]  # <span class="pl-s1">取第一个视频文件</span>

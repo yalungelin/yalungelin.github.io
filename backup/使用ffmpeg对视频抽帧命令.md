@@ -71,7 +71,7 @@ def extract_frames_per_folder(input_root, output_root, frame_rate=1):
         video_files = [f for f in os.listdir(folder_path)
                        if f.lower().endswith(('.mp4', '.avi', '.mov', '.mkv'))]
         if len(video_files) == 0:
-            print(f"⚠️ No video found in {folder_path}")
+            print(f"No video found in {folder_path}")
             continue
 
         video_file = video_files[0]  # 取第一个视频文件
