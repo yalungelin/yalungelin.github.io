@@ -1,5 +1,27 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>瘦道西风,清穷白马</title><link>https://yalungelin.github.io</link><description>笔记</description><copyright>瘦道西风,清穷白马</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://iconic-api.onrender.com/dark/linux</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Mon, 07 Jul 2025 16:23:07 +0000</lastBuildDate><managingEditor>瘦道西风,清穷白马</managingEditor><ttl>60</ttl><webMaster>瘦道西风,清穷白马</webMaster><item><title>WSL子系统问题集合（继续更新）</title><link>https://yalungelin.github.io/post/WSL-zi-xi-tong-wen-ti-ji-he-%EF%BC%88-ji-xu-geng-xin-%EF%BC%89.html</link><description>WSL安装
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>瘦道西风,清穷白马</title><link>https://yalungelin.github.io</link><description>笔记</description><copyright>瘦道西风,清穷白马</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://iconic-api.onrender.com/dark/linux</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Fri, 08 Aug 2025 06:14:46 +0000</lastBuildDate><managingEditor>瘦道西风,清穷白马</managingEditor><ttl>60</ttl><webMaster>瘦道西风,清穷白马</webMaster><item><title>conda、linux、电脑命令合集</title><link>https://yalungelin.github.io/post/conda%E3%80%81linux%E3%80%81-dian-nao-ming-ling-he-ji.html</link><description>**conda命令**
+```c
+conda list：查看环境中的所有包
+conda install XXX：安装 XXX 包
+conda remove XXX：删除XXX 包
+conda env list：列出所有环境
+conda create -n XXX python=3.XXX：创建名为 XXX 的环境 conda
+create -n env_name jupyter notebook ：创建虚拟环境
+activate XXX（或 source activate XXX）：启用/激活XXX环境
+conda env remove -n XXX：删除指定XXX环境
+deactivate（或source deactivate）：退出环境
+conda env export &gt; xxx.yaml:导出环境
+conda env create -f xxx.yaml:导入环境
+jupyter notebook ：打开Jupyter Notebook
+conda config --remove-key channels ：换回默认源
+conda update --all：更新环境中的所有软件包
+conda update conda：Conda中更新自己
+conda update package_name1 package_name2 ...：更新环境中的某些软件包
+conda install package_name=old_version：回退软件包版本
+conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
+pip install -r requirements.txt  //安装依赖
+conda list -e &gt; requirements.txt  //导出环境依赖
+conda clean --all  这个命令会删除 Conda 包缓存、索引缓存、临时文件、未使用的包等，帮助释放空间。</description><guid isPermaLink="true">https://yalungelin.github.io/post/conda%E3%80%81linux%E3%80%81-dian-nao-ming-ling-he-ji.html</guid><pubDate>Fri, 08 Aug 2025 06:14:17 +0000</pubDate></item><item><title>WSL子系统问题集合（继续更新）</title><link>https://yalungelin.github.io/post/WSL-zi-xi-tong-wen-ti-ji-he-%EF%BC%88-ji-xu-geng-xin-%EF%BC%89.html</link><description>WSL安装
 首先在启用或关闭wwindows功能中启用Linux虚拟化平台等等
 ![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/660cfae3a173454f82be442c58df479d.png)
 在微软商店中安装不同版本的Ubuntu，如果使用深度学习训练，建议使用20.04，别的版本会有显卡软连接问题，后续会提到。</description><guid isPermaLink="true">https://yalungelin.github.io/post/WSL-zi-xi-tong-wen-ti-ji-he-%EF%BC%88-ji-xu-geng-xin-%EF%BC%89.html</guid><pubDate>Sun, 06 Jul 2025 10:28:07 +0000</pubDate></item><item><title>打包PyQt5应用为exe文件</title><link>https://yalungelin.github.io/post/da-bao-PyQt5-ying-yong-wei-exe-wen-jian.html</link><description>安装必要的工具
