@@ -23,39 +23,43 @@ conda list -e > requirements.txt  //导出环境依赖
 conda clean --all  这个命令会删除 Conda 包缓存、索引缓存、临时文件、未使用的包等，帮助释放空间。
 pip list --format=freeze > requirements.txt 这样导出的requirements.txt，不会含有文件路径。
 ```
-conda 导出环境
-一般方式
+**conda 导出环境**
+1. 一般方式
 ```c
 conda env export --no-builds > environment.yml
 ```
---no-builds：不导出具体的构建号，只保留包名+版本号，移植性更好（不同平台安装成功率高）。
 
-生成的是 YAML 格式，包含 conda 包和 pip 包。
+-  --no-builds：不导出具体的构建号，只保留包名+版本号，移植性更好（不同平台安装成功率高）。
 
-用于恢复环境：`conda env create -f environment.yml
+- 生成的是 YAML 格式，包含 conda 包和 pip 包。
+
+- 用于恢复环境：`conda env create -f environment.yml
+
 `
-精确复现方式
+2. 精确复现方式
 
 ```c
 conda list --explicit > spec-file.txt
 ```
 
-会导出精确的包版本和构建号（甚至频道），能 100% 还原 环境。
+- 会导出精确的包版本和构建号（甚至频道），能 100% 还原 环境。
 
-缺点：不同平台（Linux/Windows）可能会安装失败，因为构建依赖平台。
+- 缺点：不同平台（Linux/Windows）可能会安装失败，因为构建依赖平台。
 
-用于恢复环境：`conda create --name myenv --file spec-file.txt`
+- 用于恢复环境：`conda create --name myenv --file spec-file.txt`
 
-只想导出 pip 依赖
+**只想导出 pip 依赖**
 进入环境后：`pip list --format=freeze > requirements.txt`
 **建议：**
-如果是给别人用、或者跨平台部署 → 用 conda env export --no-builds
 
-如果是自己备份、同平台恢复 → 用 conda list --explicit
+- 如果是给别人用、或者跨平台部署 → 用 conda env export --no-builds
+
+- 如果是自己备份、同平台恢复 → 用 conda list --explicit
 
 **Linux命令**
 nvidia-smi：查看GPU信息
 nvcc -V :查看 CUDA 编译器版本
+
 在脚本中运行如下代码，查看是否anconda在安装pytorch环境的时候也安装了cuda和cudnn。
 ```c
 

@@ -150,26 +150,51 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <span class="pl-s1">conda</span> <span class="pl-s1">list</span> <span class="pl-c1">-</span><span class="pl-s1">e</span> <span class="pl-c1">&gt;</span> <span class="pl-s1">requirements</span>.<span class="pl-c1">txt</span>  <span class="pl-c">//导出环境依赖</span>
 <span class="pl-smi">conda</span> <span class="pl-s1">clean</span> <span class="pl-c1">--</span><span class="pl-s1">all</span>  <span class="pl-smi">这个命令会删除</span> <span class="pl-s1">Conda</span> <span class="pl-s1">包缓存</span>、<span class="pl-s1">索引缓存</span>、<span class="pl-s1">临时文件</span>、<span class="pl-s1">未使用的包等</span>，<span class="pl-s1">帮助释放空间</span>。
 <span class="pl-s1">pip</span> <span class="pl-s1">list</span> <span class="pl-c1">--</span><span class="pl-s1">format</span><span class="pl-c1">=</span><span class="pl-s1">freeze</span> <span class="pl-c1">&gt;</span> <span class="pl-s1">requirements</span>.<span class="pl-c1">txt</span> <span class="pl-s1">这样导出的requirements</span>.<span class="pl-c1">txt</span>，<span class="pl-s1">不会含有文件路径</span>。</pre></div>
-<p>conda 导出环境<br>
-一般方式</p>
+<p><strong>conda 导出环境</strong></p>
+<ol>
+<li>一般方式</li>
+</ol>
 <div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">conda</span> <span class="pl-s1">env</span> <span class="pl-s1">export</span> <span class="pl-c1">--</span><span class="pl-s1">no</span><span class="pl-c1">-</span><span class="pl-s1">builds</span> <span class="pl-c1">&gt;</span> <span class="pl-s1">environment</span>.<span class="pl-c1">yml</span></pre></div>
+<ul>
+<li>
 <p>--no-builds：不导出具体的构建号，只保留包名+版本号，移植性更好（不同平台安装成功率高）。</p>
+</li>
+<li>
 <p>生成的是 YAML 格式，包含 conda 包和 pip 包。</p>
-<p>用于恢复环境：<code class="notranslate">conda env create -f environment.yml </code><br>
-精确复现方式</p>
+</li>
+<li>
+<p>用于恢复环境：`conda env create -f environment.yml</p>
+</li>
+</ul>
+<p>`<br>
+2. 精确复现方式</p>
 <div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">conda</span> <span class="pl-s1">list</span> <span class="pl-c1">--</span><span class="pl-s1">explicit</span> <span class="pl-c1">&gt;</span> <span class="pl-s1">spec</span><span class="pl-c1">-</span><span class="pl-s1">file</span>.<span class="pl-c1">txt</span></pre></div>
+<ul>
+<li>
 <p>会导出精确的包版本和构建号（甚至频道），能 100% 还原 环境。</p>
+</li>
+<li>
 <p>缺点：不同平台（Linux/Windows）可能会安装失败，因为构建依赖平台。</p>
+</li>
+<li>
 <p>用于恢复环境：<code class="notranslate">conda create --name myenv --file spec-file.txt</code></p>
-<p>只想导出 pip 依赖<br>
+</li>
+</ul>
+<p><strong>只想导出 pip 依赖</strong><br>
 进入环境后：<code class="notranslate">pip list --format=freeze &gt; requirements.txt</code><br>
-<strong>建议：</strong><br>
-如果是给别人用、或者跨平台部署 → 用 conda env export --no-builds</p>
+<strong>建议：</strong></p>
+<ul>
+<li>
+<p>如果是给别人用、或者跨平台部署 → 用 conda env export --no-builds</p>
+</li>
+<li>
 <p>如果是自己备份、同平台恢复 → 用 conda list --explicit</p>
+</li>
+</ul>
 <p><strong>Linux命令</strong><br>
 nvidia-smi：查看GPU信息<br>
-nvcc -V :查看 CUDA 编译器版本<br>
-在脚本中运行如下代码，查看是否anconda在安装pytorch环境的时候也安装了cuda和cudnn。</p>
+nvcc -V :查看 CUDA 编译器版本</p>
+<p>在脚本中运行如下代码，查看是否anconda在安装pytorch环境的时候也安装了cuda和cudnn。</p>
 <div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">import</span> <span class="pl-s1">torch</span>
 <span class="pl-s1">torch</span>.<span class="pl-c1">__version__</span>
 <span class="pl-s1">torch</span>.<span class="pl-c1">cuda</span>.<span class="pl-en">is_available</span>()
