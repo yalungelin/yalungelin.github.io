@@ -35,7 +35,6 @@ conda env export --no-builds > environment.yml
 
 - 用于恢复环境：`conda env create -f environment.yml
 
-`
 2. 精确复现方式
 
 ```c
