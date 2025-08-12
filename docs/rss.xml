@@ -1,5 +1,25 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>瘦道西风,清穷白马</title><link>https://yalungelin.github.io</link><description>笔记</description><copyright>瘦道西风,清穷白马</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://iconic-api.onrender.com/dark/linux</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Fri, 08 Aug 2025 06:14:46 +0000</lastBuildDate><managingEditor>瘦道西风,清穷白马</managingEditor><ttl>60</ttl><webMaster>瘦道西风,清穷白马</webMaster><item><title>conda、linux、电脑命令合集</title><link>https://yalungelin.github.io/post/conda%E3%80%81linux%E3%80%81-dian-nao-ming-ling-he-ji.html</link><description>**conda命令**
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>瘦道西风,清穷白马</title><link>https://yalungelin.github.io</link><description>笔记</description><copyright>瘦道西风,清穷白马</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://iconic-api.onrender.com/dark/linux</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Tue, 12 Aug 2025 11:12:02 +0000</lastBuildDate><managingEditor>瘦道西风,清穷白马</managingEditor><ttl>60</ttl><webMaster>瘦道西风,清穷白马</webMaster><item><title>mmdetection-实例分割</title><link>https://yalungelin.github.io/post/mmdetection--shi-li-fen-ge.html</link><description>1.mmdetection环境安装
+
+```c
+conda create --name openmmlab python=3.8 -y
+conda activate openmmlab
+（ PyTorch 1.8+.）
+conda install pytorch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 pytorch-cuda=11.8 -c pytorch -c nvidia
+pip install -U openmim
+mim install mmengine
+mim install 'mmcv&gt;=2.0.0'
+git clone https://github.com/open-mmlab/mmdetection.git
+cd mmdetection
+pip install -v -e .
+```
+验证是否成功：
+
+```c
+mim download mmdet --config rtmdet_tiny_8xb32-300e_coco --dest .
+python demo/image_demo.py demo/demo.jpg rtmdet_tiny_8xb32-300e_coco.py --weights rtmdet_tiny_8xb32-300e_coco_20220902_112414-78e30dcc.pth --device cpu
+```
+您将在 ./outputs/vis 文件夹中看到一个新的图像 demo.jpg ，其中绘制了汽车、工作台等的边界框。</description><guid isPermaLink="true">https://yalungelin.github.io/post/mmdetection--shi-li-fen-ge.html</guid><pubDate>Tue, 12 Aug 2025 11:11:27 +0000</pubDate></item><item><title>conda、linux、电脑命令合集</title><link>https://yalungelin.github.io/post/conda%E3%80%81linux%E3%80%81-dian-nao-ming-ling-he-ji.html</link><description>**conda命令**
 ```c
 conda list：查看环境中的所有包
 conda install XXX：安装 XXX 包
