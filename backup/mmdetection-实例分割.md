@@ -204,5 +204,6 @@ inferencer = DetInferencer(model='/work_dirs/yolact_r50_1xb8-55e_coco/yolact_r50
 
 inferencer('5_frame_00010.jpg', out_dir='/outputs/', no_save_pred=False)
 ```
-结果展示：
+**结果展示：**
+
 ![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/7fb9b6633bbf4aa89e73584128dd4f04.png)
