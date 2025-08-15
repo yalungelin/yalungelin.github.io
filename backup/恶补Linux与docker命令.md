@@ -1,4 +1,5 @@
 一、Linux 常用命令
+
 1. 系统信息
 
 ```bash
@@ -93,7 +94,8 @@ find /path/to/search -type f | grep -i "keyword"   # 忽略大小写
  
 
 二、Docker 常用命令
-11. 镜像管理
+
+1. 镜像管理
 
 ```bash
 docker pull 镜像名[:tag]     # 拉取镜像
@@ -133,7 +135,6 @@ docker run -it ubuntu /bin/bash
 root@a1b2c3d4e5:/#
 ```
 
-
 3. 数据卷
 
 ```bash
@@ -160,6 +161,7 @@ docker container prune -f  # 清理已停止容器
 docker volume prune -f     # 清理无用卷
 ```
 6. 管理 Docker 服务
+
 ```bash
 # 启动 Docker 服务
 sudo systemctl start docker
