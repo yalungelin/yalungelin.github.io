@@ -117,6 +117,22 @@ docker rm 容器ID                 # 删除容器
 docker exec -it 容器ID /bin/bash # 进入运行中容器
 docker logs -f 容器ID            # 查看容器日志
 ```
+docker run -it --name 名字 镜像名 /bin/bash   # 创建并进入容器
+/bin/bash 是 Linux 系统中 Bash Shell 的可执行路径
+
+作用：启动容器后直接进入 Bash 交互环境，而不是让容器跑默认的 ENTRYPOINT 或 CMD
+
+这样可以让你手动输入命令，就像登录到一台新的 Linux 机器
+如：
+```bash
+docker run -it ubuntu /bin/bash
+```
+执行后你会进入一个 Ubuntu 容器的命令行：
+
+```bash
+root@a1b2c3d4e5:/#
+```
+
 
 3. 数据卷
 
