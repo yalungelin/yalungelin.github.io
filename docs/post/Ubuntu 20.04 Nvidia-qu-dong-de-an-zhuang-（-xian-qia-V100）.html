@@ -188,7 +188,8 @@ sudo systemctl <span class="pl-c1">enable</span> nvidia-persistenced</pre></div>
 <div class="highlight highlight-source-shell"><pre class="notranslate">lsmod <span class="pl-k">|</span> grep nvidia
 dmesg <span class="pl-k">|</span> grep -i nvidia
 journalctl -xe <span class="pl-k">|</span> grep -i nvidia</pre></div>
-<p>这样可以获取更详细的错误信息，我可以帮你进一步分析！🚀</p></div>
+<p>如果直接使用<code class="notranslate">sudo apt-get install nvidia-driver-570</code>安装，或对<code class="notranslate">nouveau</code>部分操作时导致黑屏可能是这种方式操作导致驱动不兼容，系统无法启动，最后还是使用本地推荐安装的方法即可。如下图：<br>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/734deca60cc3df06640709021b55c753a4c78ad992a5d8687d91541c61fca202/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f35383231323164306135626634376638623735333330373965313161323939652e706e67"><img src="https://camo.githubusercontent.com/734deca60cc3df06640709021b55c753a4c78ad992a5d8687d91541c61fca202/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f35383231323164306135626634376638623735333330373965313161323939652e706e67" alt="在这里插入图片描述" data-canonical-src="https://i-blog.csdnimg.cn/direct/582121d0a5bf47f8b7533079e11a299e.png" style="max-width: 100%;"></a></p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
