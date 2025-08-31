@@ -66,7 +66,7 @@ import torch
 torch.__version__
 torch.cuda.is_available()
 torch.backends.cudnn.is_available()
-torch.cuda_version
+torch.version.cuda
 torch.backends.cudnn.version()
 ```
 递归（-R）地把某个目录（/directory_path）及其里面的所有文件和子目录的所有者改成你指定的用户（username）
