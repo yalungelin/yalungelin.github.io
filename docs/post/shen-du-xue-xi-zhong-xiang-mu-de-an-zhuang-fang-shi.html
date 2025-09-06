@@ -101,7 +101,7 @@ pip install -r requirements.txt（从文件批量安装依赖）</p>
 没有 . 的话，它会去 PyPI 或你指定的源找包。<br>
 常用场景：调试安装问题，查看构建细节。<br>
 <strong>pip install -e .</strong><br>
-含义：-e 表示 editable mode（<strong>可编辑模式</strong>）。<br>
+含义：-e 表示 editable mode（<strong>可编辑模式</strong>），它需要一个路径参数，所以一般加 .（表示当前目录）。<br>
 安装模式：可编辑。<br>
 行为：<br>
 在 site-packages 里放一个指向源码目录的<strong>符号链接</strong>（或 .pth 文件）。<br>
