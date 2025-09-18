@@ -1,5 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>瘦道西风,清穷白马</title><link>https://yalungelin.github.io</link><description>笔记</description><copyright>瘦道西风,清穷白马</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://iconic-api.onrender.com/dark/linux</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Fri, 15 Aug 2025 07:23:54 +0000</lastBuildDate><managingEditor>瘦道西风,清穷白马</managingEditor><ttl>60</ttl><webMaster>瘦道西风,清穷白马</webMaster><item><title>深度学习中项目的安装方式</title><link>https://yalungelin.github.io/post/shen-du-xue-xi-zhong-xiang-mu-de-an-zhuang-fang-shi.html</link><description>在传统的深度学习中需要安装环境和源码来对数据集进行训练和改进。</description><guid isPermaLink="true">https://yalungelin.github.io/post/shen-du-xue-xi-zhong-xiang-mu-de-an-zhuang-fang-shi.html</guid><pubDate>Fri, 15 Aug 2025 07:23:25 +0000</pubDate></item><item><title>恶补Linux与docker命令</title><link>https://yalungelin.github.io/post/e-bu-Linux-yu-docker-ming-ling.html</link><description>一、Linux 常用命令
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>瘦道西风,清穷白马</title><link>https://yalungelin.github.io</link><description>笔记</description><copyright>瘦道西风,清穷白马</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://iconic-api.onrender.com/dark/linux</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Thu, 18 Sep 2025 02:28:27 +0000</lastBuildDate><managingEditor>瘦道西风,清穷白马</managingEditor><ttl>60</ttl><webMaster>瘦道西风,清穷白马</webMaster><item><title>git管理代码项目-初探</title><link>https://yalungelin.github.io/post/git-guan-li-dai-ma-xiang-mu---chu-tan.html</link><description>1.安装git
+在Windows下直接安装git Windows即可
+在Linux/WSL：`sudo apt install git`
+2.设置用户名和邮箱（用于提交记录）
+
+```bash
+git config --global user.name '你的名字'
+git config --global user.email 'you@example.com'
+```
+查看配置：git config --list
+3.初始化仓库
+在你的项目根目录：
+
+```bash
+cd /path/to/your/project
+git init
+```
+这会生成一个 .git 文件夹，Git 会在这里记录版本信息。</description><guid isPermaLink="true">https://yalungelin.github.io/post/git-guan-li-dai-ma-xiang-mu---chu-tan.html</guid><pubDate>Thu, 18 Sep 2025 02:27:59 +0000</pubDate></item><item><title>深度学习中项目的安装方式</title><link>https://yalungelin.github.io/post/shen-du-xue-xi-zhong-xiang-mu-de-an-zhuang-fang-shi.html</link><description>在传统的深度学习中需要安装环境和源码来对数据集进行训练和改进。</description><guid isPermaLink="true">https://yalungelin.github.io/post/shen-du-xue-xi-zhong-xiang-mu-de-an-zhuang-fang-shi.html</guid><pubDate>Fri, 15 Aug 2025 07:23:25 +0000</pubDate></item><item><title>恶补Linux与docker命令</title><link>https://yalungelin.github.io/post/e-bu-Linux-yu-docker-ming-ling.html</link><description>一、Linux 常用命令
 
 1. 系统信息
 
