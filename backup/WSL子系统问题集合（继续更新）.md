@@ -82,3 +82,6 @@ autoProxy=true
 [链接](https://zhuanlan.zhihu.com/p/153124468)
 
 这个是微软官方配置描述[WSL高级配置](https://learn.microsoft.com/en-us/windows/wsl/wsl-config#networkingmode-mirrored)
+
+**Rustdesk问题**
+在使用模型进行训练时，使用Rustdesk远程会导致内存或进程抢占，导致在需要模型验证阶段，需要大量的线程和内存导致溢出。更换远程工具立即恢复。
