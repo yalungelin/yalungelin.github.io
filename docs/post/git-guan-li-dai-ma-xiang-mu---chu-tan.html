@@ -51,7 +51,7 @@ git init
 <meta property="og:url" content="https://yalungelin.github.io/post/git-guan-li-dai-ma-xiang-mu---chu-tan.html">
 <meta property="og:image" content="https://iconic-api.onrender.com/dark/linux">
 <title>git管理代码项目-初探</title>
-<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
 
 
 </head>
@@ -75,17 +75,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     body {padding: 8px;}
     .postTitle{font-size:24px;}
 }
-.copy-feedback {
-    display: none;
-    position: absolute;
-    top: 10px;
-    right: 50px;
-    color: var(--color-fg-on-emphasis);
-    background-color: var(--color-fg-muted);
-    border-radius: 3px;
-    padding: 5px 8px;
-    font-size: 12px;
-}
+
 </style>
 
 
@@ -121,48 +111,59 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 在Windows下直接安装git Windows即可<br>
 在Linux/WSL：<code class="notranslate">sudo apt install git</code><br>
 2.设置用户名和邮箱（用于提交记录）</p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">git config --global user.name <span class="pl-s"><span class="pl-pds">"</span>你的名字<span class="pl-pds">"</span></span>
-git config --global user.email <span class="pl-s"><span class="pl-pds">"</span>you@example.com<span class="pl-pds">"</span></span></pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">git config --global user.name "你的名字"
+git config --global user.email "you@example.com"
+</code></pre>
 <p>查看配置：git config --list<br>
 3.初始化仓库<br>
 在你的项目根目录：</p>
-<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c1">cd</span> /path/to/your/project
-git init</pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">cd /path/to/your/project
+git init
+</code></pre>
 <p>这会生成一个 .git 文件夹，Git 会在这里记录版本信息。<br>
 <strong>（如果是新建项目，在创建GitHub仓库时，会有详细的流程，教你如何上传相应的代码）<br>
 （如果接着别人的项目开发又是不一样，下面详细展开说明）</strong><br>
 4.常用工作流<br>
 <strong>查看当前状态</strong></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">git status</pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">git status
+</code></pre>
 <p><strong>添加到暂存区</strong></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">git add 文件名        <span class="pl-c"><span class="pl-c">#</span> 添加指定文件</span>
-git add <span class="pl-c1">.</span>            <span class="pl-c"><span class="pl-c">#</span> 添加当前目录所有改动</span></pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">git add 文件名        # 添加指定文件
+git add .            # 添加当前目录所有改动
+</code></pre>
 <p><strong>提交版本</strong></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">git commit -m <span class="pl-s"><span class="pl-pds">"</span>描述这次修改的内容<span class="pl-pds">"</span></span></pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">git commit -m "描述这次修改的内容"
+</code></pre>
 <p><strong>查看提交记录</strong></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">git log --oneline --graph --decorate</pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">git log --oneline --graph --decorate
+</code></pre>
 <p>5.远程仓库（GitHub / Gitee / GitLab）<br>
 <strong>关联远程仓库</strong></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">git remote add origin git@github.com:用户名/仓库名.git</pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">git remote add origin git@github.com:用户名/仓库名.git
+</code></pre>
 <p><strong>首次推送</strong></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">git push -u origin main   <span class="pl-c"><span class="pl-c">#</span> 如果默认分支是 main</span></pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">git push -u origin main   # 如果默认分支是 main
+</code></pre>
 <p><strong>拉取远程更新</strong></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">git pull</pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">git pull
+</code></pre>
 <p>生成 SSH key（推荐）<br>
 运行 ssh-keygen -t ed25519 -C "<a href="mailto:you@example.com">you@example.com</a>"，然后将 ~/.ssh/id_ed25519.pub 的内容添加到 GitHub/Gitee 的 SSH key 设置中，实现免密操作。<br>
 <strong>分支管理</strong></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">创建分支：git branch dev
+<pre lang="bash" class="notranslate"><code class="notranslate">创建分支：git branch dev
 切换分支：git checkout dev 或 git switch dev
 合并分支：git merge dev
-删除分支：git branch -d dev</pre></div>
+删除分支：git branch -d dev
+</code></pre>
 <p><strong>忽略文件</strong><br>
 在项目根目录创建 .gitignore 文件，例如：</p>
-<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-k">*</span>.pyc
+<pre lang="bash" class="notranslate"><code class="notranslate">*.pyc
 __pycache__/
-data/</pre></div>
+data/
+</code></pre>
 <p>这样这些文件不会被 Git 跟踪。<br>
 <strong>实用技巧</strong></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">查看差异：git diff
+<pre lang="bash" class="notranslate"><code class="notranslate">查看差异：git diff
 
 撤销改动：
 
@@ -174,35 +175,43 @@ data/</pre></div>
 
 保留修改：git reset --soft HEAD~1
 
-丢弃修改：git reset --hard HEAD~1</pre></div>
+丢弃修改：git reset --hard HEAD~1
+</code></pre>
 <p><strong>clone别人的仓库作为基准</strong><br>
 本地目录已经是一个完整的 Git 仓库（包含 .git 目录），不需要再 git init。<br>
 任务场景一：给原仓库贡献（Pull Request）<br>
 <strong>克隆项目</strong></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">git clone git@github.com:原作者/项目名.git
-<span class="pl-c1">cd</span> 项目名</pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">git clone git@github.com:原作者/项目名.git
+cd 项目名
+</code></pre>
 <p>远程 origin 默认指向原作者的仓库。<br>
 <strong>创建分支开发</strong></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">git checkout -b my-feature</pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">git checkout -b my-feature
+</code></pre>
 <p><strong>修改代码 → 提交</strong></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">git add <span class="pl-c1">.</span>
-git commit -m <span class="pl-s"><span class="pl-pds">"</span>feat: 添加某功能<span class="pl-pds">"</span></span></pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">git add .
+git commit -m "feat: 添加某功能"
+</code></pre>
 <p><strong>推送到自己 Fork 的仓库</strong><br>
 你需要先在 GitHub 上 Fork 这个项目，然后修改远程：</p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">git remote set-url origin git@github.com:你的用户名/项目名.git
-git push -u origin my-feature</pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">git remote set-url origin git@github.com:你的用户名/项目名.git
+git push -u origin my-feature
+</code></pre>
 <p><strong>在 GitHub 上发起 Pull Request，让原作者审核合并。</strong><br>
 任务场景二：当作模板，建自己的仓库<br>
 如果你只是想用别人的代码当起点，不打算提交回去，可以这样：<br>
 <strong>克隆后解除和原仓库的绑定</strong></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">git clone https://github.com/原作者/项目名.git
-<span class="pl-c1">cd</span> 项目名
-git remote remove origin</pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">git clone https://github.com/原作者/项目名.git
+cd 项目名
+git remote remove origin
+</code></pre>
 <p><strong>在 GitHub/Gitee 创建你自己的空仓库，得到地址，例如：</strong></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">git@github.com:你的用户名/新仓库.git</pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">git@github.com:你的用户名/新仓库.git
+</code></pre>
 <p><strong>绑定到新的远程仓库</strong></p>
-<div class="highlight highlight-source-shell"><pre class="notranslate">git remote add origin git@github.com:你的用户名/新仓库.git
-git push -u origin main   <span class="pl-c"><span class="pl-c">#</span> 或 master</span></pre></div>
+<pre lang="bash" class="notranslate"><code class="notranslate">git remote add origin git@github.com:你的用户名/新仓库.git
+git push -u origin main   # 或 master
+</code></pre>
 <p>之后 git push 就是推送到你自己的仓库了。</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
@@ -228,7 +237,7 @@ if(""!=""){
 </script></div>
 </body>
 <script>
-var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
 var utterancesLoad=0;
 
 let themeSettings={
@@ -301,70 +310,7 @@ function iFrameLoading(){
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const createClipboardHTML = (codeContent, additionalClasses = '') => `
-        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
-        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
-            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
-                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
-                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
-            </clipboard-copy>
-            <div class="copy-feedback">Copied!</div>
-        </div>
-    `;
 
-    const handleCodeElements = (selector = '') => {
-        document.querySelectorAll(selector).forEach(codeElement => {
-            const codeContent = codeElement.innerHTML;
-            const newStructure = document.createElement('div');
-            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
-            newStructure.innerHTML = createClipboardHTML(codeContent);
-
-            const parentElement = codeElement.parentElement;
-            if (selector.includes('highlight')) {
-                parentElement.insertBefore(newStructure, codeElement.nextSibling);
-                parentElement.removeChild(codeElement);
-            } else {
-                parentElement.parentElement.replaceChild(newStructure, parentElement);
-            }
-        });
-    };
-
-    handleCodeElements('pre.notranslate > code.notranslate');
-    handleCodeElements('div.highlight > pre.notranslate');
-
-    let currentFeedback = null;
-    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
-        copyButton.addEventListener('click', () => {
-            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
-            const tempTextArea = document.createElement('textarea');
-            tempTextArea.value = codeContent;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempTextArea);
-
-            const copyIcon = copyButton.querySelector('.octicon-copy');
-            const checkIcon = copyButton.querySelector('.octicon-check');
-            const copyFeedback = copyButton.nextElementSibling;
-
-            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
-            currentFeedback = copyFeedback;
-
-            copyIcon.classList.add('d-none');
-            checkIcon.classList.remove('d-none');
-            copyFeedback.style.display = 'block';
-            copyButton.style.borderColor = 'var(--color-success-fg)';
-
-            setTimeout(() => {
-                copyIcon.classList.remove('d-none');
-                checkIcon.classList.add('d-none');
-                copyFeedback.style.display = 'none';
-                copyButton.style.borderColor = '';
-            }, 2000);
-        });
-    });
-});
 
 </script>
 
