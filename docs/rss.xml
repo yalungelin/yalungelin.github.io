@@ -1,5 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>瘦道西风,清穷白马</title><link>https://yalungelin.github.io</link><description>笔记</description><copyright>瘦道西风,清穷白马</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://iconic-api.onrender.com/dark/linux</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Thu, 18 Sep 2025 02:28:27 +0000</lastBuildDate><managingEditor>瘦道西风,清穷白马</managingEditor><ttl>60</ttl><webMaster>瘦道西风,清穷白马</webMaster><item><title>git管理代码项目-初探</title><link>https://yalungelin.github.io/post/git-guan-li-dai-ma-xiang-mu---chu-tan.html</link><description>1.安装git
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>瘦道西风,清穷白马</title><link>https://yalungelin.github.io</link><description>笔记</description><copyright>瘦道西风,清穷白马</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://iconic-api.onrender.com/dark/linux</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Fri, 17 Oct 2025 06:59:47 +0000</lastBuildDate><managingEditor>瘦道西风,清穷白马</managingEditor><ttl>60</ttl><webMaster>瘦道西风,清穷白马</webMaster><item><title>Jetson Nano部署mmdetection与mmsegmentation</title><link>https://yalungelin.github.io/post/Jetson%20Nano-bu-shu-mmdetection-yu-mmsegmentation.html</link><description>1.Jetson的环境配置
+[这个是具体的官网网站](https://mmdeploy.readthedocs.io/en/latest/01-how-to-build/jetsons.html)
+目前的设备与文档略有不一样，为JetPack 5.1，所以在创建环境时，python为3.8.
+
+**conda**
+安装Archiconda而不是 Anaconda，因为后者不提供为 Jetson 构建的文件。</description><guid isPermaLink="true">https://yalungelin.github.io/post/Jetson%20Nano-bu-shu-mmdetection-yu-mmsegmentation.html</guid><pubDate>Fri, 17 Oct 2025 05:57:49 +0000</pubDate></item><item><title>git管理代码项目-初探</title><link>https://yalungelin.github.io/post/git-guan-li-dai-ma-xiang-mu---chu-tan.html</link><description>1.安装git
 在Windows下直接安装git Windows即可
 在Linux/WSL：`sudo apt install git`
 2.设置用户名和邮箱（用于提交记录）
