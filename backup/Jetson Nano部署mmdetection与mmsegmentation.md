@@ -378,6 +378,5 @@ task_processor.visualize(
     window_name='visualize',
     output_file='./output_segmentation.png')
 ```
-
 即可得到推理结果：
 ![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/f598c237c3bb43fab6d158f23f7dfb48.png)
