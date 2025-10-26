@@ -117,6 +117,8 @@ conda activate mmdeploy</pre></div>
 <p>正如我上面所说对应JetPack不同版本对应不同python版本。</p>
 <div class="highlight highlight-source-shell"><pre class="notranslate">JetPack SDK 4+ 提供 Python 3.6。我们强烈建议使用默认 Python。尝试升级可能会破坏 JetPack 环境。
 如果需要更高版本的Python，可以安装JetPack 5+，其中Python版本为3.8。</pre></div>
+<p>查看JetPack版本</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">sudo apt-cache show nvidia-jetpack</pre></div>
 <p>PyTorch<br>
 这里JetPack 对应的pytorch版本<br>
 <a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/3f78a762f4ce000ab30c3ebf525516fa5e9778d6a384ab8e5a50320b6e99f493/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f31383635373035386364363534323932393163626263336234386335613139642e706e67"><img src="https://camo.githubusercontent.com/3f78a762f4ce000ab30c3ebf525516fa5e9778d6a384ab8e5a50320b6e99f493/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f31383635373035386364363534323932393163626263336234386335613139642e706e67" alt="在这里插入图片描述" data-canonical-src="https://i-blog.csdnimg.cn/direct/18657058cd65429291cbbc3b48c5a19d.png" style="max-width: 100%;"></a><br>
@@ -133,7 +135,9 @@ git clone --branch v0.12.0 https://github.com/pytorch/vision torchvision
 <span class="pl-k">export</span> BUILD_VERSION=0.12.1
 pip install -e <span class="pl-c1">.</span></pre></div>
 <p>在 Jetson Nano 上安装 torchvision 大约需要 30 分钟。请耐心等待安装完成。<br>
-<strong>CMake</strong></p>
+<strong>CMake</strong><br>
+CMake 版本</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">cmake --version</pre></div>
 <div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> purge existing</span>
 sudo apt-get purge cmake -y
 
@@ -203,6 +207,8 @@ $ pip3 install onnxruntime_gpu-1.15.1-cp38-cp38-linux_aarch64.whl</pre></div>
 模型转换器采用HDF5保存TensorRT INT8量化的校准数据，需要pycuda复制设备内存。</p>
 <div class="highlight highlight-source-shell"><pre class="notranslate">sudo apt-get install -y pkg-config libhdf5-100 libhdf5-dev
 pip install versioned-hdf5 pycuda</pre></div>
+<p>versioned-hdf5可能因为版本而安装不上，可以使用conda进行安装，pycuda正常安装。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">conda install -c conda-forge h5py=2.10.0 hdf5</pre></div>
 <p>在 Jetson Nano 上安装 versioned-hdf5 大约需要 6 分钟。请耐心等待安装完成。</p>
 <p><strong>安装 C/C++ 推理 SDK 的依赖项</strong><br>
 安装 spdlog<br>

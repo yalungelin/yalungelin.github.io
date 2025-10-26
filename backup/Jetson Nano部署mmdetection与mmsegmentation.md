@@ -32,6 +32,12 @@ conda activate mmdeploy
 JetPack SDK 4+ 提供 Python 3.6。我们强烈建议使用默认 Python。尝试升级可能会破坏 JetPack 环境。
 如果需要更高版本的Python，可以安装JetPack 5+，其中Python版本为3.8。
 ```
+查看JetPack版本
+
+```bash
+sudo apt-cache show nvidia-jetpack
+```
+
 PyTorch
 这里JetPack 对应的pytorch版本
 ![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/18657058cd65429291cbbc3b48c5a19d.png)
@@ -52,6 +58,11 @@ pip install -e .
 ```
 在 Jetson Nano 上安装 torchvision 大约需要 30 分钟。请耐心等待安装完成。
 **CMake**
+CMake 版本
+
+```bash
+cmake --version
+```
 
 ```bash
 # purge existing
@@ -148,6 +159,12 @@ $ pip3 install onnxruntime_gpu-1.15.1-cp38-cp38-linux_aarch64.whl
 sudo apt-get install -y pkg-config libhdf5-100 libhdf5-dev
 pip install versioned-hdf5 pycuda
 ```
+versioned-hdf5可能因为版本而安装不上，可以使用conda进行安装，pycuda正常安装。
+
+```bash
+conda install -c conda-forge h5py=2.10.0 hdf5
+```
+
 在 Jetson Nano 上安装 versioned-hdf5 大约需要 6 分钟。请耐心等待安装完成。
 
 **安装 C/C++ 推理 SDK 的依赖项**
