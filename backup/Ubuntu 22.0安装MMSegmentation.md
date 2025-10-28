@@ -75,3 +75,10 @@ mim install mmcv==2.1.0
 show_result_pyplot(model, img_path, result, show=False, out_file=output_path, opacity=1,with_labels=False)
 ```
 **with_labels=False,   # 不显示标签**
+
+resume模型一直卡住，也不报错
+
+卡在这里 Advance dataloader 102456 steps to skip data that has already been trained
+解决方法：降低mmengine 版本  
+
+mim install mmengine==0.10.2   

@@ -150,7 +150,11 @@ ModuleNotFoundError: No module named 'mmcv._ext'</p>
 <p>在运行测试代码，即可。</p>
 <p>在进行预测时默认带有类别标签，去除如下：</p>
 <div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-en">show_result_pyplot</span>(<span class="pl-s1">model</span>, <span class="pl-s1">img_path</span>, <span class="pl-s1">result</span>, <span class="pl-s1">show</span><span class="pl-c1">=</span><span class="pl-s1">False</span>, <span class="pl-s1">out_file</span><span class="pl-c1">=</span><span class="pl-s1">output_path</span>, <span class="pl-s1">opacity</span><span class="pl-c1">=</span><span class="pl-c1">1</span>,<span class="pl-s1">with_labels</span><span class="pl-c1">=</span><span class="pl-s1">False</span>)</pre></div>
-<p><strong>with_labels=False,   # 不显示标签</strong></p></div>
+<p><strong>with_labels=False,   # 不显示标签</strong></p>
+<p>resume模型一直卡住，也不报错</p>
+<p>卡在这里 Advance dataloader 102456 steps to skip data that has already been trained<br>
+解决方法：降低mmengine 版本</p>
+<p>mim install mmengine==0.10.2</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
