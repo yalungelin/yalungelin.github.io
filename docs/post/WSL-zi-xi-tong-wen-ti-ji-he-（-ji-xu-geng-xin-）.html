@@ -153,7 +153,12 @@ autoProxy=true
 <p><a href="https://zhuanlan.zhihu.com/p/153124468" rel="nofollow">链接</a></p>
 <p>这个是微软官方配置描述<a href="https://learn.microsoft.com/en-us/windows/wsl/wsl-config#networkingmode-mirrored" rel="nofollow">WSL高级配置</a></p>
 <p><strong>Rustdesk问题</strong><br>
-在使用模型进行训练时，使用Rustdesk远程会导致内存或进程抢占，导致在需要模型验证阶段，需要大量的线程和内存导致溢出。更换远程工具立即恢复。</p></div>
+在使用模型进行训练时，使用Rustdesk远程会导致内存或进程抢占，导致在需要模型验证阶段，需要大量的线程和内存导致溢出。更换远程工具立即恢复。</p>
+<p>CUDA环境变量配置：<br>
+export CUDA_HOME=/usr/local/cuda-11.8<br>
+export PATH=$PATH:$CUDA_HOME/bin<br>
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64<br>
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/extras/CUPTI/lib64</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>

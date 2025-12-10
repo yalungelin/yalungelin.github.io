@@ -85,3 +85,10 @@ autoProxy=true
 
 **Rustdesk问题**
 在使用模型进行训练时，使用Rustdesk远程会导致内存或进程抢占，导致在需要模型验证阶段，需要大量的线程和内存导致溢出。更换远程工具立即恢复。
+
+
+CUDA环境变量配置：
+export CUDA_HOME=/usr/local/cuda-11.8 
+export PATH=$PATH:$CUDA_HOME/bin       
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/extras/CUPTI/lib64
