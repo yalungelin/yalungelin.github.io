@@ -92,3 +92,10 @@ export CUDA_HOME=/usr/local/cuda-11.8
 export PATH=$PATH:$CUDA_HOME/bin       
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/extras/CUPTI/lib64
+
+
+2025.12.10
+经过测试：新版python 3.13的miniconda装不上wsl中，安装的过程中老是失败。
+这个是以前版本仓库[https://repo.anaconda.com/miniconda/](url)。
+这个是命令：
+ wget https://repo.anaconda.com/miniconda/Miniconda3-py312_24.5.0-0-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh

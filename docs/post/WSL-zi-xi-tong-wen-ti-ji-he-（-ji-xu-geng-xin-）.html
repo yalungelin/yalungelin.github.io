@@ -158,7 +158,12 @@ autoProxy=true
 export CUDA_HOME=/usr/local/cuda-11.8<br>
 export PATH=$PATH:$CUDA_HOME/bin<br>
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/lib64<br>
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/extras/CUPTI/lib64</p></div>
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/extras/CUPTI/lib64</p>
+<p>2025.12.10<br>
+经过测试：新版python 3.13的miniconda装不上wsl中，安装的过程中老是失败。<br>
+这个是以前版本仓库<a href="url">https://repo.anaconda.com/miniconda/</a>。<br>
+这个是命令：<br>
+wget <a href="https://repo.anaconda.com/miniconda/Miniconda3-py312_24.5.0-0-Linux-x86_64.sh" rel="nofollow">https://repo.anaconda.com/miniconda/Miniconda3-py312_24.5.0-0-Linux-x86_64.sh</a> -O ~/miniconda3/miniconda.sh</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
