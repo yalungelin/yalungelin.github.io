@@ -99,3 +99,5 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/extras/CUPTI/lib64
 这个是以前版本仓库[https://repo.anaconda.com/miniconda/](url)。
 这个是命令：
  wget https://repo.anaconda.com/miniconda/Miniconda3-py312_24.5.0-0-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+
+<img width="737" height="644" alt="Image" src="https://github.com/user-attachments/assets/360a9436-f8ee-474b-aa45-0aedaeb40d38" />
