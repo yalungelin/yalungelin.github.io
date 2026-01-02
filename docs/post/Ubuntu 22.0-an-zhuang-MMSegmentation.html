@@ -154,7 +154,12 @@ ModuleNotFoundError: No module named 'mmcv._ext'</p>
 <p>resume模型一直卡住，也不报错</p>
 <p>卡在这里 Advance dataloader 102456 steps to skip data that has already been trained<br>
 解决方法：降低mmengine 版本</p>
-<p>mim install mmengine==0.10.2</p></div>
+<p>mim install mmengine==0.10.2</p>
+<p>如果在子系统上出现训练中断，多处出现在权重保存方面，可能是yapf 版本与 Python 3.8 或 mmengine 不兼容<br>
+`pip install -U yapf           # 升级到最新版</p>
+<h1>或</h1>
+<p>pip install yapf==0.32.0      # 安装官方推荐版本<br>
+`</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
