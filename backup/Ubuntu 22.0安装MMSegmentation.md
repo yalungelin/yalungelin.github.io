@@ -83,8 +83,9 @@ resume模型一直卡住，也不报错
 
 mim install mmengine==0.10.2   
 
-如果在子系统上出现训练中断，多处出现在权重保存方面，可能是yapf 版本与 Python 3.8 或 mmengine 不兼容
-`pip install -U yapf           # 升级到最新版
-# 或
+如果在子系统上出现训练中断，多次出现在权重保存方面，可能是yapf 版本与 Python 3.8 或 mmengine 不兼容
+```
+pip install -U yapf           # 升级到最新版
+or
 pip install yapf==0.32.0      # 安装官方推荐版本
-`
+````
