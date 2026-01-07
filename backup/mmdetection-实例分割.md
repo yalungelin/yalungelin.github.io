@@ -212,4 +212,4 @@ inferencer('5_frame_00010.jpg', out_dir='/outputs/', no_save_pred=False)
 python版本：3.8
 pytorch安装：
 conda install pytorch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 pytorch-cuda=11.8 -c pytorch -c nvidia
-mmcv=2.1.0
+mmcv版本：mmcv=2.1.0
