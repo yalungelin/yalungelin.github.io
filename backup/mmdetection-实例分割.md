@@ -207,3 +207,9 @@ inferencer('5_frame_00010.jpg', out_dir='/outputs/', no_save_pred=False)
 **结果展示：**
 
 ![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/7fb9b6633bbf4aa89e73584128dd4f04.png)
+
+**50系显卡**
+python版本：3.8
+pytorch安装：
+conda install pytorch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 pytorch-cuda=11.8 -c pytorch -c nvidia
+mmcv=2.1.0
