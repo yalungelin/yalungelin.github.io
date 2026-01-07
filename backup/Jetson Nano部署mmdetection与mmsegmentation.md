@@ -418,3 +418,5 @@ python tools/profiler.py configs/mmseg/segmentation_tensorrt-int8_static-512x512
 /media/jiang/皮皮虾三号/jetson/cwd/segformer_mit-b0_8xb2-160k_ade20k-512x512/segformer_mit-b0_8xb2-160k_ade20k-512x512.py 
 /media/jiang/皮皮虾三号/jetson/cwd/test-org-img --model /home/jiang/mmdeploy/work_dir/tensorint8/end2end.engine 
 --device cuda:0 --shape 512x512 --num-iter 100 --warmup 10
+
+<img width="637" height="836" alt="Image" src="https://github.com/user-attachments/assets/b3df765b-4c20-4789-9bba-a2b19878ce14" />
