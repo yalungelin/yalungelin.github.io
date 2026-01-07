@@ -397,3 +397,24 @@ task_processor.visualize(
 ```
 即可得到推理结果：
 ![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/f598c237c3bb43fab6d158f23f7dfb48.png)
+
+**蒸馏模型：**
+使用mmrazor进行教师学生蒸馏
+蒸馏：
+python tools/train.py /home/lsl/Workspace/mmrazor/configs/distill/mmseg/cwd/cwd_logits_segformer_B5_segformer_B0_-40k_voc-512x512.py
+划分成学生权重：
+python tools/model_converters/convert_kd_ckpt_to_student.py /home/lsl/Workspace/mmrazor/work_dirs/cwd_logits_segformer_B5_segformer_B0_-40k_voc-512x512-tau=1-loss_weight=1.25/best_mIoU_iter_37000.pth --out-path /home/lsl/Workspace/mmrazor/work_dirs/cwd_logits_segformer_B5_segformer_B0_-40k_voc-512x512-tau=1-loss_weight=1.25
+**量化模型：**
+将划分完的权重放入开发板上进行量化推理：
+量化代码（tensorRT_int8）:
+python3 tools/deploy.py 
+/home/jiang/mmdeploy/configs/mmseg/segmentation_tensorrt-int8_static-512x512.py 
+/media/jiang/皮皮虾三号/jetson/cwd/segformer_mit-b0_8xb2-160k_ade20k-512x512/segformer_mit-b0_8xb2-160k_ade20k-512x512.py  
+/media/jiang/皮皮虾三号/jetson/cwd/best_mIoU_iter_37000_student.pth  /media/jiang/皮皮虾三号/jetson/cwd/test-org-img/6336.jpg   
+--work-dir work_dir1 
+--device cuda --quant  --quant-image-dir /media/jiang/皮皮虾三号/jetson/cwd/VOCdevkit/VOC2012/JPEGImages
+模型测速（FPS）：
+python tools/profiler.py configs/mmseg/segmentation_tensorrt-int8_static-512x512.py 
+/media/jiang/皮皮虾三号/jetson/cwd/segformer_mit-b0_8xb2-160k_ade20k-512x512/segformer_mit-b0_8xb2-160k_ade20k-512x512.py 
+/media/jiang/皮皮虾三号/jetson/cwd/test-org-img --model /home/jiang/mmdeploy/work_dir/tensorint8/end2end.engine 
+--device cuda:0 --shape 512x512 --num-iter 100 --warmup 10

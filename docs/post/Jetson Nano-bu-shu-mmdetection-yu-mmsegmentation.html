@@ -386,7 +386,27 @@ task_processor.visualize(
     window_name=<span class="pl-s"><span class="pl-pds">'</span>visualize<span class="pl-pds">'</span></span>,
     output_file=<span class="pl-s"><span class="pl-pds">'</span>./output_segmentation.png<span class="pl-pds">'</span></span>)</pre></div>
 <p>即可得到推理结果：<br>
-<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/9e0c1b509e6b57904b48c984f7817f8669987a1e87f4c58289572eef4f98e3f6/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f66353938633233376333626234336661623664313538663233663764666234382e706e67"><img src="https://camo.githubusercontent.com/9e0c1b509e6b57904b48c984f7817f8669987a1e87f4c58289572eef4f98e3f6/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f66353938633233376333626234336661623664313538663233663764666234382e706e67" alt="在这里插入图片描述" data-canonical-src="https://i-blog.csdnimg.cn/direct/f598c237c3bb43fab6d158f23f7dfb48.png" style="max-width: 100%;"></a></p></div>
+<a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/9e0c1b509e6b57904b48c984f7817f8669987a1e87f4c58289572eef4f98e3f6/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f66353938633233376333626234336661623664313538663233663764666234382e706e67"><img src="https://camo.githubusercontent.com/9e0c1b509e6b57904b48c984f7817f8669987a1e87f4c58289572eef4f98e3f6/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f66353938633233376333626234336661623664313538663233663764666234382e706e67" alt="在这里插入图片描述" data-canonical-src="https://i-blog.csdnimg.cn/direct/f598c237c3bb43fab6d158f23f7dfb48.png" style="max-width: 100%;"></a></p>
+<p><strong>蒸馏模型：</strong><br>
+使用mmrazor进行教师学生蒸馏<br>
+蒸馏：<br>
+python tools/train.py /home/lsl/Workspace/mmrazor/configs/distill/mmseg/cwd/cwd_logits_segformer_B5_segformer_B0_-40k_voc-512x512.py<br>
+划分成学生权重：<br>
+python tools/model_converters/convert_kd_ckpt_to_student.py /home/lsl/Workspace/mmrazor/work_dirs/cwd_logits_segformer_B5_segformer_B0_-40k_voc-512x512-tau=1-loss_weight=1.25/best_mIoU_iter_37000.pth --out-path /home/lsl/Workspace/mmrazor/work_dirs/cwd_logits_segformer_B5_segformer_B0_-40k_voc-512x512-tau=1-loss_weight=1.25<br>
+<strong>量化模型：</strong><br>
+将划分完的权重放入开发板上进行量化推理：<br>
+量化代码（tensorRT_int8）:<br>
+python3 tools/deploy.py<br>
+/home/jiang/mmdeploy/configs/mmseg/segmentation_tensorrt-int8_static-512x512.py<br>
+/media/jiang/皮皮虾三号/jetson/cwd/segformer_mit-b0_8xb2-160k_ade20k-512x512/segformer_mit-b0_8xb2-160k_ade20k-512x512.py<br>
+/media/jiang/皮皮虾三号/jetson/cwd/best_mIoU_iter_37000_student.pth  /media/jiang/皮皮虾三号/jetson/cwd/test-org-img/6336.jpg<br>
+--work-dir work_dir1<br>
+--device cuda --quant  --quant-image-dir /media/jiang/皮皮虾三号/jetson/cwd/VOCdevkit/VOC2012/JPEGImages<br>
+模型测速（FPS）：<br>
+python tools/profiler.py configs/mmseg/segmentation_tensorrt-int8_static-512x512.py<br>
+/media/jiang/皮皮虾三号/jetson/cwd/segformer_mit-b0_8xb2-160k_ade20k-512x512/segformer_mit-b0_8xb2-160k_ade20k-512x512.py<br>
+/media/jiang/皮皮虾三号/jetson/cwd/test-org-img --model /home/jiang/mmdeploy/work_dir/tensorint8/end2end.engine<br>
+--device cuda:0 --shape 512x512 --num-iter 100 --warmup 10</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
