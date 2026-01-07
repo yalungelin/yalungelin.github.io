@@ -80,6 +80,9 @@ resume模型一直卡住，也不报错
 
 卡在这里 Advance dataloader 102456 steps to skip data that has already been trained
 解决方法：降低mmengine 版本  
+原本为：
+
+<img width="278" height="22" alt="Image" src="https://github.com/user-attachments/assets/06fc78a5-9233-4905-b996-de6214979496" />
 
 mim install mmengine==0.10.2   
 
