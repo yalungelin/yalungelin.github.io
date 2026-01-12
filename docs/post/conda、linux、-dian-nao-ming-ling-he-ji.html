@@ -216,7 +216,19 @@ nvcc -V :查看 CUDA 编译器版本</p>
 /<span class="pl-s1">directory_path</span>：<span class="pl-s1">要修改权限的文件夹路径</span></pre></div>
 <p>chown 只是改所有者，不改读写执行权限（那是 chmod 做的事）</p>
 <p>word公式标号快捷键</p>
-<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">公式</span>#()<span class="pl-s1">回车</span></pre></div></div>
+<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">公式</span>#()<span class="pl-s1">回车</span></pre></div>
+<p><strong>删除子系统中Zone.Identifier文件</strong><br>
+方法 1：使用 find 命令</p>
+<pre class="notranslate"><code class="notranslate"># 删除当前目录及子目录下所有包含 :Zone.Identifier 的文件
+find /path/to/folder -type f -name "*:Zone.Identifier" -exec rm -f {} \;
+</code></pre>
+<p>解释：</p>
+<p>-type f：只查找文件</p>
+<p>-name "*:Zone.Identifier"：匹配包含 :Zone.Identifier 的文件</p>
+<p>-exec rm -f {}：删除找到的文件</p>
+<p>方法 2：用通配符删除（不递归）<br>
+<code class="notranslate">rm -f /path/to/folder/*:Zone.Identifier </code></p>
+<p>只会删除当前目录下的文件，不会递归子目录</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>

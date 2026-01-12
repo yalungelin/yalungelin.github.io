@@ -96,3 +96,24 @@ word公式标号快捷键
 ```c
 公式#()回车
 ```
+**删除子系统中Zone.Identifier文件**
+方法 1：使用 find 命令
+```
+# 删除当前目录及子目录下所有包含 :Zone.Identifier 的文件
+find /path/to/folder -type f -name "*:Zone.Identifier" -exec rm -f {} \;
+```
+
+
+解释：
+
+-type f：只查找文件
+
+-name "*:Zone.Identifier"：匹配包含 :Zone.Identifier 的文件
+
+-exec rm -f {}：删除找到的文件
+
+方法 2：用通配符删除（不递归）
+`rm -f /path/to/folder/*:Zone.Identifier
+`
+
+只会删除当前目录下的文件，不会递归子目录
