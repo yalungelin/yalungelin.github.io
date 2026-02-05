@@ -23,7 +23,7 @@
 <meta property="og:url" content="https://yalungelin.github.io/post/WSL-zi-xi-tong-wen-ti-ji-he-%EF%BC%88-ji-xu-geng-xin-%EF%BC%89.html">
 <meta property="og:image" content="https://iconic-api.onrender.com/dark/linux">
 <title>WSL子系统问题集合（继续更新）</title>
-<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
 
 
 </head>
@@ -99,45 +99,51 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>还有就是wsl的 卸载问题，直接卸载，在本机还是有保留。完整卸载如下：<br>
 查看所拥有的子系统列表<br>
 在power shell中操作</p>
-<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-s1">wsl</span> <span class="pl-c1">--</span><span class="pl-s1">list</span></pre></div>
+<pre lang="c" class="notranslate"><code class="notranslate">wsl --list
+</code></pre>
 <p>删除你要删除的版本</p>
-<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-s1">wsl</span> <span class="pl-c1">--</span><span class="pl-s1">unregister</span> <span class="pl-s1">Ubuntu</span><span class="pl-c1">-</span><span class="pl-c1">24.04</span>  </pre></div>
+<pre lang="c" class="notranslate"><code class="notranslate">wsl --unregister Ubuntu-24.04  
+</code></pre>
 <p>所遇到的问题，在模型训练中：<br>
 <strong>Could not load library libcudnn_cnn_infer.so.8. Error: libcuda.so: cannot open shared object file</strong><br>
 有两种解决方法：</p>
 <ol>
 <li>修复软连接问题</li>
 </ol>
-<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-s1">cd</span> /<span class="pl-s1">usr</span>/<span class="pl-s1">lib</span>/<span class="pl-s1">wsl</span>/<span class="pl-s1">lib</span>/
+<pre lang="c" class="notranslate"><code class="notranslate">cd /usr/lib/wsl/lib/
 
-<span class="pl-k">#backup</span>
-<span class="pl-smi">sudo</span> <span class="pl-s1">mv</span> <span class="pl-s1">libcuda</span>.<span class="pl-c1">so</span>.<span class="pl-c1">1</span> <span class="pl-c1">libcuda</span>.<span class="pl-c1">so</span>.<span class="pl-c1">1.ba</span><span class="pl-c1">k</span>
-<span class="pl-s1">sudo</span> <span class="pl-smi">mv</span> <span class="pl-s1">libcuda</span>.<span class="pl-s1">so</span> <span class="pl-s1">libcuda</span>.<span class="pl-s1">so</span>.<span class="pl-s1">bak</span>
+#backup
+sudo mv libcuda.so.1 libcuda.so.1.bak
+sudo mv libcuda.so libcuda.so.bak
 
-<span class="pl-k">#symbolic</span> link
-<span class="pl-smi">sudo</span> <span class="pl-s1">ln</span> <span class="pl-c1">-</span><span class="pl-s1">s</span> <span class="pl-s1">libcuda</span>.<span class="pl-c1">so</span>.<span class="pl-c1">1.1</span> <span class="pl-c1">libcuda</span>.<span class="pl-c1">so</span>.<span class="pl-c1">1</span>
-<span class="pl-c1">sudo</span> <span class="pl-s1">ln</span> <span class="pl-c1">-</span><span class="pl-s1">s</span> <span class="pl-s1">libcuda</span>.<span class="pl-c1">so</span>.<span class="pl-c1">1.1</span> <span class="pl-c1">libcuda</span>.<span class="pl-c1">so</span>
-<span class="pl-s1">sudo</span> <span class="pl-s1">ldconfig</span></pre></div>
+#symbolic link
+sudo ln -s libcuda.so.1.1 libcuda.so.1
+sudo ln -s libcuda.so.1.1 libcuda.so
+sudo ldconfig
+</code></pre>
 <p>这种方法可以暂时性解决，但是电脑死机后，就失效，得反复操作这个命令。（不知道是不是因为这个原因导致电脑死机？疑问）<br>
 这个是原博主连接：<a href="https://blog.csdn.net/zfjBIT/article/details/129679186" rel="nofollow">修复软连接</a></p>
 <ol start="2">
 <li>直接连接<br>
 只需在 .bashrc 中添加以下内容：</li>
 </ol>
-<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">export</span> <span class="pl-c1">LD_LIBRARY_PATH</span><span class="pl-c1">=</span>/<span class="pl-s1">usr</span>/<span class="pl-s1">lib</span>/<span class="pl-s1">wsl</span>/<span class="pl-s1">lib</span>:<span class="pl-s1">$LD_LIBRARY_PATH</span></pre></div>
+<pre lang="c" class="notranslate"><code class="notranslate">export LD_LIBRARY_PATH=/usr/lib/wsl/lib:$LD_LIBRARY_PATH
+</code></pre>
 <p>确保您的库位于 /usr/lib/wsl/lib 中，您可以运行</p>
-<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-s1">ldconfig</span> <span class="pl-c1">-</span><span class="pl-s1">p</span> | <span class="pl-s1">grep</span> <span class="pl-s1">cuda</span></pre></div>
+<pre lang="c" class="notranslate"><code class="notranslate">ldconfig -p | grep cuda
+</code></pre>
 <p>目前来看是可以使用，等到电脑在突然死机，再进行实验。<br>
 贴上连接：<a href="https://discuss.pytorch.org/t/libcudnn-cnn-infer-so-8-library-can-not-found/164661/2" rel="nofollow"> .bashrc</a></p>
 <p><strong>WSL使用Windows的代理</strong><br>
 1.加上这个可以正常代理并且使用vscode连接wsl2开发</p>
 <p>在Windows中的C:\Users&lt;your_username&gt;目录下创建一个.wslconfig文件，然后在文件中写入如下内容</p>
-<div class="highlight highlight-source-c"><pre class="notranslate">[<span class="pl-s1">experimental</span>]
-<span class="pl-s1">autoMemoryReclaim</span><span class="pl-c1">=</span><span class="pl-s1">gradual</span>
-<span class="pl-s1">networkingMode</span><span class="pl-c1">=</span><span class="pl-s1">mirrored</span>
-<span class="pl-s1">dnsTunneling</span><span class="pl-c1">=</span>true
-<span class="pl-s1">firewall</span><span class="pl-c1">=</span>true
-<span class="pl-s1">autoProxy</span><span class="pl-c1">=</span>true</pre></div>
+<pre lang="c" class="notranslate"><code class="notranslate">[experimental]
+autoMemoryReclaim=gradual
+networkingMode=mirrored
+dnsTunneling=true
+firewall=true
+autoProxy=true
+</code></pre>
 <p><a href="https://www.cnblogs.com/hg479/p/17869109.html" rel="nofollow">链接</a><br>
 2.现在不用手动开关了 修改一下.wslconfig文件就能自动开启代理了，以下是我的配置文件，修改前需要在powershell运行 wsl --update --pre-release</p>
 <pre class="notranslate"><code class="notranslate">[wsl2]
@@ -184,7 +190,7 @@ if(""!=""){
     var startSite=new Date("");
     var diff=now.getTime()-startSite.getTime();
     var diffDay=Math.floor(diff/(1000*60*60*24));
-    document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";
+    document.getElementById("runday").innerHTML="网站运行 "+diffDay+" 天"+" • ";
 }
 </script></div>
 </body>
@@ -229,6 +235,7 @@ document.getElementById("pathIssue").setAttribute("d",IconList["github"]);
 function openComments(){
     cm=document.getElementById("comments");
     cmButton=document.getElementById("cmButton");
+    cmButton.disabled=true;
     cmButton.innerHTML="loading";
     span=document.createElement("span");
     span.setAttribute("class","AnimatedEllipsis");
