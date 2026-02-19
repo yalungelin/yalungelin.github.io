@@ -27,7 +27,7 @@
 <meta property="og:url" content="https://yalungelin.github.io/post/Jetson%20Nano-bu-shu-mmdetection-yu-mmsegmentation.html">
 <meta property="og:image" content="https://iconic-api.onrender.com/dark/linux">
 <title>Jetson Nano部署mmdetection与mmsegmentation</title>
-
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
 
 
 </head>
@@ -51,7 +51,17 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
     body {padding: 8px;}
     .postTitle{font-size:24px;}
 }
-
+.copy-feedback {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    color: var(--color-fg-on-emphasis);
+    background-color: var(--color-fg-muted);
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 12px;
+}
 </style>
 
 
@@ -88,31 +98,27 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 目前的设备与文档略有不一样，为JetPack 5.1，所以在创建环境时，python为3.8.</p>
 <p><strong>conda</strong><br>
 安装Archiconda而不是 Anaconda，因为后者不提供为 Jetson 构建的文件。</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">wget https://github.com/Archiconda/build-tools/releases/download/0.2.3/Archiconda3-0.2.3-Linux-aarch64.sh
+<div class="highlight highlight-source-shell"><pre class="notranslate">wget https://github.com/Archiconda/build-tools/releases/download/0.2.3/Archiconda3-0.2.3-Linux-aarch64.sh
 bash Archiconda3-0.2.3-Linux-aarch64.sh -b
 
-echo -e '\n# set environment variable for conda' &gt;&gt; ~/.bashrc
-echo ". ~/archiconda3/etc/profile.d/conda.sh" &gt;&gt; ~/.bashrc
-echo 'export PATH=$PATH:~/archiconda3/bin' &gt;&gt; ~/.bashrc
+<span class="pl-c1">echo</span> -e <span class="pl-s"><span class="pl-pds">'</span>\n# set environment variable for conda<span class="pl-pds">'</span></span> <span class="pl-k">&gt;&gt;</span> <span class="pl-k">~</span>/.bashrc
+<span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>. ~/archiconda3/etc/profile.d/conda.sh<span class="pl-pds">"</span></span> <span class="pl-k">&gt;&gt;</span> <span class="pl-k">~</span>/.bashrc
+<span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">'</span>export PATH=$PATH:~/archiconda3/bin<span class="pl-pds">'</span></span> <span class="pl-k">&gt;&gt;</span> <span class="pl-k">~</span>/.bashrc
 
-echo -e '\n# set environment variable for pip' &gt;&gt; ~/.bashrc
-echo 'export OPENBLAS_CORETYPE=ARMV8' &gt;&gt; ~/.bashrc
+<span class="pl-c1">echo</span> -e <span class="pl-s"><span class="pl-pds">'</span>\n# set environment variable for pip<span class="pl-pds">'</span></span> <span class="pl-k">&gt;&gt;</span> <span class="pl-k">~</span>/.bashrc
+<span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">'</span>export OPENBLAS_CORETYPE=ARMV8<span class="pl-pds">'</span></span> <span class="pl-k">&gt;&gt;</span> <span class="pl-k">~</span>/.bashrc
 
-source ~/.bashrc
-conda --version
-</code></pre>
+<span class="pl-c1">source</span> <span class="pl-k">~</span>/.bashrc
+conda --version</pre></div>
 <p>安装完成后，创建conda环境并激活。</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">export PYTHON_VERSION=`python3 --version | cut -d' ' -f 2 | cut -d'.' -f1,2`
-conda create -y -n mmdeploy python=${PYTHON_VERSION}
-conda activate mmdeploy
-</code></pre>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-k">export</span> PYTHON_VERSION=<span class="pl-s"><span class="pl-pds">`</span>python3 --version <span class="pl-k">|</span> cut -d<span class="pl-s"><span class="pl-pds">'</span> <span class="pl-pds">'</span></span> -f 2 <span class="pl-k">|</span> cut -d<span class="pl-s"><span class="pl-pds">'</span>.<span class="pl-pds">'</span></span> -f1,2<span class="pl-pds">`</span></span>
+conda create -y -n mmdeploy python=<span class="pl-smi">${PYTHON_VERSION}</span>
+conda activate mmdeploy</pre></div>
 <p>正如我上面所说对应JetPack不同版本对应不同python版本。</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">JetPack SDK 4+ 提供 Python 3.6。我们强烈建议使用默认 Python。尝试升级可能会破坏 JetPack 环境。
-如果需要更高版本的Python，可以安装JetPack 5+，其中Python版本为3.8。
-</code></pre>
+<div class="highlight highlight-source-shell"><pre class="notranslate">JetPack SDK 4+ 提供 Python 3.6。我们强烈建议使用默认 Python。尝试升级可能会破坏 JetPack 环境。
+如果需要更高版本的Python，可以安装JetPack 5+，其中Python版本为3.8。</pre></div>
 <p>查看JetPack版本</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">sudo apt-cache show nvidia-jetpack
-</code></pre>
+<div class="highlight highlight-source-shell"><pre class="notranslate">sudo apt-cache show nvidia-jetpack</pre></div>
 <p>PyTorch<br>
 这里JetPack 对应的pytorch版本<br>
 <a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/8d2e0ec720b1077640189235c7d96a0744cec296df0cfb30335195828fba53ce/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f31383635373035386364363534323932393163626263336234386335613139642e706e67"><img src="https://camo.githubusercontent.com/8d2e0ec720b1077640189235c7d96a0744cec296df0cfb30335195828fba53ce/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f31383635373035386364363534323932393163626263336234386335613139642e706e67" alt="在这里插入图片描述" data-canonical-src="https://i-blog.csdnimg.cn/direct/18657058cd65429291cbbc3b48c5a19d.png" style="max-width: 100%;"></a><br>
@@ -120,186 +126,165 @@ conda activate mmdeploy
 我安装的是torch 1.11，最低要求<br>
 这个是torch对应兼容的torchvision网站<a href="https://pypi.org/project/torchvision/" rel="nofollow">torch-torchvision </a></p>
 <h1>pytorch</h1>
-<pre lang="bash" class="notranslate"><code class="notranslate">wget https://nvidia.box.com/shared/static/ssf2v7pf5i245fk4i0q926hy4imzs2ph.whl -O torch-1.11.0-cp38-cp38-linux_aarch64.whl #名字都得对上，不然安装不上
+<div class="highlight highlight-source-shell"><pre class="notranslate">wget https://nvidia.box.com/shared/static/ssf2v7pf5i245fk4i0q926hy4imzs2ph.whl -O torch-1.11.0-cp38-cp38-linux_aarch64.whl <span class="pl-c"><span class="pl-c">#</span>名字都得对上，不然安装不上</span>
 pip3 install torch-1.10.0-cp36-cp36m-linux_aarch64.whl
-# torchvision
+<span class="pl-c"><span class="pl-c">#</span> torchvision</span>
 sudo apt-get install libjpeg-dev zlib1g-dev libpython3-dev libavcodec-dev libavformat-dev libswscale-dev libopenblas-base libopenmpi-dev  libopenblas-dev -y
 git clone --branch v0.12.0 https://github.com/pytorch/vision torchvision
-cd torchvision
-export BUILD_VERSION=0.12.1
-pip install -e .
-</code></pre>
+<span class="pl-c1">cd</span> torchvision
+<span class="pl-k">export</span> BUILD_VERSION=0.12.1
+pip install -e <span class="pl-c1">.</span></pre></div>
 <p>在 Jetson Nano 上安装 torchvision 大约需要 30 分钟。请耐心等待安装完成。<br>
 <strong>CMake</strong><br>
 CMake 版本</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">cmake --version
-</code></pre>
-<pre lang="bash" class="notranslate"><code class="notranslate"># purge existing
+<div class="highlight highlight-source-shell"><pre class="notranslate">cmake --version</pre></div>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> purge existing</span>
 sudo apt-get purge cmake -y
 
-# install prebuilt binary
-export CMAKE_VER=3.23.1
-export ARCH=aarch64
-wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VER}/cmake-${CMAKE_VER}-linux-${ARCH}.sh
-chmod +x cmake-${CMAKE_VER}-linux-${ARCH}.sh
-sudo ./cmake-${CMAKE_VER}-linux-${ARCH}.sh --prefix=/usr --skip-license
-cmake --version
-</code></pre>
+<span class="pl-c"><span class="pl-c">#</span> install prebuilt binary</span>
+<span class="pl-k">export</span> CMAKE_VER=3.23.1
+<span class="pl-k">export</span> ARCH=aarch64
+wget https://github.com/Kitware/CMake/releases/download/v<span class="pl-smi">${CMAKE_VER}</span>/cmake-<span class="pl-smi">${CMAKE_VER}</span>-linux-<span class="pl-smi">${ARCH}</span>.sh
+chmod +x cmake-<span class="pl-smi">${CMAKE_VER}</span>-linux-<span class="pl-smi">${ARCH}</span>.sh
+sudo ./cmake-<span class="pl-smi">${CMAKE_VER}</span>-linux-<span class="pl-smi">${ARCH}</span>.sh --prefix=/usr --skip-license
+cmake --version</pre></div>
 <p><strong>安装依赖项</strong><br>
 Jetson 平台上 MMDeploy 的模型转换器依赖于MMCV和推理引擎TensorRT。而 MMDeploy C/C++ 推理 SDK 则依赖于spdlog、OpenCV 和ppl.cv等，以及 TensorRT 。因此，在接下来的章节中，我们将介绍如何准备 TensorRT 。然后，我们将分别介绍如何安装模型转换器和 C/C++ 推理 SDK 的依赖项。<br>
 准备 TensorRT<br>
 TensorRT 已经打包到 JetPack SDK 中。但为了在 conda 环境中成功导入，我们需要将 tensorrt 包复制到之前创建的 conda 环境中。</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">cp -r /usr/lib/python${PYTHON_VERSION}/dist-packages/tensorrt* ~/archiconda3/envs/mmdeploy/lib/python${PYTHON_VERSION}/site-packages/
+<div class="highlight highlight-source-shell"><pre class="notranslate">cp -r /usr/lib/python<span class="pl-smi">${PYTHON_VERSION}</span>/dist-packages/tensorrt<span class="pl-k">*</span> <span class="pl-k">~</span>/archiconda3/envs/mmdeploy/lib/python<span class="pl-smi">${PYTHON_VERSION}</span>/site-packages/
 conda deactivate
 conda activate mmdeploy
-python -c "import tensorrt; print(tensorrt.__version__)" # Will print the version of TensorRT
+python -c <span class="pl-s"><span class="pl-pds">"</span>import tensorrt; print(tensorrt.__version__)<span class="pl-pds">"</span></span> <span class="pl-c"><span class="pl-c">#</span> Will print the version of TensorRT</span>
 
-# set environment variable for building mmdeploy later on
-export TENSORRT_DIR=/usr/include/aarch64-linux-gnu
+<span class="pl-c"><span class="pl-c">#</span> set environment variable for building mmdeploy later on</span>
+<span class="pl-k">export</span> TENSORRT_DIR=/usr/include/aarch64-linux-gnu
 
-# append cuda path and libraries to PATH and LD_LIBRARY_PATH, which is also used for building mmdeploy later on.
-# this is not needed if you use NVIDIA SDK Manager with "Jetson SDK Components" for installing JetPack.
-# this is only needed if you install JetPack using SD Card Image Method.
-export PATH=$PATH:/usr/local/cuda/bin
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
-</code></pre>
+<span class="pl-c"><span class="pl-c">#</span> append cuda path and libraries to PATH and LD_LIBRARY_PATH, which is also used for building mmdeploy later on.</span>
+<span class="pl-c"><span class="pl-c">#</span> this is not needed if you use NVIDIA SDK Manager with "Jetson SDK Components" for installing JetPack.</span>
+<span class="pl-c"><span class="pl-c">#</span> this is only needed if you install JetPack using SD Card Image Method.</span>
+<span class="pl-k">export</span> PATH=<span class="pl-smi">$PATH</span>:/usr/local/cuda/bin
+<span class="pl-k">export</span> LD_LIBRARY_PATH=<span class="pl-smi">$LD_LIBRARY_PATH</span>:/usr/local/cuda/lib64</pre></div>
 <p>您还可以通过将上述环境变量添加到来使其永久化~/.bashrc。</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">echo -e '\n# set environment variable for TensorRT' &gt;&gt; ~/.bashrc
-echo 'export TENSORRT_DIR=/usr/include/aarch64-linux-gnu' &gt;&gt; ~/.bashrc
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c1">echo</span> -e <span class="pl-s"><span class="pl-pds">'</span>\n# set environment variable for TensorRT<span class="pl-pds">'</span></span> <span class="pl-k">&gt;&gt;</span> <span class="pl-k">~</span>/.bashrc
+<span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">'</span>export TENSORRT_DIR=/usr/include/aarch64-linux-gnu<span class="pl-pds">'</span></span> <span class="pl-k">&gt;&gt;</span> <span class="pl-k">~</span>/.bashrc
 
-# this is not needed if you use NVIDIA SDK Manager with "Jetson SDK Components" for installing JetPack.
-# this is only needed if you install JetPack using SD Card Image Method.
-echo -e '\n# set environment variable for CUDA' &gt;&gt; ~/.bashrc
-echo 'export PATH=$PATH:/usr/local/cuda/bin' &gt;&gt; ~/.bashrc
-echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64' &gt;&gt; ~/.bashrc
+<span class="pl-c"><span class="pl-c">#</span> this is not needed if you use NVIDIA SDK Manager with "Jetson SDK Components" for installing JetPack.</span>
+<span class="pl-c"><span class="pl-c">#</span> this is only needed if you install JetPack using SD Card Image Method.</span>
+<span class="pl-c1">echo</span> -e <span class="pl-s"><span class="pl-pds">'</span>\n# set environment variable for CUDA<span class="pl-pds">'</span></span> <span class="pl-k">&gt;&gt;</span> <span class="pl-k">~</span>/.bashrc
+<span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">'</span>export PATH=$PATH:/usr/local/cuda/bin<span class="pl-pds">'</span></span> <span class="pl-k">&gt;&gt;</span> <span class="pl-k">~</span>/.bashrc
+<span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">'</span>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64<span class="pl-pds">'</span></span> <span class="pl-k">&gt;&gt;</span> <span class="pl-k">~</span>/.bashrc
 
-source ~/.bashrc
-conda activate mmdeploy
-</code></pre>
+<span class="pl-c1">source</span> <span class="pl-k">~</span>/.bashrc
+conda activate mmdeploy</pre></div>
 <p><strong>安装模型转换器的依赖项</strong><br>
 安装 MMCV<br>
 MMCV没有为 Jetson 平台提供预构建包，因此我们必须从源代码构建它。</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">sudo apt-get install -y libssl-dev
+<div class="highlight highlight-source-shell"><pre class="notranslate">sudo apt-get install -y libssl-dev
 git clone --branch 2.x https://github.com/open-mmlab/mmcv.git
-cd mmcv
-MMCV_WITH_OPS=1 pip install -e .
-</code></pre>
+<span class="pl-c1">cd</span> mmcv
+MMCV_WITH_OPS=1 pip install -e <span class="pl-c1">.</span></pre></div>
 <p>在 Jetson Nano 上安装 MMCV 大约需要 1 小时 40 分钟。请耐心等待安装完成。</p>
 <p>安装 ONNX<br>
 不要安装最新的 ONNX。建议的 ONNX 版本是 1.10.0。</p>
-<pre lang="bash" class="notranslate"><code class="notranslate"># Execute one of the following commands
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> Execute one of the following commands</span>
 pip install onnx==1.10.0
-conda install -c conda-forge onnx
-</code></pre>
+conda install -c conda-forge onnx</pre></div>
 <p>如果安装失败并显示以下错误：</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">CMake Error at CMakeLists.txt:299 (message):
-      Protobuf compiler not found
-</code></pre>
+<div class="highlight highlight-source-shell"><pre class="notranslate">CMake Error at CMakeLists.txt:299 (message):
+      Protobuf compiler not found</pre></div>
 <p>请安装依赖项：</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">sudo apt-get install protobuf-compiler libprotoc-dev
-</code></pre>
+<div class="highlight highlight-source-shell"><pre class="notranslate">sudo apt-get install protobuf-compiler libprotoc-dev</pre></div>
 <p>安装 ONNX 运行时 [可选]<br>
 前往<a href="https://elinux.org/Jetson_Zoo#ONNX_Runtime" rel="nofollow">Jetson_Zoo#ONNX_Runtime</a>找到正确版本的 onnx 运行时。然后下载并安装软件包。<br>
 <a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/1be154aff755a2e660e9edd6915282c43447c6b221c6e796b61f60ff894d9cb0/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f32353464393262363061633234333464383864666134343366633134303565632e706e67"><img src="https://camo.githubusercontent.com/1be154aff755a2e660e9edd6915282c43447c6b221c6e796b61f60ff894d9cb0/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f32353464393262363061633234333464383864666134343366633134303565632e706e67" alt="在这里插入图片描述" data-canonical-src="https://i-blog.csdnimg.cn/direct/254d92b60ac2434d88dfa443fc1405ec.png" style="max-width: 100%;"></a><br>
 我按照对应的版本安装的是onnxruntime 1.15.1</p>
-<pre lang="bash" class="notranslate"><code class="notranslate"># Download pip wheel from location mentioned above
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> Download pip wheel from location mentioned above</span>
 $ wget https://nvidia.box.com/shared/static/mvdcltm9ewdy2d5nurkiqorofz1s53ww.whl -O onnxruntime_gpu-1.15.1-cp38-cp38-linux_aarch64.whl
-# Install pip wheel
-$ pip3 install onnxruntime_gpu-1.15.1-cp38-cp38-linux_aarch64.whl
-</code></pre>
+<span class="pl-c"><span class="pl-c">#</span> Install pip wheel</span>
+$ pip3 install onnxruntime_gpu-1.15.1-cp38-cp38-linux_aarch64.whl</pre></div>
 <p>安装h5py和pycuda<br>
 模型转换器采用HDF5保存TensorRT INT8量化的校准数据，需要pycuda复制设备内存。</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">sudo apt-get install -y pkg-config libhdf5-100 libhdf5-dev
-pip install versioned-hdf5 pycuda
-</code></pre>
+<div class="highlight highlight-source-shell"><pre class="notranslate">sudo apt-get install -y pkg-config libhdf5-100 libhdf5-dev
+pip install versioned-hdf5 pycuda</pre></div>
 <p>versioned-hdf5可能因为版本而安装不上，可以使用conda进行安装，pycuda正常安装。</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">conda install -c conda-forge h5py=2.10.0 hdf5
-</code></pre>
+<div class="highlight highlight-source-shell"><pre class="notranslate">conda install -c conda-forge h5py=2.10.0 hdf5</pre></div>
 <p>在 Jetson Nano 上安装 versioned-hdf5 大约需要 6 分钟。请耐心等待安装完成。</p>
 <p><strong>安装 C/C++ 推理 SDK 的依赖项</strong><br>
 安装 spdlog<br>
 spdlog是一个非常快的、仅有头文件/编译的 C++ 日志库</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">sudo apt-get install -y libspdlog-dev
-</code></pre>
+<div class="highlight highlight-source-shell"><pre class="notranslate">sudo apt-get install -y libspdlog-dev</pre></div>
 <p>安装 ppl.cv<br>
 ppl.cv是openPPL的一个高性能图像处理库</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">git clone https://github.com/openppl-public/ppl.cv.git
-cd ppl.cv
-export PPLCV_DIR=$(pwd)
-echo -e '\n# set environment variable for ppl.cv' &gt;&gt; ~/.bashrc
-echo "export PPLCV_DIR=$(pwd)" &gt;&gt; ~/.bashrc
-./build.sh cuda
-</code></pre>
+<div class="highlight highlight-source-shell"><pre class="notranslate">git clone https://github.com/openppl-public/ppl.cv.git
+<span class="pl-c1">cd</span> ppl.cv
+<span class="pl-k">export</span> PPLCV_DIR=<span class="pl-s"><span class="pl-pds">$(</span>pwd<span class="pl-pds">)</span></span>
+<span class="pl-c1">echo</span> -e <span class="pl-s"><span class="pl-pds">'</span>\n# set environment variable for ppl.cv<span class="pl-pds">'</span></span> <span class="pl-k">&gt;&gt;</span> <span class="pl-k">~</span>/.bashrc
+<span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>export PPLCV_DIR=<span class="pl-s"><span class="pl-pds">$(</span>pwd<span class="pl-pds">)</span></span><span class="pl-pds">"</span></span> <span class="pl-k">&gt;&gt;</span> <span class="pl-k">~</span>/.bashrc
+./build.sh cuda</pre></div>
 <p>在 Jetson Nano 上安装 ppl.cv 大约需要 15 分钟。请耐心等待安装完成。<br>
 安装 MMDeploy</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">git clone -b main --recursive https://github.com/open-mmlab/mmdeploy.git
-cd mmdeploy
-export MMDEPLOY_DIR=$(pwd)
-</code></pre>
+<div class="highlight highlight-source-shell"><pre class="notranslate">git clone -b main --recursive https://github.com/open-mmlab/mmdeploy.git
+<span class="pl-c1">cd</span> mmdeploy
+<span class="pl-k">export</span> MMDEPLOY_DIR=<span class="pl-s"><span class="pl-pds">$(</span>pwd<span class="pl-pds">)</span></span></pre></div>
 <p><strong>安装模型转换器</strong><br>
 由于 OpenMMLab 代码库采用的一些运算符不受 TensorRT 支持，我们构建了自定义 TensorRT 插件来弥补，例如roi_align、等。您可以从这里scatternd找到自定义插件的完整列表。</p>
-<pre lang="bash" class="notranslate"><code class="notranslate"># build TensorRT custom operators
-mkdir -p build &amp;&amp; cd build
-cmake .. -DMMDEPLOY_TARGET_BACKENDS="trt"
-make -j$(nproc) &amp;&amp; make install
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> build TensorRT custom operators</span>
+mkdir -p build <span class="pl-k">&amp;&amp;</span> <span class="pl-c1">cd</span> build
+cmake .. -DMMDEPLOY_TARGET_BACKENDS=<span class="pl-s"><span class="pl-pds">"</span>trt<span class="pl-pds">"</span></span>
+make -j<span class="pl-s"><span class="pl-pds">$(</span>nproc<span class="pl-pds">)</span></span> <span class="pl-k">&amp;&amp;</span> make install
 
-# install model converter
-cd ${MMDEPLOY_DIR}
-pip install -v -e .
-# "-v" means verbose, or more output
-# "-e" means installing a project in editable mode,
-# thus any local modifications made to the code will take effect without re-installation.
-</code></pre>
+<span class="pl-c"><span class="pl-c">#</span> install model converter</span>
+<span class="pl-c1">cd</span> <span class="pl-smi">${MMDEPLOY_DIR}</span>
+pip install -v -e <span class="pl-c1">.</span>
+<span class="pl-c"><span class="pl-c">#</span> "-v" means verbose, or more output</span>
+<span class="pl-c"><span class="pl-c">#</span> "-e" means installing a project in editable mode,</span>
+<span class="pl-c"><span class="pl-c">#</span> thus any local modifications made to the code will take effect without re-installation.</span></pre></div>
 <p>在 Jetson Nano 上安装模型转换器大约需要 5 分钟。请耐心等待安装完成。<br>
 <strong>安装 C/C++ 推理 SDK</strong><br>
 构建 SDK 库及其演示如下：</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">mkdir -p build &amp;&amp; cd build
+<div class="highlight highlight-source-shell"><pre class="notranslate">mkdir -p build <span class="pl-k">&amp;&amp;</span> <span class="pl-c1">cd</span> build
 cmake .. \
     -DMMDEPLOY_BUILD_SDK=ON \
     -DMMDEPLOY_BUILD_SDK_PYTHON_API=ON \
     -DMMDEPLOY_BUILD_EXAMPLES=ON \
-    -DMMDEPLOY_TARGET_DEVICES="cuda;cpu" \
-    -DMMDEPLOY_TARGET_BACKENDS="trt" \
+    -DMMDEPLOY_TARGET_DEVICES=<span class="pl-s"><span class="pl-pds">"</span>cuda;cpu<span class="pl-pds">"</span></span> \
+    -DMMDEPLOY_TARGET_BACKENDS=<span class="pl-s"><span class="pl-pds">"</span>trt<span class="pl-pds">"</span></span> \
     -DMMDEPLOY_CODEBASES=all \
-    -Dpplcv_DIR=${PPLCV_DIR}/cuda-build/install/lib/cmake/ppl
-make -j$(nproc) &amp;&amp; make install
-</code></pre>
+    -Dpplcv_DIR=<span class="pl-smi">${PPLCV_DIR}</span>/cuda-build/install/lib/cmake/ppl
+make -j<span class="pl-s"><span class="pl-pds">$(</span>nproc<span class="pl-pds">)</span></span> <span class="pl-k">&amp;&amp;</span> make install</pre></div>
 <p>在 Jetson Nano 上构建 SDK 库大约需要 9 分钟。请耐心等待安装完成。<br>
 <strong>运行演示</strong><br>
 物体检测演示<br>
 在运行此演示之前，您需要转换模型文件才能与此 SDK 一起使用。</p>
 <p>1.安装模型转换所需的MMDetection</p>
 <p>MMDetection 是一个基于 PyTorch 的开源对象检测工具箱</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">git clone -b 3.x https://github.com/open-mmlab/mmdetection.git
-cd mmdetection
+<div class="highlight highlight-source-shell"><pre class="notranslate">git clone -b 3.x https://github.com/open-mmlab/mmdetection.git
+<span class="pl-c1">cd</span> mmdetection
 pip install -r requirements/build.txt
-pip install -v -e .  # or "python setup.py develop"
-</code></pre>
+pip install -v -e <span class="pl-c1">.</span>  <span class="pl-c"><span class="pl-c">#</span> or "python setup.py develop"</span></pre></div>
 <p>2.按照本文档了解如何转换模型文件。</p>
 <p>在本例中，我们使用retinanet_r18_fpn_1x_coco.py作为模型配置，并使用该文件作为相应的检查点文件。此外，对于部署配置，我们使用了detection_tensorrt_dynamic-320x320-1344x1344.py 。</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">python ./tools/deploy.py \
+<div class="highlight highlight-source-shell"><pre class="notranslate">python ./tools/deploy.py \
     configs/mmdet/detection/detection_tensorrt_dynamic-320x320-1344x1344.py \
-    $PATH_TO_MMDET/configs/retinanet/retinanet_r18_fpn_1x_coco.py \
+    <span class="pl-smi">$PATH_TO_MMDET</span>/configs/retinanet/retinanet_r18_fpn_1x_coco.py \
     retinanet_r18_fpn_1x_coco_20220407_171055-614fd399.pth \
-    $PATH_TO_MMDET/demo/demo.jpg \
+    <span class="pl-smi">$PATH_TO_MMDET</span>/demo/demo.jpg \
     --work-dir work_dir \
     --show \
     --device cuda:0 \
-    --dump-info
-</code></pre>
+    --dump-info</pre></div>
 <p>最后对图像进行推理<br>
 <a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/ec8bb8fe0c74875bae03da4d69155d54b4856e8d1e0f4d4ff152c0bb411caad7/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f62653062363461663039666234303464396565383137623439376334303233662e706e67"><img src="https://camo.githubusercontent.com/ec8bb8fe0c74875bae03da4d69155d54b4856e8d1e0f4d4ff152c0bb411caad7/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f62653062363461663039666234303464396565383137623439376334303233662e706e67" alt="在这里插入图片描述" data-canonical-src="https://i-blog.csdnimg.cn/direct/be0b64af09fb404d9ee817b497c4023f.png" style="max-width: 100%;"></a></p>
-<pre lang="bash" class="notranslate"><code class="notranslate">./object_detection cuda ${directory/to/the/converted/models} ${path/to/an/image}
-</code></pre>
+<div class="highlight highlight-source-shell"><pre class="notranslate">./object_detection cuda <span class="pl-smi">${directory<span class="pl-k">/</span>to<span class="pl-k">/</span>the<span class="pl-k">/</span>converted<span class="pl-k">/</span>models}</span> <span class="pl-smi">${path<span class="pl-k">/</span>to<span class="pl-k">/</span>an<span class="pl-k">/</span>image}</span></pre></div>
 <p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/13541ac1bf8d27cfa04747c33e27d6f3298b9e7382bb7f805a39f81dd0b353a4/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f33316161653061336637643334646565616439366631323631366331393730352e706e67"><img src="https://camo.githubusercontent.com/13541ac1bf8d27cfa04747c33e27d6f3298b9e7382bb7f805a39f81dd0b353a4/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f33316161653061336637643334646565616439366631323631366331393730352e706e67" alt="在这里插入图片描述" data-canonical-src="https://i-blog.csdnimg.cn/direct/31aae0a3f7d34deead96f12616c19705.png" style="max-width: 100%;"></a><br>
 下面是MMsegmentation的部署过程，以我自己的现有代码，复制到Jetson Nano中，然后安装环境，我现有的环境都安装在mmdeploy中。</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">cd mmsegmentation
-pip install -v -e .
-</code></pre>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c1">cd</span> mmsegmentation
+pip install -v -e <span class="pl-c1">.</span></pre></div>
 <p>在 Jetson 平台进行转换及部署<br>
 <strong>1.ONNX 模型转换</strong><br>
 在 Jetson 平台下进入安装好的虚拟环境，以及mmdeploy 目录，进行模型ONNX转换。</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">python tools/deploy.py \
+<div class="highlight highlight-source-shell"><pre class="notranslate">python tools/deploy.py \
     configs/mmseg/segmentation_onnxruntime_static-512x512.py \
     ../atl_config.py \
     ../deeplabv3plus_r18-d8_512x512_80k_potsdam_20211219_020601-75fd5bc3.pth \
@@ -308,16 +293,14 @@ pip install -v -e .
     --device cpu \
     --show \
     --dump-info
-
-</code></pre>
+</pre></div>
 <p>转换成功后，您将会看到如下信息以及包含 ONNX 模型的文件夹：</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">10/09 19:58:22 - mmengine - INFO - visualize pytorch model success.
-10/09 19:58:22 - mmengine - INFO - All process success.
-</code></pre>
+<div class="highlight highlight-source-shell"><pre class="notranslate">10/09 19:58:22 - mmengine - INFO - visualize pytorch model success.
+10/09 19:58:22 - mmengine - INFO - All process success.</pre></div>
 <p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/3196806be79c4ba279ae6d9dd556aca9e97ff957d297f8dae9f22e7573b2e5e2/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f63656261343031393633303734316331626532323331663363636435353761312e706e67"><img src="https://camo.githubusercontent.com/3196806be79c4ba279ae6d9dd556aca9e97ff957d297f8dae9f22e7573b2e5e2/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f63656261343031393633303734316331626532323331663363636435353761312e706e67" alt="在这里插入图片描述" data-canonical-src="https://i-blog.csdnimg.cn/direct/ceba4019630741c1be2231f3ccd557a1.png" style="max-width: 100%;"></a><br>
 <strong>2.TensorRT 模型转换</strong><br>
 更换部署trt配置文件，进行 TensorRT 模型转换。</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">python tools/deploy.py \
+<div class="highlight highlight-source-shell"><pre class="notranslate">python tools/deploy.py \
     configs/mmseg/segmentation_tensorrt_static-512x512.py \
     ../atl_config.py \
     ../deeplabv3plus_r18-d8_512x512_80k_potsdam_20211219_020601-75fd5bc3.pth \
@@ -326,8 +309,7 @@ pip install -v -e .
     --device cuda:0 \
     --show \
     --dump-info
-
-</code></pre>
+</pre></div>
 <p>转换成功后您将看到以下信息及 TensorRT 模型文件夹：<br>
 10/09 20:15:50 - mmengine - INFO - visualize pytorch model success.<br>
 10/09 20:15:50 - mmengine - INFO - All process success.<br>
@@ -335,79 +317,74 @@ pip install -v -e .
 插曲：如果想让分割的图片没有标签，只是分割图，需要对mmseg中的代码进行更改。<br>
 <a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/0e3c35200a3e88207c479168c3f2bbc4de0a4f6acdc4dd66d05ec6c4a896e63c/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f34666439616536323061366534626231393664356532656666323665373137312e706e67"><img src="https://camo.githubusercontent.com/0e3c35200a3e88207c479168c3f2bbc4de0a4f6acdc4dd66d05ec6c4a896e63c/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f34666439616536323061366534626231393664356532656666323665373137312e706e67" alt="在这里插入图片描述" data-canonical-src="https://i-blog.csdnimg.cn/direct/4fd9ae620a6e4bb196d5e2eff26e7171.png" style="max-width: 100%;"></a><br>
 第 312 行</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">gt_img_data = self._draw_sem_seg(image, data_sample.gt_sem_seg,
+<div class="highlight highlight-source-shell"><pre class="notranslate">gt_img_data = self._draw_sem_seg(image, data_sample.gt_sem_seg,
                                  classes, palette, with_labels=False)
-
-</code></pre>
+</pre></div>
 <p>第 329 行</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">pred_img_data = self._draw_sem_seg(image,
+<div class="highlight highlight-source-shell"><pre class="notranslate">pred_img_data = self._draw_sem_seg(image,
                                    data_sample.pred_sem_seg,
                                    classes, palette,
                                    with_labels=False)
-
-</code></pre>
+</pre></div>
 <p><strong>3.模型测速</strong><br>
 执行以下命令完成模型测速，详细内容请查看 profiler</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">python tools/profiler.py \
-    ${DEPLOY_CFG} \
-    ${MODEL_CFG} \
-    ${IMAGE_DIR} \
-    --model ${MODEL} \
-    --device ${DEVICE} \
-    --shape ${SHAPE} \
-    --num-iter ${NUM_ITER} \
-    --warmup ${WARMUP} \
-    --cfg-options ${CFG_OPTIONS} \
-    --batch-size ${BATCH_SIZE} \
-    --img-ext ${IMG_EXT}
-</code></pre>
+<div class="highlight highlight-source-shell"><pre class="notranslate">python tools/profiler.py \
+    <span class="pl-smi">${DEPLOY_CFG}</span> \
+    <span class="pl-smi">${MODEL_CFG}</span> \
+    <span class="pl-smi">${IMAGE_DIR}</span> \
+    --model <span class="pl-smi">${MODEL}</span> \
+    --device <span class="pl-smi">${DEVICE}</span> \
+    --shape <span class="pl-smi">${SHAPE}</span> \
+    --num-iter <span class="pl-smi">${NUM_ITER}</span> \
+    --warmup <span class="pl-smi">${WARMUP}</span> \
+    --cfg-options <span class="pl-smi">${CFG_OPTIONS}</span> \
+    --batch-size <span class="pl-smi">${BATCH_SIZE}</span> \
+    --img-ext <span class="pl-smi">${IMG_EXT}</span></pre></div>
 <p>示例：</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">python tools/profiler.py \
+<div class="highlight highlight-source-shell"><pre class="notranslate">python tools/profiler.py \
     configs/mmseg/segmentation_tensorrt_static-512x512.py \
     ../atl_config.py \
     ../atl_demo_img \
     --model /home/sirs/AI-Tianlong/OpenMMLab/atl_trt_models/end2end.engine \
     --device cuda:0 \
     --shape 512x512 \
-    --num-iter 100
-</code></pre>
+    --num-iter 100</pre></div>
 <p>测速结果：<br>
 <a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/6345c56a084831d308d6fb4a969901a25c5e41d0d1feada65953de674960bfe6/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f38363231383634623666313034656636623763383839633930323263623662302e706e67"><img src="https://camo.githubusercontent.com/6345c56a084831d308d6fb4a969901a25c5e41d0d1feada65953de674960bfe6/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f38363231383634623666313034656636623763383839633930323263623662302e706e67" alt="在这里插入图片描述" data-canonical-src="https://i-blog.csdnimg.cn/direct/8621864b6f104ef6b7c889c9022cb6b0.png" style="max-width: 100%;"></a><br>
 <strong>4.模型推理</strong><br>
 根据2中生成的TensorRT模型文件夹，进行模型推理。</p>
-<pre lang="bash" class="notranslate"><code class="notranslate">from mmdeploy.apis.utils import build_task_processor
+<div class="highlight highlight-source-shell"><pre class="notranslate">from mmdeploy.apis.utils import build_task_processor
 from mmdeploy.utils import get_input_shape, load_config
 import torch
 
-deploy_cfg='./mmdeploy/configs/mmseg/segmentation_tensorrt_static-512x512.py'
-model_cfg='./atl_config.py'
-device='cuda:0'
-backend_model = ['./atl_trt_models/end2end.engine']
-image = './atl_demo_img/2_13_2048_1024_2560_1536.png'
+deploy_cfg=<span class="pl-s"><span class="pl-pds">'</span>./mmdeploy/configs/mmseg/segmentation_tensorrt_static-512x512.py<span class="pl-pds">'</span></span>
+model_cfg=<span class="pl-s"><span class="pl-pds">'</span>./atl_config.py<span class="pl-pds">'</span></span>
+device=<span class="pl-s"><span class="pl-pds">'</span>cuda:0<span class="pl-pds">'</span></span>
+backend_model = [<span class="pl-s"><span class="pl-pds">'</span>./atl_trt_models/end2end.engine<span class="pl-pds">'</span></span>]
+image = <span class="pl-s"><span class="pl-pds">'</span>./atl_demo_img/2_13_2048_1024_2560_1536.png<span class="pl-pds">'</span></span>
 
-# read deploy_cfg and model_cfg
+<span class="pl-c"><span class="pl-c">#</span> read deploy_cfg and model_cfg</span>
 deploy_cfg, model_cfg = load_config(deploy_cfg, model_cfg)
 
-# build task and backend model
+<span class="pl-c"><span class="pl-c">#</span> build task and backend model</span>
 task_processor = build_task_processor(model_cfg, deploy_cfg, device)
 model = task_processor.build_backend_model(backend_model)
 
-# process input image
+<span class="pl-c"><span class="pl-c">#</span> process input image</span>
 input_shape = get_input_shape(deploy_cfg)
 model_inputs, _ = task_processor.create_input(image, input_shape)
 
-# do model inference
-with torch.no_grad():
+<span class="pl-c"><span class="pl-c">#</span> do model inference</span>
+with <span class="pl-en">torch.no_grad</span>():
     result = model.test_step(model_inputs)
 
-# visualize results
+<span class="pl-c"><span class="pl-c">#</span> visualize results</span>
 task_processor.visualize(
     image=image,
     model=model,
     result=result[0],
-    window_name='visualize',
-    output_file='./output_segmentation.png')
-</code></pre>
+    window_name=<span class="pl-s"><span class="pl-pds">'</span>visualize<span class="pl-pds">'</span></span>,
+    output_file=<span class="pl-s"><span class="pl-pds">'</span>./output_segmentation.png<span class="pl-pds">'</span></span>)</pre></div>
 <p>即可得到推理结果：<br>
 <a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/9e0c1b509e6b57904b48c984f7817f8669987a1e87f4c58289572eef4f98e3f6/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f66353938633233376333626234336661623664313538663233663764666234382e706e67"><img src="https://camo.githubusercontent.com/9e0c1b509e6b57904b48c984f7817f8669987a1e87f4c58289572eef4f98e3f6/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f66353938633233376333626234336661623664313538663233663764666234382e706e67" alt="在这里插入图片描述" data-canonical-src="https://i-blog.csdnimg.cn/direct/f598c237c3bb43fab6d158f23f7dfb48.png" style="max-width: 100%;"></a></p>
 <p><strong>蒸馏模型：</strong><br>
@@ -455,7 +432,7 @@ if(""!=""){
 </script></div>
 </body>
 <script>
-var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'};
+var IconList={'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'sync': 'M1.705 8.005a.75.75 0 0 1 .834.656 5.5 5.5 0 0 0 9.592 2.97l-1.204-1.204a.25.25 0 0 1 .177-.427h3.646a.25.25 0 0 1 .25.25v3.646a.25.25 0 0 1-.427.177l-1.38-1.38A7.002 7.002 0 0 1 1.05 8.84a.75.75 0 0 1 .656-.834ZM8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'copy': 'M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z', 'check': 'M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z'};
 var utterancesLoad=0;
 
 let themeSettings={
@@ -529,7 +506,70 @@ function iFrameLoading(){
     }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    const createClipboardHTML = (codeContent, additionalClasses = '') => `
+        <pre class="notranslate"><code class="notranslate">${codeContent}</code></pre>
+        <div class="clipboard-container position-absolute right-0 top-0 ${additionalClasses}">
+            <clipboard-copy class="ClipboardButton btn m-2 p-0" role="button" style="display: inherit;">
+                <svg height="16" width="16" class="octicon octicon-copy m-2"><path d="${IconList["copy"]}"></path></svg>
+                <svg height="16" width="16" class="octicon octicon-check color-fg-success m-2 d-none"><path d="${IconList["check"]}"></path></svg>
+            </clipboard-copy>
+            <div class="copy-feedback">Copied!</div>
+        </div>
+    `;
 
+    const handleCodeElements = (selector = '') => {
+        document.querySelectorAll(selector).forEach(codeElement => {
+            const codeContent = codeElement.innerHTML;
+            const newStructure = document.createElement('div');
+            newStructure.className = 'snippet-clipboard-content position-relative overflow-auto';
+            newStructure.innerHTML = createClipboardHTML(codeContent);
+
+            const parentElement = codeElement.parentElement;
+            if (selector.includes('highlight')) {
+                parentElement.insertBefore(newStructure, codeElement.nextSibling);
+                parentElement.removeChild(codeElement);
+            } else {
+                parentElement.parentElement.replaceChild(newStructure, parentElement);
+            }
+        });
+    };
+
+    handleCodeElements('pre.notranslate > code.notranslate');
+    handleCodeElements('div.highlight > pre.notranslate');
+
+    let currentFeedback = null;
+    document.querySelectorAll('clipboard-copy').forEach(copyButton => {
+        copyButton.addEventListener('click', () => {
+            const codeContent = copyButton.closest('.snippet-clipboard-content').innerText;
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = codeContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const copyIcon = copyButton.querySelector('.octicon-copy');
+            const checkIcon = copyButton.querySelector('.octicon-check');
+            const copyFeedback = copyButton.nextElementSibling;
+
+            if (currentFeedback && currentFeedback !== copyFeedback) {currentFeedback.style.display = 'none';}
+            currentFeedback = copyFeedback;
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+            copyFeedback.style.display = 'block';
+            copyButton.style.borderColor = 'var(--color-success-fg)';
+
+            setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+                copyFeedback.style.display = 'none';
+                copyButton.style.borderColor = '';
+            }, 2000);
+        });
+    });
+});
 
 </script>
 

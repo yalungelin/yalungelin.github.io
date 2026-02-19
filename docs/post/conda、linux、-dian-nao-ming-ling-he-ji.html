@@ -61,7 +61,7 @@ conda clean --all  这个命令会删除 Conda 包缓存、索引缓存、临时
 <meta property="og:url" content="https://yalungelin.github.io/post/conda%E3%80%81linux%E3%80%81-dian-nao-ming-ling-he-ji.html">
 <meta property="og:image" content="https://iconic-api.onrender.com/dark/linux">
 <title>conda、linux、电脑命令合集</title>
-
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
 
 
 </head>
@@ -128,35 +128,33 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
     <div id="content">
 <div class="markdown-body" id="postBody"><p><strong>conda命令</strong></p>
-<pre lang="c" class="notranslate"><code class="notranslate">conda list：查看环境中的所有包
-conda install XXX：安装 XXX 包
-conda remove XXX：删除XXX 包
-conda env list：列出所有环境
-conda create -n XXX python=3.XXX：创建名为 XXX 的环境 conda
-create -n env_name jupyter notebook ：创建虚拟环境
-activate XXX（或 source activate XXX）：启用/激活XXX环境
-conda env remove -n XXX：删除指定XXX环境
-deactivate（或source deactivate）：退出环境
-conda env export &gt; xxx.yaml:导出环境
-conda env create -f xxx.yaml:导入环境
-jupyter notebook ：打开Jupyter Notebook
-conda config --remove-key channels ：换回默认源
-conda update --all：更新环境中的所有软件包
-conda update conda：Conda中更新自己
-conda update package_name1 package_name2 ...：更新环境中的某些软件包
-conda install package_name=old_version：回退软件包版本
-conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
-pip install -r requirements.txt  //安装依赖
-conda list -e &gt; requirements.txt  //导出环境依赖
-conda clean --all  这个命令会删除 Conda 包缓存、索引缓存、临时文件、未使用的包等，帮助释放空间。
-pip list --format=freeze &gt; requirements.txt 这样导出的requirements.txt，不会含有文件路径。
-</code></pre>
+<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">conda</span> <span class="pl-s1">list</span>：<span class="pl-s1">查看环境中的所有包</span>
+<span class="pl-s1">conda</span> <span class="pl-s1">install</span> <span class="pl-c1">XXX</span>：<span class="pl-s1">安装</span> <span class="pl-c1">XXX</span> <span class="pl-s1">包</span>
+<span class="pl-s1">conda</span> <span class="pl-s1">remove</span> <span class="pl-c1">XXX</span>：<span class="pl-s1">删除XXX</span> <span class="pl-s1">包</span>
+<span class="pl-s1">conda</span> <span class="pl-s1">env</span> <span class="pl-s1">list</span>：<span class="pl-s1">列出所有环境</span>
+<span class="pl-s1">conda</span> <span class="pl-s1">create</span> <span class="pl-c1">-</span><span class="pl-s1">n</span> <span class="pl-c1">XXX</span> <span class="pl-s1">python</span><span class="pl-c1">=</span><span class="pl-c1">3.</span><span class="pl-c1">XXX</span>：<span class="pl-s1">创建名为</span> <span class="pl-c1">XXX</span> <span class="pl-s1">的环境</span> <span class="pl-s1">conda</span>
+<span class="pl-s1">create</span> <span class="pl-c1">-</span><span class="pl-s1">n</span> <span class="pl-smi">env_name</span> <span class="pl-s1">jupyter</span> <span class="pl-s1">notebook</span> ：<span class="pl-s1">创建虚拟环境</span>
+<span class="pl-s1">activate</span> <span class="pl-c1">XXX</span>（<span class="pl-s1">或</span> <span class="pl-s1">source</span> <span class="pl-s1">activate</span> <span class="pl-c1">XXX</span>）：<span class="pl-s1">启用</span>/<span class="pl-s1">激活XXX环境</span>
+<span class="pl-s1">conda</span> <span class="pl-s1">env</span> <span class="pl-s1">remove</span> <span class="pl-c1">-</span><span class="pl-s1">n</span> <span class="pl-c1">XXX</span>：<span class="pl-s1">删除指定XXX环境</span>
+<span class="pl-s1">deactivate</span>（<span class="pl-s1">或source</span> <span class="pl-s1">deactivate</span>）：<span class="pl-smi">退出环境</span>
+<span class="pl-s1">conda</span> <span class="pl-smi">env</span> <span class="pl-s1">export</span> <span class="pl-c1">&gt;</span> <span class="pl-s1">xxx</span>.<span class="pl-s1">yaml</span>:<span class="pl-s1">导出环境</span>
+<span class="pl-s1">conda</span> <span class="pl-s1">env</span> <span class="pl-s1">create</span> <span class="pl-c1">-</span><span class="pl-s1">f</span> <span class="pl-s1">xxx</span>.<span class="pl-c1">yaml</span>:<span class="pl-s1">导入环境</span>
+<span class="pl-smi">jupyter</span> <span class="pl-s1">notebook</span> ：<span class="pl-s1">打开Jupyter</span> <span class="pl-s1">Notebook</span>
+<span class="pl-s1">conda</span> <span class="pl-s1">config</span> <span class="pl-c1">--</span><span class="pl-s1">remove</span><span class="pl-c1">-</span><span class="pl-s1">key</span> <span class="pl-s1">channels</span> ：<span class="pl-s1">换回默认源</span>
+<span class="pl-s1">conda</span> <span class="pl-s1">update</span> <span class="pl-c1">--</span><span class="pl-s1">all</span>：<span class="pl-s1">更新环境中的所有软件包</span>
+<span class="pl-s1">conda</span> <span class="pl-s1">update</span> <span class="pl-s1">conda</span>：<span class="pl-smi">Conda中更新自己</span>
+<span class="pl-s1">conda</span> <span class="pl-smi">update</span> <span class="pl-s1">package_name1</span> <span class="pl-s1">package_name2</span> ...：<span class="pl-s1">更新环境中的某些软件包</span>
+<span class="pl-s1">conda</span> <span class="pl-s1">install</span> <span class="pl-s1">package_name</span><span class="pl-c1">=</span><span class="pl-s1">old_version</span>：<span class="pl-s1">回退软件包版本</span>
+<span class="pl-s1">conda</span> <span class="pl-s1">install</span> <span class="pl-s1">pytorch</span> <span class="pl-s1">torchvision</span> <span class="pl-s1">torchaudio</span> <span class="pl-s1">pytorch</span><span class="pl-c1">-</span><span class="pl-s1">cuda</span><span class="pl-c1">=</span><span class="pl-c1">11.7</span> <span class="pl-c1">-</span><span class="pl-s1">c</span> <span class="pl-s1">pytorch</span> <span class="pl-c1">-</span><span class="pl-s1">c</span> <span class="pl-s1">nvidia</span>
+<span class="pl-s1">pip</span> <span class="pl-s1">install</span> <span class="pl-c1">-</span><span class="pl-s1">r</span> <span class="pl-s1">requirements</span>.<span class="pl-c1">txt</span>  <span class="pl-c">//安装依赖</span>
+<span class="pl-s1">conda</span> <span class="pl-s1">list</span> <span class="pl-c1">-</span><span class="pl-s1">e</span> <span class="pl-c1">&gt;</span> <span class="pl-s1">requirements</span>.<span class="pl-c1">txt</span>  <span class="pl-c">//导出环境依赖</span>
+<span class="pl-smi">conda</span> <span class="pl-s1">clean</span> <span class="pl-c1">--</span><span class="pl-s1">all</span>  <span class="pl-smi">这个命令会删除</span> <span class="pl-s1">Conda</span> <span class="pl-s1">包缓存</span>、<span class="pl-s1">索引缓存</span>、<span class="pl-s1">临时文件</span>、<span class="pl-s1">未使用的包等</span>，<span class="pl-s1">帮助释放空间</span>。
+<span class="pl-s1">pip</span> <span class="pl-s1">list</span> <span class="pl-c1">--</span><span class="pl-s1">format</span><span class="pl-c1">=</span><span class="pl-s1">freeze</span> <span class="pl-c1">&gt;</span> <span class="pl-s1">requirements</span>.<span class="pl-c1">txt</span> <span class="pl-s1">这样导出的requirements</span>.<span class="pl-c1">txt</span>，<span class="pl-s1">不会含有文件路径</span>。</pre></div>
 <p><strong>conda 导出环境</strong></p>
 <ol>
 <li>一般方式</li>
 </ol>
-<pre lang="c" class="notranslate"><code class="notranslate">conda env export --no-builds &gt; environment.yml
-</code></pre>
+<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">conda</span> <span class="pl-s1">env</span> <span class="pl-s1">export</span> <span class="pl-c1">--</span><span class="pl-s1">no</span><span class="pl-c1">-</span><span class="pl-s1">builds</span> <span class="pl-c1">&gt;</span> <span class="pl-s1">environment</span>.<span class="pl-c1">yml</span></pre></div>
 <ul>
 <li>
 <p>--no-builds：不导出具体的构建号，只保留包名+版本号，移植性更好（不同平台安装成功率高）。</p>
@@ -171,8 +169,7 @@ pip list --format=freeze &gt; requirements.txt 这样导出的requirements.txt�
 <ol start="2">
 <li>精确复现方式</li>
 </ol>
-<pre lang="c" class="notranslate"><code class="notranslate">conda list --explicit &gt; spec-file.txt
-</code></pre>
+<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">conda</span> <span class="pl-s1">list</span> <span class="pl-c1">--</span><span class="pl-s1">explicit</span> <span class="pl-c1">&gt;</span> <span class="pl-s1">spec</span><span class="pl-c1">-</span><span class="pl-s1">file</span>.<span class="pl-c1">txt</span></pre></div>
 <ul>
 <li>
 <p>会导出精确的包版本和构建号（甚至频道），能 100% 还原 环境。</p>
@@ -199,32 +196,27 @@ pip list --format=freeze &gt; requirements.txt 这样导出的requirements.txt�
 nvidia-smi：查看GPU信息<br>
 nvcc -V :查看 CUDA 编译器版本</p>
 <p>在脚本中运行如下代码，查看是否anconda在安装pytorch环境的时候也安装了cuda和cudnn。</p>
-<pre lang="c" class="notranslate"><code class="notranslate">
-import torch
-torch.__version__
-torch.cuda.is_available()
-torch.backends.cudnn.is_available()
-torch.version.cuda
-torch.backends.cudnn.version()
-</code></pre>
+<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">import</span> <span class="pl-s1">torch</span>
+<span class="pl-s1">torch</span>.<span class="pl-c1">__version__</span>
+<span class="pl-s1">torch</span>.<span class="pl-c1">cuda</span>.<span class="pl-en">is_available</span>()
+<span class="pl-s1">torch</span>.<span class="pl-c1">backends</span>.<span class="pl-c1">cudnn</span>.<span class="pl-en">is_available</span>()
+<span class="pl-s1">torch</span>.<span class="pl-c1">version</span>.<span class="pl-c1">cuda</span>
+<span class="pl-s1">torch</span>.<span class="pl-c1">backends</span>.<span class="pl-c1">cudnn</span>.<span class="pl-en">version</span>()</pre></div>
 <p>递归（-R）地把某个目录（/directory_path）及其里面的所有文件和子目录的所有者改成你指定的用户（username）</p>
-<pre lang="c" class="notranslate"><code class="notranslate">sudo chown -R username /directory_path
-username为你的用户名，directory_path为你想要修改的文件夹权限的路径
-</code></pre>
-<pre lang="c" class="notranslate"><code class="notranslate">sudo：以管理员权限执行（因为修改文件所有者通常需要 root 权限）
+<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">sudo</span> <span class="pl-s1">chown</span> <span class="pl-c1">-</span><span class="pl-c1">R</span> <span class="pl-s1">username</span> /<span class="pl-s1">directory_path</span>
+<span class="pl-s1">username为你的用户名</span>，<span class="pl-s1">directory_path为你想要修改的文件夹权限的路径</span></pre></div>
+<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">sudo</span>：<span class="pl-s1">以管理员权限执行</span>（<span class="pl-s1">因为修改文件所有者通常需要</span> <span class="pl-s1">root</span> <span class="pl-s1">权限</span>）
 
-chown：change owner（更改文件/目录的所有者）
+<span class="pl-s1">chown</span>：<span class="pl-s1">change</span> <span class="pl-s1">owner</span>（<span class="pl-s1">更改文件</span>/<span class="pl-s1">目录的所有者</span>）
 
--R：递归操作，包含所有子目录和文件
+<span class="pl-c1">-</span><span class="pl-c1">R</span>：<span class="pl-s1">递归操作</span>，<span class="pl-s1">包含所有子目录和文件</span>
 
-username：要设为所有者的用户账号名（可以用 whoami 查看自己当前的用户名）
+<span class="pl-s1">username</span>：<span class="pl-s1">要设为所有者的用户账号名</span>（<span class="pl-s1">可以用</span> <span class="pl-s1">whoami</span> <span class="pl-s1">查看自己当前的用户名</span>）
 
-/directory_path：要修改权限的文件夹路径
-</code></pre>
+/<span class="pl-s1">directory_path</span>：<span class="pl-s1">要修改权限的文件夹路径</span></pre></div>
 <p>chown 只是改所有者，不改读写执行权限（那是 chmod 做的事）</p>
 <p>word公式标号快捷键</p>
-<pre lang="c" class="notranslate"><code class="notranslate">公式#()回车
-</code></pre>
+<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">公式</span>#()<span class="pl-s1">回车</span></pre></div>
 <p><strong>删除子系统中Zone.Identifier文件</strong><br>
 方法 1：使用 find 命令</p>
 <pre class="notranslate"><code class="notranslate"># 删除当前目录及子目录下所有包含 :Zone.Identifier 的文件
