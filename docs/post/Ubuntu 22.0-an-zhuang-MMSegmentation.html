@@ -161,7 +161,23 @@ ModuleNotFoundError: No module named 'mmcv._ext'</p>
 <pre class="notranslate"><code class="notranslate">pip install -U yapf           # 升级到最新版
 or
 pip install yapf==0.32.0      # 安装官方推荐版本
-</code></pre></div>
+</code></pre>
+<p>报错：<br>
+AssertionError: only one of size and size_divisor should be valid</p>
+<p>加上<br>
+crop_size = (512, 512)<br>
+data_preprocessor = dict(size=crop_size)<br>
+<em>base</em> = [<br>
+'../<em>base</em>/models/upernet_r50.py',<br>
+'../<em>base</em>/datasets/pascal_voc12.py', '../<em>base</em>/default_runtime.py',<br>
+'../<em>base</em>/schedules/schedule_40k.py'<br>
+]<br>
+crop_size = (512, 512)<br>
+data_preprocessor = dict(size=crop_size)<br>
+model = dict(<br>
+data_preprocessor=data_preprocessor,<br>
+decode_head=dict(num_classes=10),<br>
+auxiliary_head=dict(num_classes=10))</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>

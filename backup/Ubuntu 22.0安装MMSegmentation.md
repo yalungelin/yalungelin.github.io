@@ -92,3 +92,21 @@ pip install -U yapf           # 升级到最新版
 or
 pip install yapf==0.32.0      # 安装官方推荐版本
 ````
+
+报错：
+AssertionError: only one of size and size_divisor should be valid
+
+加上
+crop_size = (512, 512)
+data_preprocessor = dict(size=crop_size)
+_base_ = [
+    '../_base_/models/upernet_r50.py',
+    '../_base_/datasets/pascal_voc12.py', '../_base_/default_runtime.py',
+    '../_base_/schedules/schedule_40k.py'
+]
+crop_size = (512, 512)
+data_preprocessor = dict(size=crop_size)
+model = dict(
+    data_preprocessor=data_preprocessor,
+    decode_head=dict(num_classes=10),
+    auxiliary_head=dict(num_classes=10))
