@@ -420,3 +420,32 @@ python tools/profiler.py configs/mmseg/segmentation_tensorrt-int8_static-512x512
 --device cuda:0 --shape 512x512 --num-iter 100 --warmup 10
 
 <img width="637" height="836" alt="Image" src="https://github.com/user-attachments/assets/b3df765b-4c20-4789-9bba-a2b19878ce14" />
+
+**量化后进行mIoU测试(拥有测试数据集)：**
+建议新建一个 deploy_eval_512.py（完整的配置文件config），内容放在原 config 最后：
+```
+
+deploy_test_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(type='Resize', scale=(512, 512), keep_ratio=False),
+    dict(type='LoadAnnotations'),
+    dict(type='PackSegInputs'),
+]
+
+test_pipeline = deploy_test_pipeline
+val_pipeline = deploy_test_pipeline
+
+test_dataloader['dataset']['pipeline'] = deploy_test_pipeline
+val_dataloader['dataset']['pipeline'] = deploy_test_pipeline
+```
+
+再用这个 config 跑：
+
+```
+python tools/test.py \
+  configs/mmseg/segmentation_tensorrt_static-512x512.py \
+  /path/to/deploy_eval_512.py \
+  --model work_dir/tensor/end2end.engine \
+  --device cuda:0 \
+  --work-dir work_dirs/eval_trt_fp32
+```

@@ -407,7 +407,31 @@ python tools/profiler.py configs/mmseg/segmentation_tensorrt-int8_static-512x512
 /media/jiang/皮皮虾三号/jetson/cwd/segformer_mit-b0_8xb2-160k_ade20k-512x512/segformer_mit-b0_8xb2-160k_ade20k-512x512.py<br>
 /media/jiang/皮皮虾三号/jetson/cwd/test-org-img --model /home/jiang/mmdeploy/work_dir/tensorint8/end2end.engine<br>
 --device cuda:0 --shape 512x512 --num-iter 100 --warmup 10</p>
-<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/b3df765b-4c20-4789-9bba-a2b19878ce14"><img width="637" height="836" alt="Image" src="https://github.com/user-attachments/assets/b3df765b-4c20-4789-9bba-a2b19878ce14" style="max-width: 100%; height: auto; max-height: 836px;; aspect-ratio: 637 / 836; background-color: var(--bgColor-muted); border-radius: 6px" class="js-gh-image-fallback"></a></p></div>
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/b3df765b-4c20-4789-9bba-a2b19878ce14"><img width="637" height="836" alt="Image" src="https://github.com/user-attachments/assets/b3df765b-4c20-4789-9bba-a2b19878ce14" style="max-width: 100%; height: auto; max-height: 836px;; aspect-ratio: 637 / 836; background-color: var(--bgColor-muted); border-radius: 6px" class="js-gh-image-fallback"></a></p>
+<p><strong>量化后进行mIoU测试(拥有测试数据集)：</strong><br>
+建议新建一个 deploy_eval_512.py（完整的配置文件config），内容放在原 config 最后：</p>
+<pre class="notranslate"><code class="notranslate">
+deploy_test_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(type='Resize', scale=(512, 512), keep_ratio=False),
+    dict(type='LoadAnnotations'),
+    dict(type='PackSegInputs'),
+]
+
+test_pipeline = deploy_test_pipeline
+val_pipeline = deploy_test_pipeline
+
+test_dataloader['dataset']['pipeline'] = deploy_test_pipeline
+val_dataloader['dataset']['pipeline'] = deploy_test_pipeline
+</code></pre>
+<p>再用这个 config 跑：</p>
+<pre class="notranslate"><code class="notranslate">python tools/test.py \
+  configs/mmseg/segmentation_tensorrt_static-512x512.py \
+  /path/to/deploy_eval_512.py \
+  --model work_dir/tensor/end2end.engine \
+  --device cuda:0 \
+  --work-dir work_dirs/eval_trt_fp32
+</code></pre></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
