@@ -20,7 +20,6 @@ Internet
 Nginx Proxy Manager
    ↓ Docker internal network (proxy)
 cli-proxy-api:8317
-vaultwarden:80
 ```
 3. 安全目标
 ❌ 不允许业务端口暴露公网
