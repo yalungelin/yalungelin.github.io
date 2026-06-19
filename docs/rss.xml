@@ -1,5 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>比海更深</title><link>https://yalungelin.github.io</link><description>笔记</description><copyright>比海更深</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://iconic-api.onrender.com/dark/linux</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Mon, 15 Jun 2026 05:21:20 +0000</lastBuildDate><managingEditor>比海更深</managingEditor><ttl>60</ttl><webMaster>比海更深</webMaster><item><title>CLIProxyAPI + Nginx Proxy Manager（NPM）反向代理与端口配置</title><link>https://yalungelin.github.io/post/CLIProxyAPI%20%2B%20Nginx%20Proxy%20Manager%EF%BC%88NPM%EF%BC%89-fan-xiang-dai-li-yu-duan-kou-pei-zhi.html</link><description>一、目标架构
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>比海更深</title><link>https://yalungelin.github.io</link><description>笔记</description><copyright>比海更深</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://iconic-api.onrender.com/dark/linux</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Fri, 19 Jun 2026 04:42:48 +0000</lastBuildDate><managingEditor>比海更深</managingEditor><ttl>60</ttl><webMaster>比海更深</webMaster><item><title>深度学习任务中的bad case分析</title><link>https://yalungelin.github.io/post/shen-du-xue-xi-ren-wu-zhong-de-bad%20case-fen-xi.html</link><description># 为什么你的检测/分割模型涨不上去：从 Bad Case 开始，而不是从注意力模块开始
+
+## 前言
+
+很多项目到了瓶颈期，大家第一反应往往是：
+
+**更换Backbone
+增加注意力模块
+引入新的Neck结构
+尝试最新论文模型**
+
+
+这些方法并非无效，但在实际工程中，性能瓶颈往往首先来自数据、目标尺度、特征分辨率、标注质量和训练策略，而非模型结构本身。</description><guid isPermaLink="true">https://yalungelin.github.io/post/shen-du-xue-xi-ren-wu-zhong-de-bad%20case-fen-xi.html</guid><pubDate>Thu, 18 Jun 2026 12:09:04 +0000</pubDate></item><item><title>CLIProxyAPI + Nginx Proxy Manager（NPM）反向代理与端口配置</title><link>https://yalungelin.github.io/post/CLIProxyAPI%20%2B%20Nginx%20Proxy%20Manager%EF%BC%88NPM%EF%BC%89-fan-xiang-dai-li-yu-duan-kou-pei-zhi.html</link><description>一、目标架构
 1. 原始问题结构
 
 ```bash
