@@ -164,7 +164,12 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/extras/CUPTI/lib64</p>
 这个是以前版本仓库<a href="url">https://repo.anaconda.com/miniconda/</a>。<br>
 这个是命令：<br>
 wget <a href="https://repo.anaconda.com/miniconda/Miniconda3-py312_24.5.0-0-Linux-x86_64.sh" rel="nofollow">https://repo.anaconda.com/miniconda/Miniconda3-py312_24.5.0-0-Linux-x86_64.sh</a> -O ~/miniconda3/miniconda.sh</p>
-<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/360a9436-f8ee-474b-aa45-0aedaeb40d38"><img width="737" height="644" alt="Image" src="https://github.com/user-attachments/assets/360a9436-f8ee-474b-aa45-0aedaeb40d38" style="max-width: 100%; height: auto; max-height: 644px;; aspect-ratio: 737 / 644; background-color: var(--bgColor-muted); border-radius: 6px" class="js-gh-image-fallback"></a></p></div>
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/360a9436-f8ee-474b-aa45-0aedaeb40d38"><img width="737" height="644" alt="Image" src="https://github.com/user-attachments/assets/360a9436-f8ee-474b-aa45-0aedaeb40d38" style="max-width: 100%; height: auto; max-height: 644px;; aspect-ratio: 737 / 644; background-color: var(--bgColor-muted); border-radius: 6px" class="js-gh-image-fallback"></a></p>
+<p><strong>零售电脑作为服务器出现的问题</strong><br>
+关于购买的主机来说，跑深度学习进行性的死机，让我困惑不已，我最近尝试了降低显卡的功耗能够稍微改善这个情况。</p>
+<pre class="notranslate"><code class="notranslate">nvidia-smi -q -d POWER
+nvidia-smi -pl 400(原来450，现在400)
+</code></pre></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>

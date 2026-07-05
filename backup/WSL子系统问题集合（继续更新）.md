@@ -101,3 +101,10 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_HOME/extras/CUPTI/lib64
  wget https://repo.anaconda.com/miniconda/Miniconda3-py312_24.5.0-0-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
 
 <img width="737" height="644" alt="Image" src="https://github.com/user-attachments/assets/360a9436-f8ee-474b-aa45-0aedaeb40d38" />
+
+**零售电脑作为服务器出现的问题**
+关于购买的主机来说，跑深度学习进行性的死机，让我困惑不已，我最近尝试了降低显卡的功耗能够稍微改善这个情况。
+```
+nvidia-smi -q -d POWER
+nvidia-smi -pl 400(原来450，现在400)
+```
