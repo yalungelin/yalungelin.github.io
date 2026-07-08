@@ -1,5 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>比海更深</title><link>https://yalungelin.github.io</link><description>笔记</description><copyright>比海更深</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://iconic-api.onrender.com/dark/linux</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Fri, 19 Jun 2026 04:42:48 +0000</lastBuildDate><managingEditor>比海更深</managingEditor><ttl>60</ttl><webMaster>比海更深</webMaster><item><title>深度学习任务中的bad case分析</title><link>https://yalungelin.github.io/post/shen-du-xue-xi-ren-wu-zhong-de-bad%20case-fen-xi.html</link><description># 为什么你的检测/分割模型涨不上去：从 Bad Case 开始，而不是从注意力模块开始
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>比海更深</title><link>https://yalungelin.github.io</link><description>笔记</description><copyright>比海更深</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://iconic-api.onrender.com/dark/linux</url><title>avatar</title><link>https://yalungelin.github.io</link></image><lastBuildDate>Wed, 08 Jul 2026 13:29:37 +0000</lastBuildDate><managingEditor>比海更深</managingEditor><ttl>60</ttl><webMaster>比海更深</webMaster><item><title>Stable-diffusion的安装与使用</title><link>https://yalungelin.github.io/post/Stable-diffusion-de-an-zhuang-yu-shi-yong.html</link><description>**首先是对环境的配置：**
+设备为Linux，显卡：4090
+conda环境：python=3.10，pytorch=2.6
+
+```bash
+pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu124
+```
+```bash
+pip install diffusers['torch'] transformers
+```
+Diffusers 的安装
+```bash
+git clone https://github.com/huggingface/diffusers.git
+cd diffusers
+uv pip install -e '.[torch]'
+```
+使用以下命令将克隆的存储库更新到最新版本的 Diffusers。</description><guid isPermaLink="true">https://yalungelin.github.io/post/Stable-diffusion-de-an-zhuang-yu-shi-yong.html</guid><pubDate>Wed, 08 Jul 2026 13:29:10 +0000</pubDate></item><item><title>深度学习任务中的bad case分析</title><link>https://yalungelin.github.io/post/shen-du-xue-xi-ren-wu-zhong-de-bad%20case-fen-xi.html</link><description># 为什么你的检测/分割模型涨不上去：从 Bad Case 开始，而不是从注意力模块开始
 
 ## 前言
 
