@@ -84,3 +84,4 @@ hf download  stabilityai/stable-diffusion-xl-base-1.0  --local-dir /models/stabl
 ```bash
 hf  download --repo-type dataset --resume-download wikitext --local-dir wikitext
 ```
+stable-diffusion-xl-base-1.0 适合正常的图片增强。能够更改很多东西，stable-diffusion-xl-refiner-1.0是对原图的细化操作。
