@@ -336,8 +336,5 @@ print("\n推理完成！")
 ```
 
 
-**50系显卡**
-python版本：3.8
-pytorch安装：
-conda install pytorch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 pytorch-cuda=11.8 -c pytorch -c nvidia
-mmcv版本：mmcv=2.1.0
+**50系显卡得编译才能使用**
+
