@@ -227,6 +227,114 @@ inferencer('5_frame_00010.jpg', out_dir='/outputs/', no_save_pred=False)
 
 ![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/7fb9b6633bbf4aa89e73584128dd4f04.png)
 
+很多模型一起可视化预测的代码，包含对于各个类别的计算和统计。
+`
+import cv2
+import os
+from mmdet.apis import DetInferencer
+from collections import Counter
+
+# 定义所有模型配置
+MODEL_CONFIGS = [
+    {
+        'name': 'yolact',
+        'config': '/home/lsl/mmdetection/work_dirs/yolact_r50_1xb8-55e_coco/yolact_r50_1xb8-55e_coco.py',
+        'checkpoint': '/home/lsl/mmdetection/work_dirs/yolact_r50_1xb8-55e_coco/epoch_100.pth'
+    },
+    {
+        'name': 'mask-rcnn_convnext',
+        'config': '/home/lsl/mmdetection/work_dirs/mask-rcnn_convnext-t-p4-w7_fpn_amp-ms-crop-3x_coco/mask-rcnn_convnext-t-p4-w7_fpn_amp-ms-crop-3x_coco.py',
+        'checkpoint': '/home/lsl/mmdetection/work_dirs/mask-rcnn_convnext-t-p4-w7_fpn_amp-ms-crop-3x_coco/epoch_100.pth'
+    },
+    {
+        'name': 'mask-rcnn_r50',
+        'config': '/home/lsl/mmdetection/work_dirs/mask-rcnn_r50_fpn_1x_coco/mask-rcnn_r50_fpn_1x_coco.py',
+        'checkpoint': '/home/lsl/mmdetection/work_dirs/mask-rcnn_r50_fpn_1x_coco/epoch_100.pth'
+    },
+    {
+        'name': 'queryinst_r50',
+        'config': '/home/lsl/mmdetection/work_dirs/queryinst_r50_fpn_1x_coco/queryinst_r50_fpn_1x_coco.py',
+        'checkpoint': '/home/lsl/mmdetection/work_dirs/queryinst_r50_fpn_1x_coco/epoch_100.pth'
+    },
+    {
+        'name': 'sparseinst_r50',
+        'config': '/home/lsl/mmdetection/work_dirs/sparseinst_r50_iam_8xb8-ms-270k_coco/sparseinst_r50_iam_8xb8-ms-270k_coco.py',
+        'checkpoint': '/home/lsl/mmdetection/work_dirs/sparseinst_r50_iam_8xb8-ms-270k_coco/iter_25500.pth'
+    }
+]
+
+# 输入图片文件夹
+img_dir = '/home/lsl/mmdetection/data/test'
+base_out_dir = '/home/lsl/mmdetection/data/outputs/'
+threshold = 0.5  # 置信度阈值
+
+# 获取文件夹下所有图片路径
+img_paths = [os.path.join(img_dir, f) for f in os.listdir(img_dir)
+             if f.lower().endswith(('.jpg', '.png', '.jpeg'))]
+
+print(f"共找到 {len(img_paths)} 张图片用于推理。")
+
+# 遍历模型
+for cfg in MODEL_CONFIGS:
+    print(f"\n=== 推理模型: {cfg['name']} ===")
+    
+    # 初始化推理器
+    inferencer = DetInferencer(
+        model=cfg['config'],
+        weights=cfg['checkpoint']
+    )
+    
+    # 输出目录
+    model_out_dir = os.path.join(base_out_dir, cfg['name'])
+    os.makedirs(model_out_dir, exist_ok=True)
+    
+    # 遍历图片推理
+    for img_path in img_paths:
+        img_name = os.path.splitext(os.path.basename(img_path))[0]
+        
+        result = inferencer(img_path, no_save_pred=True, return_vis=True)
+        
+        if 'visualization' not in result or len(result['visualization']) == 0:
+            print(f"[警告] 模型 {cfg['name']} 图片 {img_name} 没有生成可视化结果")
+            continue
+        
+        preds = result['predictions'][0]
+        scores = preds['scores']
+        labels = preds['labels']
+        
+        keep_idx = [i for i, s in enumerate(scores) if s >= threshold]
+        count_total = len(keep_idx)
+        category_counts = Counter(labels[i] for i in keep_idx)
+        
+        # 转换为 BGR
+        vis_img_rgb = result['visualization'][0]
+        vis_img = cv2.cvtColor(vis_img_rgb, cv2.COLOR_RGB2BGR)
+        
+        # 保存预测图
+        first_img_path = os.path.join(model_out_dir, f'{img_name}_pred.jpg')
+        cv2.imwrite(first_img_path, vis_img)
+        
+        # 添加数量文字
+        vis_with_count = vis_img.copy()
+        text = f"Total: {count_total}"
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        font_scale = 3.0
+        thickness = 5
+        (text_w, text_h), baseline = cv2.getTextSize(text, font, font_scale, thickness)
+        pos_x = vis_with_count.shape[1] - text_w - 20
+        pos_y = 20 + text_h
+        cv2.putText(vis_with_count, text, (pos_x, pos_y),
+                    font, font_scale, (0, 0, 0), thickness, cv2.LINE_AA)
+        
+        second_img_path = os.path.join(model_out_dir, f'{img_name}_pred_with_count.jpg')
+        cv2.imwrite(second_img_path, vis_with_count)
+        
+        print(f"保存: {second_img_path}")
+
+print("\n推理完成！")
+`
+
+
 **50系显卡**
 python版本：3.8
 pytorch安装：
