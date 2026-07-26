@@ -312,106 +312,110 @@ inferencer = DetInferencer(model=<span class="pl-s"><span class="pl-pds">'</span
 inferencer(<span class="pl-s"><span class="pl-pds">'</span>5_frame_00010.jpg<span class="pl-pds">'</span></span>, out_dir=<span class="pl-s"><span class="pl-pds">'</span>/outputs/<span class="pl-pds">'</span></span>, no_save_pred=False)</pre></div>
 <p><strong>结果展示：</strong></p>
 <p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/46f5866473e2ff45d684c28c7d6163a61e6ef6c0f1d819ac5a5a7033ddc8d308/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f37666239623636333362626634616138396537333538343132386464346630342e706e67"><img src="https://camo.githubusercontent.com/46f5866473e2ff45d684c28c7d6163a61e6ef6c0f1d819ac5a5a7033ddc8d308/68747470733a2f2f692d626c6f672e6373646e696d672e636e2f6469726563742f37666239623636333362626634616138396537333538343132386464346630342e706e67" alt="在这里插入图片描述" data-canonical-src="https://i-blog.csdnimg.cn/direct/7fb9b6633bbf4aa89e73584128dd4f04.png" style="max-width: 100%;"></a></p>
-<p>很多模型一起可视化预测的代码，包含对于各个类别的计算和统计。<br>
-`<br>
-import cv2<br>
-import os<br>
-from mmdet.apis import DetInferencer<br>
-from collections import Counter</p>
-<h1>定义所有模型配置</h1>
-<p>MODEL_CONFIGS = [<br>
-{<br>
-'name': 'yolact',<br>
-'config': '/home/lsl/mmdetection/work_dirs/yolact_r50_1xb8-55e_coco/yolact_r50_1xb8-55e_coco.py',<br>
-'checkpoint': '/home/lsl/mmdetection/work_dirs/yolact_r50_1xb8-55e_coco/epoch_100.pth'<br>
-},<br>
-{<br>
-'name': 'mask-rcnn_convnext',<br>
-'config': '/home/lsl/mmdetection/work_dirs/mask-rcnn_convnext-t-p4-w7_fpn_amp-ms-crop-3x_coco/mask-rcnn_convnext-t-p4-w7_fpn_amp-ms-crop-3x_coco.py',<br>
-'checkpoint': '/home/lsl/mmdetection/work_dirs/mask-rcnn_convnext-t-p4-w7_fpn_amp-ms-crop-3x_coco/epoch_100.pth'<br>
-},<br>
-{<br>
-'name': 'mask-rcnn_r50',<br>
-'config': '/home/lsl/mmdetection/work_dirs/mask-rcnn_r50_fpn_1x_coco/mask-rcnn_r50_fpn_1x_coco.py',<br>
-'checkpoint': '/home/lsl/mmdetection/work_dirs/mask-rcnn_r50_fpn_1x_coco/epoch_100.pth'<br>
-},<br>
-{<br>
-'name': 'queryinst_r50',<br>
-'config': '/home/lsl/mmdetection/work_dirs/queryinst_r50_fpn_1x_coco/queryinst_r50_fpn_1x_coco.py',<br>
-'checkpoint': '/home/lsl/mmdetection/work_dirs/queryinst_r50_fpn_1x_coco/epoch_100.pth'<br>
-},<br>
-{<br>
-'name': 'sparseinst_r50',<br>
-'config': '/home/lsl/mmdetection/work_dirs/sparseinst_r50_iam_8xb8-ms-270k_coco/sparseinst_r50_iam_8xb8-ms-270k_coco.py',<br>
-'checkpoint': '/home/lsl/mmdetection/work_dirs/sparseinst_r50_iam_8xb8-ms-270k_coco/iter_25500.pth'<br>
-}<br>
-]</p>
-<h1>输入图片文件夹</h1>
-<p>img_dir = '/home/lsl/mmdetection/data/test'<br>
-base_out_dir = '/home/lsl/mmdetection/data/outputs/'<br>
-threshold = 0.5  # 置信度阈值</p>
-<h1>获取文件夹下所有图片路径</h1>
-<p>img_paths = [os.path.join(img_dir, f) for f in os.listdir(img_dir)<br>
-if f.lower().endswith(('.jpg', '.png', '.jpeg'))]</p>
-<p>print(f"共找到 {len(img_paths)} 张图片用于推理。")</p>
-<h1>遍历模型</h1>
-<p>for cfg in MODEL_CONFIGS:<br>
-print(f"\n=== 推理模型: {cfg['name']} ===")</p>
-<pre class="notranslate"><code class="notranslate"># 初始化推理器
-inferencer = DetInferencer(
-    model=cfg['config'],
-    weights=cfg['checkpoint']
-)
+<p>很多模型一起进行可视化预测的代码，包含对于各个类别的计算和统计。</p>
+<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">import</span> <span class="pl-s1">cv2</span>
+<span class="pl-smi">import</span> <span class="pl-s1">os</span>
+<span class="pl-smi">from</span> <span class="pl-s1">mmdet</span>.<span class="pl-s1">apis</span> <span class="pl-s1">import</span> <span class="pl-s1">DetInferencer</span>
+<span class="pl-s1">from</span> <span class="pl-s1">collections</span> <span class="pl-s1">import</span> <span class="pl-s1">Counter</span>
 
-# 输出目录
-model_out_dir = os.path.join(base_out_dir, cfg['name'])
-os.makedirs(model_out_dir, exist_ok=True)
+# <span class="pl-s1">定义所有模型配置</span>
+<span class="pl-c1">MODEL_CONFIGS</span> <span class="pl-c1">=</span> [
+    {
+        <span class="pl-c1">'name'</span>: <span class="pl-c1">'yolact'</span>,
+        <span class="pl-c1">'config'</span>: <span class="pl-c1">'/home/lsl/mmdetection/work_dirs/yolact_r50_1xb8-55e_coco/yolact_r50_1xb8-55e_coco.py'</span>,
+        <span class="pl-c1">'checkpoint'</span>: <span class="pl-c1">'/home/lsl/mmdetection/work_dirs/yolact_r50_1xb8-55e_coco/epoch_100.pth'</span>
+    },
+    {
+        '<span class="pl-s1">name</span>': '<span class="pl-s1">mask</span><span class="pl-c1">-</span><span class="pl-s1">rcnn_convnext</span>',
+        '<span class="pl-s1">config</span>': '/<span class="pl-s1">home</span>/<span class="pl-s1">lsl</span>/<span class="pl-s1">mmdetection</span>/<span class="pl-s1">work_dirs</span>/<span class="pl-s1">mask</span><span class="pl-c1">-</span><span class="pl-s1">rcnn_convnext</span><span class="pl-c1">-</span><span class="pl-s1">t</span><span class="pl-c1">-</span><span class="pl-s1">p4</span><span class="pl-c1">-</span><span class="pl-s1">w7_fpn_amp</span><span class="pl-c1">-</span><span class="pl-s1">ms</span><span class="pl-c1">-</span><span class="pl-s1">crop</span><span class="pl-c1">-</span><span class="pl-c1">3</span><span class="pl-s1">x_coco</span>/<span class="pl-s1">mask</span><span class="pl-c1">-</span><span class="pl-s1">rcnn_convnext</span><span class="pl-c1">-</span><span class="pl-s1">t</span><span class="pl-c1">-</span><span class="pl-s1">p4</span><span class="pl-c1">-</span><span class="pl-s1">w7_fpn_amp</span><span class="pl-c1">-</span><span class="pl-s1">ms</span><span class="pl-c1">-</span><span class="pl-s1">crop</span><span class="pl-c1">-</span><span class="pl-c1">3</span><span class="pl-s1">x_coco</span>.<span class="pl-s1">py</span>',
+        '<span class="pl-s1">checkpoint</span>': '/<span class="pl-s1">home</span>/<span class="pl-s1">lsl</span>/<span class="pl-s1">mmdetection</span>/<span class="pl-s1">work_dirs</span>/<span class="pl-s1">mask</span><span class="pl-c1">-</span><span class="pl-s1">rcnn_convnext</span><span class="pl-c1">-</span><span class="pl-s1">t</span><span class="pl-c1">-</span><span class="pl-s1">p4</span><span class="pl-c1">-</span><span class="pl-s1">w7_fpn_amp</span><span class="pl-c1">-</span><span class="pl-s1">ms</span><span class="pl-c1">-</span><span class="pl-s1">crop</span><span class="pl-c1">-</span><span class="pl-c1">3</span><span class="pl-s1">x_coco</span>/<span class="pl-s1">epoch_100</span>.<span class="pl-s1">pth</span>'
+    },
+    {
+        '<span class="pl-s1">name</span>': '<span class="pl-s1">mask</span><span class="pl-c1">-</span><span class="pl-s1">rcnn_r50</span>',
+        '<span class="pl-s1">config</span>': '/<span class="pl-s1">home</span>/<span class="pl-s1">lsl</span>/<span class="pl-s1">mmdetection</span>/<span class="pl-s1">work_dirs</span>/<span class="pl-s1">mask</span><span class="pl-c1">-</span><span class="pl-s1">rcnn_r50_fpn_1x_coco</span>/<span class="pl-s1">mask</span><span class="pl-c1">-</span><span class="pl-s1">rcnn_r50_fpn_1x_coco</span>.<span class="pl-s1">py</span>',
+        '<span class="pl-s1">checkpoint</span>': '/<span class="pl-s1">home</span>/<span class="pl-s1">lsl</span>/<span class="pl-s1">mmdetection</span>/<span class="pl-s1">work_dirs</span>/<span class="pl-s1">mask</span><span class="pl-c1">-</span><span class="pl-s1">rcnn_r50_fpn_1x_coco</span>/<span class="pl-s1">epoch_100</span>.<span class="pl-s1">pth</span>'
+    },
+    {
+        '<span class="pl-s1">name</span>': '<span class="pl-s1">queryinst_r50</span>',
+        '<span class="pl-s1">config</span>': '/<span class="pl-s1">home</span>/<span class="pl-s1">lsl</span>/<span class="pl-s1">mmdetection</span>/<span class="pl-s1">work_dirs</span>/<span class="pl-s1">queryinst_r50_fpn_1x_coco</span>/<span class="pl-s1">queryinst_r50_fpn_1x_coco</span>.<span class="pl-s1">py</span>',
+        '<span class="pl-s1">checkpoint</span>': '/<span class="pl-s1">home</span>/<span class="pl-s1">lsl</span>/<span class="pl-s1">mmdetection</span>/<span class="pl-s1">work_dirs</span>/<span class="pl-s1">queryinst_r50_fpn_1x_coco</span>/<span class="pl-s1">epoch_100</span>.<span class="pl-s1">pth</span>'
+    },
+    {
+        '<span class="pl-s1">name</span>': '<span class="pl-s1">sparseinst_r50</span>',
+        '<span class="pl-s1">config</span>': '/<span class="pl-s1">home</span>/<span class="pl-s1">lsl</span>/<span class="pl-s1">mmdetection</span>/<span class="pl-s1">work_dirs</span>/<span class="pl-s1">sparseinst_r50_iam_8xb8</span><span class="pl-c1">-</span><span class="pl-s1">ms</span><span class="pl-c1">-</span><span class="pl-c1">270</span><span class="pl-s1">k_coco</span>/<span class="pl-s1">sparseinst_r50_iam_8xb8</span><span class="pl-c1">-</span><span class="pl-s1">ms</span><span class="pl-c1">-</span><span class="pl-c1">270</span><span class="pl-s1">k_coco</span>.<span class="pl-s1">py</span>',
+        '<span class="pl-s1">checkpoint</span>': '/<span class="pl-s1">home</span>/<span class="pl-s1">lsl</span>/<span class="pl-s1">mmdetection</span>/<span class="pl-s1">work_dirs</span>/<span class="pl-s1">sparseinst_r50_iam_8xb8</span><span class="pl-c1">-</span><span class="pl-s1">ms</span><span class="pl-c1">-</span><span class="pl-c1">270</span><span class="pl-s1">k_coco</span>/<span class="pl-s1">iter_25500</span>.<span class="pl-s1">pth</span>'
+    }
+]
 
-# 遍历图片推理
-for img_path in img_paths:
-    img_name = os.path.splitext(os.path.basename(img_path))[0]
+# <span class="pl-s1">输入图片文件夹</span>
+<span class="pl-s1">img_dir</span> <span class="pl-c1">=</span> <span class="pl-c1">'/home/lsl/mmdetection/data/test'</span>
+<span class="pl-s1">base_out_dir</span> <span class="pl-c1">=</span> <span class="pl-c1">'/home/lsl/mmdetection/data/outputs/'</span>
+<span class="pl-s1">threshold</span> <span class="pl-c1">=</span> <span class="pl-c1">0.5</span>  # <span class="pl-s1">置信度阈值</span>
+
+# <span class="pl-s1">获取文件夹下所有图片路径</span>
+<span class="pl-s1">img_paths</span> <span class="pl-c1">=</span> [<span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">img_dir</span>, <span class="pl-s1">f</span>) <span class="pl-s1">for</span> <span class="pl-s1">f</span> <span class="pl-s1">in</span> <span class="pl-s1">os</span>.<span class="pl-en">listdir</span>(<span class="pl-s1">img_dir</span>)
+             <span class="pl-s1">if</span> <span class="pl-s1">f</span>.<span class="pl-en">lower</span>().<span class="pl-en">endswith</span>((<span class="pl-c1">'.jpg'</span>, <span class="pl-c1">'.png'</span>, <span class="pl-c1">'.jpeg'</span>))]
+
+<span class="pl-en">print</span>(<span class="pl-s1">f</span><span class="pl-s">"共找到 {len(img_paths)} 张图片用于推理。"</span>)
+
+# <span class="pl-s1">遍历模型</span>
+<span class="pl-s1">for</span> <span class="pl-s1">cfg</span> <span class="pl-s1">in</span> <span class="pl-c1">MODEL_CONFIGS</span>:
+    <span class="pl-en">print</span>(<span class="pl-s1">f</span><span class="pl-s">"\n=== 推理模型: {cfg['name']} ==="</span>)
     
-    result = inferencer(img_path, no_save_pred=True, return_vis=True)
+    # <span class="pl-smi">初始化推理器</span>
+    <span class="pl-s1">inferencer</span> <span class="pl-c1">=</span> <span class="pl-en">DetInferencer</span>(
+        <span class="pl-s1">model</span><span class="pl-c1">=</span><span class="pl-s1">cfg</span>[<span class="pl-c1">'config'</span>],
+        <span class="pl-s1">weights</span><span class="pl-c1">=</span><span class="pl-s1">cfg</span>[<span class="pl-c1">'checkpoint'</span>]
+    )
     
-    if 'visualization' not in result or len(result['visualization']) == 0:
-        print(f"[警告] 模型 {cfg['name']} 图片 {img_name} 没有生成可视化结果")
-        continue
+    # <span class="pl-s1">输出目录</span>
+    <span class="pl-s1">model_out_dir</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">base_out_dir</span>, <span class="pl-s1">cfg</span>[<span class="pl-c1">'name'</span>])
+    <span class="pl-s1">os</span>.<span class="pl-en">makedirs</span>(<span class="pl-s1">model_out_dir</span>, <span class="pl-s1">exist_ok</span><span class="pl-c1">=</span><span class="pl-s1">True</span>)
     
-    preds = result['predictions'][0]
-    scores = preds['scores']
-    labels = preds['labels']
-    
-    keep_idx = [i for i, s in enumerate(scores) if s &gt;= threshold]
-    count_total = len(keep_idx)
-    category_counts = Counter(labels[i] for i in keep_idx)
-    
-    # 转换为 BGR
-    vis_img_rgb = result['visualization'][0]
-    vis_img = cv2.cvtColor(vis_img_rgb, cv2.COLOR_RGB2BGR)
-    
-    # 保存预测图
-    first_img_path = os.path.join(model_out_dir, f'{img_name}_pred.jpg')
-    cv2.imwrite(first_img_path, vis_img)
-    
-    # 添加数量文字
-    vis_with_count = vis_img.copy()
-    text = f"Total: {count_total}"
-    font = cv2.FONT_HERSHEY_SIMPLEX
-    font_scale = 3.0
-    thickness = 5
-    (text_w, text_h), baseline = cv2.getTextSize(text, font, font_scale, thickness)
-    pos_x = vis_with_count.shape[1] - text_w - 20
-    pos_y = 20 + text_h
-    cv2.putText(vis_with_count, text, (pos_x, pos_y),
-                font, font_scale, (0, 0, 0), thickness, cv2.LINE_AA)
-    
-    second_img_path = os.path.join(model_out_dir, f'{img_name}_pred_with_count.jpg')
-    cv2.imwrite(second_img_path, vis_with_count)
-    
-    print(f"保存: {second_img_path}")
-</code></pre>
-<p>print("\n推理完成！")<br>
-`</p>
+    # <span class="pl-s1">遍历图片推理</span>
+    <span class="pl-k">for</span> <span class="pl-s1">img_path</span> <span class="pl-s1">in</span> <span class="pl-s1">img_paths</span>:
+        <span class="pl-s1">img_name</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">splitext</span>(<span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">basename</span>(<span class="pl-s1">img_path</span>))[<span class="pl-c1">0</span>]
+        
+        <span class="pl-s1">result</span> <span class="pl-c1">=</span> <span class="pl-en">inferencer</span>(<span class="pl-s1">img_path</span>, <span class="pl-s1">no_save_pred</span><span class="pl-c1">=</span><span class="pl-s1">True</span>, <span class="pl-s1">return_vis</span><span class="pl-c1">=</span><span class="pl-s1">True</span>)
+        
+        <span class="pl-s1">if</span> <span class="pl-c1">'visualization'</span> <span class="pl-s1">not</span> <span class="pl-s1">in</span> <span class="pl-s1">result</span> <span class="pl-s1">or</span> <span class="pl-s1">len</span>(<span class="pl-s1">result</span>[<span class="pl-c1">'visualization'</span>]) <span class="pl-c1">==</span> <span class="pl-c1">0</span>:
+            <span class="pl-en">print</span>(<span class="pl-s1">f</span><span class="pl-s">"[警告] 模型 {cfg['name']} 图片 {img_name} 没有生成可视化结果"</span>)
+            <span class="pl-s1">continue</span>
+        
+        <span class="pl-s1">preds</span> <span class="pl-c1">=</span> <span class="pl-s1">result</span>[<span class="pl-c1">'predictions'</span>][<span class="pl-c1">0</span>]
+        <span class="pl-s1">scores</span> <span class="pl-c1">=</span> <span class="pl-s1">preds</span>[<span class="pl-c1">'scores'</span>]
+        <span class="pl-s1">labels</span> <span class="pl-c1">=</span> <span class="pl-s1">preds</span>[<span class="pl-c1">'labels'</span>]
+        
+        <span class="pl-s1">keep_idx</span> <span class="pl-c1">=</span> [<span class="pl-s1">i</span> <span class="pl-s1">for</span> <span class="pl-s1">i</span>, <span class="pl-s1">s</span> <span class="pl-s1">in</span> <span class="pl-en">enumerate</span>(<span class="pl-smi">scores</span>) <span class="pl-s1">if</span> <span class="pl-s1">s</span> &gt;= <span class="pl-s1">threshold</span>]
+        <span class="pl-s1">count_total</span> <span class="pl-c1">=</span> <span class="pl-en">len</span>(<span class="pl-s1">keep_idx</span>)
+        <span class="pl-s1">category_counts</span> <span class="pl-c1">=</span> <span class="pl-en">Counter</span>(<span class="pl-s1">labels</span>[<span class="pl-s1">i</span>] <span class="pl-s1">for</span> <span class="pl-s1">i</span> <span class="pl-s1">in</span> <span class="pl-s1">keep_idx</span>)
+        
+        # <span class="pl-s1">转换为</span> <span class="pl-c1">BGR</span>
+        <span class="pl-s1">vis_img_rgb</span> <span class="pl-c1">=</span> <span class="pl-s1">result</span>[<span class="pl-c1">'visualization'</span>][<span class="pl-c1">0</span>]
+        <span class="pl-s1">vis_img</span> <span class="pl-c1">=</span> <span class="pl-s1">cv2</span>.<span class="pl-en">cvtColor</span>(<span class="pl-s1">vis_img_rgb</span>, <span class="pl-s1">cv2</span>.<span class="pl-c1">COLOR_RGB2BGR</span>)
+        
+        # <span class="pl-s1">保存预测图</span>
+        <span class="pl-s1">first_img_path</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">model_out_dir</span>, <span class="pl-s1">f</span><span class="pl-c1">'{img_name}_pred.jpg'</span>)
+        <span class="pl-s1">cv2</span>.<span class="pl-en">imwrite</span>(<span class="pl-s1">first_img_path</span>, <span class="pl-s1">vis_img</span>)
+        
+        # <span class="pl-s1">添加数量文字</span>
+        <span class="pl-s1">vis_with_count</span> <span class="pl-c1">=</span> <span class="pl-s1">vis_img</span>.<span class="pl-en">copy</span>()
+        <span class="pl-s1">text</span> <span class="pl-c1">=</span> <span class="pl-s1">f</span><span class="pl-s">"Total: {count_total}"</span>
+        <span class="pl-s1">font</span> <span class="pl-c1">=</span> <span class="pl-s1">cv2</span>.<span class="pl-c1">FONT_HERSHEY_SIMPLEX</span>
+        <span class="pl-s1">font_scale</span> <span class="pl-c1">=</span> <span class="pl-c1">3.0</span>
+        <span class="pl-s1">thickness</span> <span class="pl-c1">=</span> <span class="pl-c1">5</span>
+        (<span class="pl-s1">text_w</span>, <span class="pl-s1">text_h</span>), <span class="pl-s1">baseline</span> <span class="pl-c1">=</span> <span class="pl-s1">cv2</span>.<span class="pl-en">getTextSize</span>(<span class="pl-s1">text</span>, <span class="pl-s1">font</span>, <span class="pl-s1">font_scale</span>, <span class="pl-s1">thickness</span>)
+        <span class="pl-s1">pos_x</span> <span class="pl-c1">=</span> <span class="pl-s1">vis_with_count</span>.<span class="pl-c1">shape</span>[<span class="pl-c1">1</span>] <span class="pl-c1">-</span> <span class="pl-s1">text_w</span> <span class="pl-c1">-</span> <span class="pl-c1">20</span>
+        <span class="pl-s1">pos_y</span> <span class="pl-c1">=</span> <span class="pl-c1">20</span> <span class="pl-c1">+</span> <span class="pl-s1">text_h</span>
+        <span class="pl-s1">cv2</span>.<span class="pl-en">putText</span>(<span class="pl-s1">vis_with_count</span>, <span class="pl-s1">text</span>, (<span class="pl-s1">pos_x</span>, <span class="pl-s1">pos_y</span>),
+                    <span class="pl-s1">font</span>, <span class="pl-s1">font_scale</span>, (<span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>), <span class="pl-s1">thickness</span>, <span class="pl-s1">cv2</span>.<span class="pl-c1">LINE_AA</span>)
+        
+        <span class="pl-s1">second_img_path</span> <span class="pl-c1">=</span> <span class="pl-s1">os</span>.<span class="pl-c1">path</span>.<span class="pl-en">join</span>(<span class="pl-s1">model_out_dir</span>, <span class="pl-s1">f</span><span class="pl-c1">'{img_name}_pred_with_count.jpg'</span>)
+        <span class="pl-s1">cv2</span>.<span class="pl-en">imwrite</span>(<span class="pl-s1">second_img_path</span>, <span class="pl-s1">vis_with_count</span>)
+        
+        <span class="pl-en">print</span>(<span class="pl-s1">f</span><span class="pl-s">"保存: {second_img_path}"</span>)
+
+<span class="pl-en">print</span>(<span class="pl-s">"\n推理完成！"</span>)</pre></div>
 <p><strong>50系显卡</strong><br>
 python版本：3.8<br>
 pytorch安装：<br>

@@ -227,8 +227,9 @@ inferencer('5_frame_00010.jpg', out_dir='/outputs/', no_save_pred=False)
 
 ![在这里插入图片描述](https://i-blog.csdnimg.cn/direct/7fb9b6633bbf4aa89e73584128dd4f04.png)
 
-很多模型一起可视化预测的代码，包含对于各个类别的计算和统计。
-`
+很多模型一起进行可视化预测的代码，包含对于各个类别的计算和统计。 
+
+```c
 import cv2
 import os
 from mmdet.apis import DetInferencer
@@ -332,7 +333,7 @@ for cfg in MODEL_CONFIGS:
         print(f"保存: {second_img_path}")
 
 print("\n推理完成！")
-`
+```
 
 
 **50系显卡**
