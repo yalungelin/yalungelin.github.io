@@ -148,7 +148,7 @@ ModuleNotFoundError: No module named 'mmcv._ext'</p>
 <pre class="notranslate"><code class="notranslate">mim install mmcv==2.1.0
 </code></pre>
 <p>在运行测试代码，即可。</p>
-<p><strong>可视化代码：多个模型的</strong>可视化输出****</p>
+<p><strong>可视化代码：多个模型的可视化输出</strong></p>
 <div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">from</span> <span class="pl-s1">mmseg</span>.<span class="pl-s1">apis</span> <span class="pl-s1">import</span> <span class="pl-s1">inference_model</span>, <span class="pl-s1">init_model</span>, <span class="pl-s1">show_result_pyplot</span>
 <span class="pl-s1">import</span> <span class="pl-s1">mmcv</span>
 <span class="pl-s1">import</span> <span class="pl-s1">os</span>
@@ -260,13 +260,9 @@ ModuleNotFoundError: No module named 'mmcv._ext'</p>
             <span class="pl-k">continue</span>
 
 <span class="pl-k">if</span> <span class="pl-s1">__name__</span> <span class="pl-c1">==</span> <span class="pl-c1">'__main__'</span>:
-    <span class="pl-s1">main</span>()
-```<span class="pl-s1">c</span>
-
-<span class="pl-s1">在进行预测时默认带有</span><span class="pl-c1">*</span><span class="pl-c1">*</span><span class="pl-s1">类别标签</span><span class="pl-c1">*</span><span class="pl-c1">*</span>，<span class="pl-s1">去除如下</span>：
-
-```<span class="pl-s1">c</span>
-<span class="pl-s1">show_result_pyplot</span>(<span class="pl-s1">model</span>, <span class="pl-s1">img_path</span>, <span class="pl-s1">result</span>, <span class="pl-s1">show</span><span class="pl-c1">=</span><span class="pl-s1">False</span>, <span class="pl-s1">out_file</span><span class="pl-c1">=</span><span class="pl-s1">output_path</span>, <span class="pl-s1">opacity</span><span class="pl-c1">=</span><span class="pl-c1">1</span>,<span class="pl-s1">with_labels</span><span class="pl-c1">=</span><span class="pl-s1">False</span>)</pre></div>
+    <span class="pl-s1">main</span>()</pre></div>
+<p>在进行预测时默认带有<strong>类别标签</strong>，去除如下：</p>
+<div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-en">show_result_pyplot</span>(<span class="pl-s1">model</span>, <span class="pl-s1">img_path</span>, <span class="pl-s1">result</span>, <span class="pl-s1">show</span><span class="pl-c1">=</span><span class="pl-s1">False</span>, <span class="pl-s1">out_file</span><span class="pl-c1">=</span><span class="pl-s1">output_path</span>, <span class="pl-s1">opacity</span><span class="pl-c1">=</span><span class="pl-c1">1</span>,<span class="pl-s1">with_labels</span><span class="pl-c1">=</span><span class="pl-s1">False</span>)</pre></div>
 <p><strong>with_labels=False,   # 不显示标签</strong></p>
 <p>保存最优权重的：<strong>save_best='mIoU'</strong>，可以自定义选择你需要的评价指标。</p>
 <div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-s1">train_cfg</span> <span class="pl-c1">=</span> <span class="pl-en">dict</span>(<span class="pl-s1">type</span><span class="pl-c1">=</span><span class="pl-c1">'IterBasedTrainLoop'</span>, <span class="pl-s1">max_iters</span><span class="pl-c1">=</span><span class="pl-c1">80000</span>, <span class="pl-s1">val_interval</span><span class="pl-c1">=</span><span class="pl-c1">4000</span>)

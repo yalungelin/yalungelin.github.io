@@ -68,7 +68,7 @@ mim install mmcv==2.1.0
 ```
 在运行测试代码，即可。
 
-**可视化代码：多个模型的**可视化输出****
+**可视化代码：多个模型的可视化输出**
 ```c
 from mmseg.apis import inference_model, init_model, show_result_pyplot
 import mmcv
@@ -182,7 +182,7 @@ def main():
 
 if __name__ == '__main__':
     main()
-```c
+```
 
 在进行预测时默认带有**类别标签**，去除如下：
 
