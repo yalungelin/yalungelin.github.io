@@ -68,6 +68,120 @@ mim install mmcv==2.1.0
 ```
 在运行测试代码，即可。
 
+**可视化代码：多个模型的可视化输出**
+`from mmseg.apis import inference_model, init_model, show_result_pyplot
+import mmcv
+import os
+import glob
+
+# 定义所有模型配置
+MODEL_CONFIGS = [
+    # {
+    #     'name': 'danet',
+    #     'config': '/home/lsl/Workspace/mmsegmentation/work_dirs0/danet_r50-d8_4xb4-40k_voc12aug-512x512/danet_r50-d8_4xb4-40k_voc12aug-512x512.py',
+    #     'checkpoint': '/home/lsl/Workspace/mmsegmentation/work_dirs0/danet_r50-d8_4xb4-40k_voc12aug-512x512/iter_37000.pth'
+    # },
+    # {
+    #     'name': 'ocrnet',
+    #     'config': '/home/lsl/Workspace/mmsegmentation/work_dirs/ocrnet_hr18_4xb4-40k_voc12aug-512x512/ocrnet_hr18_4xb4-40k_voc12aug-512x512.py',
+    #     'checkpoint': '/home/lsl/Workspace/mmsegmentation/work_dirs/ocrnet_hr18_4xb4-40k_voc12aug-512x512/iter_37000.pth'
+    # },
+    # {
+    #     'name': 'deeplabv3_r50',
+    #     'config': '/home/lsl/Workspace/mmsegmentation/work_dirs/deeplabv3_r50-d8_4xb4-20k_voc12aug-512x512/deeplabv3_r50-d8_4xb4-20k_voc12aug-512x512.py',
+    #     'checkpoint': '/home/lsl/Workspace/mmsegmentation/work_dirs/deeplabv3_r50-d8_4xb4-20k_voc12aug-512x512/iter_37000.pth'
+    # },
+    # {
+    #     'name': 'deeplabv3plus_r50',
+    #     'config': '/home/lsl/Workspace/mmsegmentation/work_dirs/deeplabv3plus_r50-d8_4xb4-40k_voc12aug-512x512/deeplabv3plus_r50-d8_4xb4-40k_voc12aug-512x512.py',
+    #     'checkpoint': '/home/lsl/Workspace/mmsegmentation/work_dirs/deeplabv3plus_r50-d8_4xb4-40k_voc12aug-512x512/iter_37000.pth'
+    # },
+    # {
+    #     'name': 'pspnet_r50',
+    #     'config': '/home/lsl/Workspace/mmsegmentation/work_dirs/pspnet_r50-d8_4xb4-40k_voc12aug-512x512/pspnet_r50-d8_4xb4-40k_voc12aug-512x512.py',
+    #     'checkpoint': '/home/lsl/Workspace/mmsegmentation/work_dirs/pspnet_r50-d8_4xb4-40k_voc12aug-512x512/iter_37000.pth'
+    # },
+    # {
+    #     'name': 'segformer',
+    #     'config': '/home/lsl/Workspace/mmsegmentation/work_dirs/segformer0_mit-b0_8xb2-160k_ade20k-512x512/segformer_mit-b0_8xb2-160k_ade20k-512x512.py',
+    #     'checkpoint': '/home/lsl/Workspace/mmsegmentation/work_dirs/segformer0_mit-b0_8xb2-160k_ade20k-512x512/iter_37000.pth'
+    # },
+    {
+        'name': 'segmenter',
+        'config': '/home/lsl/Workspace/mmsegmentation/work_dirs/segmenter_vit-t_mask_8xb1-160k_ade20k-512x512/segmenter_vit-t_mask_8xb1-160k_ade20k-512x512.py',
+        'checkpoint': '/home/lsl/Workspace/mmsegmentation/work_dirs/segmenter_vit-t_mask_8xb1-160k_ade20k-512x512/iter_37000.pth'
+    },
+    # {
+    #     'name': 'segnext',
+    #     'config': '/home/lsl/Workspace/mmsegmentation/work_dirs/segnext_mscan-t_1xb16-adamw-160k_ade20k-512x512/segnext_mscan-t_1xb16-adamw-160k_ade20k-512x512.py',
+    #     'checkpoint': '/home/lsl/Workspace/mmsegmentation/work_dirs/segnext_mscan-t_1xb16-adamw-160k_ade20k-512x512/iter_37000.pth'
+    # },
+    {
+        'name': 'upernet',
+        'config': '/home/lsl/Workspace/mmsegmentation/work_dirs/upernet_r50_4xb4-40k_voc12aug-512x512/upernet_r50_4xb4-40k_voc12aug-512x512.py',
+        'checkpoint': '/home/lsl/Workspace/mmsegmentation/work_dirs/upernet_r50_4xb4-40k_voc12aug-512x512/iter_37000.pth'
+    }
+    
+]
+
+def process_images(model_config, input_dir, base_output_dir):
+    """
+    使用指定的模型处理输入目录中的所有图像
+    """
+    # 创建模型特定的输出目录
+    output_dir = os.path.join(base_output_dir, f"{model_config['name']}Vis")
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # 初始化模型
+    print(f"\nInitializing {model_config['name']} model...")
+    model = init_model(model_config['config'], model_config['checkpoint'], device='cuda:0')
+    
+    # 获取所有PNG图片
+    image_files = glob.glob(os.path.join(input_dir, '*.jpg'))
+    total_images = len(image_files)
+    
+    print(f"Processing {total_images} images with {model_config['name']}...")
+    
+    # 处理每张图片
+    for idx, img_path in enumerate(image_files, 1):
+        img_name = os.path.basename(img_path)
+        img_name_without_ext = os.path.splitext(img_name)[0]
+        
+        # 构建输出文件路径
+        output_path = os.path.join(output_dir, f"{model_config['name']}_{img_name_without_ext}.jpg")
+        
+        # 推理并保存结果
+        result = inference_model(model, img_path)
+        show_result_pyplot(model, img_path, result, show=False, out_file=output_path, opacity=1,with_labels=False)
+        
+        print(f"[{idx}/{total_images}] Processed {img_name} -> {os.path.basename(output_path)}")
+
+def main():
+    # 设置输入输出目录
+    input_dir = '/home/lsl/Workspace/mmsegmentation/data/test-org-img'
+    base_output_dir = '/home/lsl/Workspace/mmsegmentation/work_dirs/flood-Vis'
+    
+    # 确保基础输出目录存在
+    os.makedirs(base_output_dir, exist_ok=True)
+    
+    # 处理每个模型
+    for model_config in MODEL_CONFIGS:
+        try:
+            print(f"\n{'='*50}")
+            print(f"Processing with {model_config['name'].upper()} model")
+            print(f"{'='*50}")
+            
+            process_images(model_config, input_dir, base_output_dir)
+            
+            print(f"\nCompleted processing with {model_config['name']} model")
+            
+        except Exception as e:
+            print(f"\nError processing {model_config['name']} model: {str(e)}")
+            continue
+
+if __name__ == '__main__':
+    main()
+`
 
 在进行预测时默认带有类别标签，去除如下：
 
@@ -75,6 +189,29 @@ mim install mmcv==2.1.0
 show_result_pyplot(model, img_path, result, show=False, out_file=output_path, opacity=1,with_labels=False)
 ```
 **with_labels=False,   # 不显示标签**
+
+保存最优权重的：**save_best='mIoU'**，可以自定义选择你需要的评价指标。
+```c
+train_cfg = dict(type='IterBasedTrainLoop', max_iters=80000, val_interval=4000)
+
+val_cfg = dict(type='ValLoop')
+test_cfg = dict(type='TestLoop')
+
+default_hooks = dict(
+    timer=dict(type='IterTimerHook'),
+    logger=dict(type='LoggerHook', interval=50),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    checkpoint=dict(
+        type='CheckpointHook',
+        by_epoch=False,
+        interval=4000,           # 每 4000 iter 保存一次
+        save_best='mIoU',
+        rule='greater',
+        max_keep_ckpts=3
+    )
+)
+```
 
 resume模型一直卡住，也不报错
 
