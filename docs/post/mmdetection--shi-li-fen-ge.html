@@ -293,6 +293,17 @@ coco.py: mmdet/datasets/coco.py</p>
 <p>改成自己的类别数量<br>
 然后就可以训练模型了，我先尝试的是yolact，命令如下：</p>
 <div class="highlight highlight-source-shell"><pre class="notranslate">python tools/train.py configs/yolact/yolact_r50_1xb8-55e_coco.py</pre></div>
+<p>训练的过程中需要保存最优权重，可有几种选择。首先第一可以选自定义的指标保存最优的权重，也可以自动（auto）。<br>
+如果更关注检测性能（检测任务），使用：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">save_best</span><span class="pl-c1">=</span><span class="pl-s">'coco/bbox_mAP'</span></pre></div>
+<p>如果更关注实例分割性能（Mask），使用：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">save_best</span><span class="pl-c1">=</span><span class="pl-s">'coco/segm_mAP'</span></pre></div>
+<p>自动的情况：<br>
+auto 会选择 Evaluator 返回的第一个指标，而 CocoMetric(metric=['bbox', 'segm']) 默认先计算并返回 bbox 指标，再返回 segm 指标。<br>
+因此：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">save_best</span><span class="pl-c1">=</span><span class="pl-s">'auto'</span></pre></div>
+<p>实际等价于：</p>
+<div class="highlight highlight-source-python"><pre class="notranslate"><span class="pl-s1">save_best</span><span class="pl-c1">=</span><span class="pl-s">'coco/bbox_mAP'</span></pre></div>
 <p>使用训练权重推理</p>
 <div class="highlight highlight-source-shell"><pre class="notranslate">from mmdet.apis import DetInferencer
 

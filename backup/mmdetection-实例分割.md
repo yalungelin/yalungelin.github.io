@@ -194,6 +194,25 @@ num_classes：1
 ```bash
 python tools/train.py configs/yolact/yolact_r50_1xb8-55e_coco.py
 ```
+训练的过程中需要保存最优权重，可有几种选择。首先第一可以选自定义的指标保存最优的权重，也可以自动（auto）。
+如果更关注检测性能（检测任务），使用：
+```python
+save_best='coco/bbox_mAP'
+```
+如果更关注实例分割性能（Mask），使用：
+```python
+save_best='coco/segm_mAP'
+```
+自动的情况：
+auto 会选择 Evaluator 返回的第一个指标，而 CocoMetric(metric=['bbox', 'segm']) 默认先计算并返回 bbox 指标，再返回 segm 指标。
+因此：
+```python
+save_best='auto'
+```
+实际等价于：
+```python
+save_best='coco/bbox_mAP'
+```
 
 使用训练权重推理
 
