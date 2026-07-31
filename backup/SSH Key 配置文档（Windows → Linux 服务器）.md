@@ -115,11 +115,10 @@ drwx------ .ssh
 补充相关命令说明：
 nano的编辑快捷键：
 **说明：^ 表示 Ctrl 键。**
-<html>
-<body>
-<!--StartFragment-->
+
+```
 快捷键 | 功能
--- | --
+
 Ctrl + O | 保存文件（Write Out）
 Enter | 确认保存文件名
 Ctrl + X | 退出 nano
@@ -135,10 +134,8 @@ Ctrl + V | 下翻一页
 Alt + A | 开始选择文本
 Alt + 6 | 复制当前行
 Ctrl + T | 拼写检查（部分系统支持）
+```
 
-<!--EndFragment-->
-</body>
-</html>
 
 **chmod权限解释：**
 ```
@@ -156,9 +153,8 @@ chmod XYZ
       └──── 文件所有者（owner）
 ```
 每一位数字代表：
-<html>
-<body>
-<!--StartFragment-->
+
+```
 数字 | 权限 | 含义
 -- | -- | --
 0 | --- | 无权限
@@ -169,10 +165,8 @@ chmod XYZ
 5 | r-x | 读 + 执行
 6 | rw- | 读 + 写
 7 | rwx | 读 + 写 + 执行
+```
 
-<!--EndFragment-->
-</body>
-</html>
 其中：
 
 r = read（读取）
@@ -187,15 +181,42 @@ owner   group   others
 rwx     ---     ---
 ```
 也就是：
-<html>
-<body>
-<!--StartFragment-->
+
+```
 用户 | 权限
 -- | --
 文件所有者（你） | 读、写、进入
 同组用户 | 无权限
 其他用户 | 无权限
+```
 
-<!--EndFragment-->
-</body>
-</html>
+**chmod 600 ~/.ssh/authorized_keys**
+表示：
+```
+600
+
+owner   group   others
+rw-     ---     ---
+```
+也就是：
+
+```
+用户 | 权限
+-- | --
+文件所有者 | 读取、修改
+同组用户 | 无权限
+其他用户 | 无权限
+```
+查看：
+`ls -l ~/.ssh/authorized_keys`
+结果：
+`-rw------- 1 username users 400 Jul 31 authorized_keys`
+解释：
+```
+- rw- --- ---
+│ │   │   │
+│ │   │   └── 其他用户
+│ │   └────── 组用户
+│ └────────── 所有者
+└──────────── 普通文件
+```

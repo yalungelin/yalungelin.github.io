@@ -169,11 +169,8 @@ Ctrl + X
 <p>补充相关命令说明：<br>
 nano的编辑快捷键：<br>
 <strong>说明：^ 表示 Ctrl 键。</strong></p>
+<pre class="notranslate"><code class="notranslate">快捷键 | 功能
 
-
-
-快捷键 | 功能
--- | --
 Ctrl + O | 保存文件（Write Out）
 Enter | 确认保存文件名
 Ctrl + X | 退出 nano
@@ -189,9 +186,7 @@ Ctrl + V | 下翻一页
 Alt + A | 开始选择文本
 Alt + 6 | 复制当前行
 Ctrl + T | 拼写检查（部分系统支持）
-
-
-
+</code></pre>
 <p><strong>chmod权限解释：</strong></p>
 <pre class="notranslate"><code class="notranslate">chmod 700 文件或目录
 chmod 600 文件
@@ -205,10 +200,7 @@ chmod 600 文件
       └──── 文件所有者（owner）
 </code></pre>
 <p>每一位数字代表：</p>
-
-
-
-数字 | 权限 | 含义
+<pre class="notranslate"><code class="notranslate">数字 | 权限 | 含义
 -- | -- | --
 0 | --- | 无权限
 1 | --x | 执行权限
@@ -218,10 +210,8 @@ chmod 600 文件
 5 | r-x | 读 + 执行
 6 | rw- | 读 + 写
 7 | rwx | 读 + 写 + 执行
-
-
-
-其中：
+</code></pre>
+<p>其中：</p>
 <p>r = read（读取）<br>
 w = write（写入）<br>
 x = execute（执行/进入目录）</p>
@@ -232,17 +222,38 @@ owner   group   others
 rwx     ---     ---
 </code></pre>
 <p>也就是：</p>
-
-
-
-用户 | 权限
+<pre class="notranslate"><code class="notranslate">用户 | 权限
 -- | --
 文件所有者（你） | 读、写、进入
 同组用户 | 无权限
 其他用户 | 无权限
+</code></pre>
+<p><strong>chmod 600 ~/.ssh/authorized_keys</strong><br>
+表示：</p>
+<pre class="notranslate"><code class="notranslate">600
 
-
-</div>
+owner   group   others
+rw-     ---     ---
+</code></pre>
+<p>也就是：</p>
+<pre class="notranslate"><code class="notranslate">用户 | 权限
+-- | --
+文件所有者 | 读取、修改
+同组用户 | 无权限
+其他用户 | 无权限
+</code></pre>
+<p>查看：<br>
+<code class="notranslate">ls -l ~/.ssh/authorized_keys</code><br>
+结果：<br>
+<code class="notranslate">-rw------- 1 username users 400 Jul 31 authorized_keys</code><br>
+解释：</p>
+<pre class="notranslate"><code class="notranslate">- rw- --- ---
+│ │   │   │
+│ │   │   └── 其他用户
+│ │   └────── 组用户
+│ └────────── 所有者
+└──────────── 普通文件
+</code></pre></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
