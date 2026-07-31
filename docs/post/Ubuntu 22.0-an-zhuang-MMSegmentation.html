@@ -148,6 +148,8 @@ ModuleNotFoundError: No module named 'mmcv._ext'</p>
 <pre class="notranslate"><code class="notranslate">mim install mmcv==2.1.0
 </code></pre>
 <p>在运行测试代码，即可。</p>
+<p>在训练的初始阶段，需要更多的评价指标，以下是除了默认的mIoU以外,添加别的指标。</p>
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/ef600cbf-ef7a-46d9-b715-927c76f7d22b"><img width="1219" height="738" alt="Image" src="https://github.com/user-attachments/assets/ef600cbf-ef7a-46d9-b715-927c76f7d22b" style="max-width: 100%; height: auto; max-height: 738px;; aspect-ratio: 1219 / 738; background-color: var(--bgColor-muted); border-radius: 6px" class="js-gh-image-fallback"></a></p>
 <p><strong>可视化代码：多个模型的可视化输出</strong></p>
 <div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-smi">from</span> <span class="pl-s1">mmseg</span>.<span class="pl-s1">apis</span> <span class="pl-s1">import</span> <span class="pl-s1">inference_model</span>, <span class="pl-s1">init_model</span>, <span class="pl-s1">show_result_pyplot</span>
 <span class="pl-s1">import</span> <span class="pl-s1">mmcv</span>

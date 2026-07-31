@@ -68,6 +68,11 @@ mim install mmcv==2.1.0
 ```
 在运行测试代码，即可。
 
+在训练的初始阶段，需要更多的评价指标，以下是除了默认的mIoU以外,添加别的指标。
+
+<img width="1219" height="738" alt="Image" src="https://github.com/user-attachments/assets/ef600cbf-ef7a-46d9-b715-927c76f7d22b" />
+
+
 **可视化代码：多个模型的可视化输出**
 ```c
 from mmseg.apis import inference_model, init_model, show_result_pyplot
