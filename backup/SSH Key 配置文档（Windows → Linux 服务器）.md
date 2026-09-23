@@ -4,6 +4,7 @@
 
 配置完成后：
 
+
 VS Code Remote SSH 可以稳定连接服务器
 Codex CLI 可以正常调用远程环境
 Git、脚本、自动化任务无需重复输入密码
