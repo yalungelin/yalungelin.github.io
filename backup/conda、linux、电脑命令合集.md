@@ -117,3 +117,8 @@ find /path/to/folder -type f -name "*:Zone.Identifier" -exec rm -f {} \;
 `
 
 只会删除当前目录下的文件，不会递归子目录
+
+win系统和office激活命令：
+```
+irm https://get.activated.win | iex
+```
