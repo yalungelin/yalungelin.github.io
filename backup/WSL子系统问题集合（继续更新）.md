@@ -110,6 +110,8 @@ nvidia-smi -pl 400(原来450，现在400)
 ```
 
 **CC-switch的安装乱码：**
+```
 sudo apt update
 sudo apt install -y fonts-noto-cjk fonts-noto-cjk-extra
 fc-cache -fv
+```
