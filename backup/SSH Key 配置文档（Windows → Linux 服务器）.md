@@ -221,3 +221,19 @@ rw-     ---     ---
 │ └────────── 所有者
 └──────────── 普通文件
 ```
+
+
+**只允许密钥登陆：**
+```
+cat > /etc/ssh/sshd_config.d/00-00-key-only.conf <<'EOF'
+PubkeyAuthentication yes
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+AuthenticationMethods publickey
+EOF
+
+chmod 644 /etc/ssh/sshd_config.d/00-00-key-only.conf
+
+# 检查配置，通过后平滑重载
+/usr/sbin/sshd -t && systemctl reload ssh.service
+```
