@@ -225,15 +225,16 @@ rw-     ---     ---
 
 **只允许密钥登陆：**
 ```
-cat > /etc/ssh/sshd_config.d/00-00-key-only.conf <<'EOF'
-PubkeyAuthentication yes
-PasswordAuthentication no
-KbdInteractiveAuthentication no
-AuthenticationMethods publickey
+# 在配置文件末尾添加，仅作用于 root
+cat >> /etc/ssh/sshd_config <<'EOF'
+
+Match User root
+    PubkeyAuthentication yes
+    PasswordAuthentication no
+    KbdInteractiveAuthentication no
+    AuthenticationMethods publickey
 EOF
 
-chmod 644 /etc/ssh/sshd_config.d/00-00-key-only.conf
-
-# 检查配置，通过后平滑重载
+# 检查配置，通过后平滑重载 SSH
 /usr/sbin/sshd -t && systemctl reload ssh.service
 ```

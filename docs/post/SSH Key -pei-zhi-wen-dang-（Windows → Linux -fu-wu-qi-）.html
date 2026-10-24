@@ -255,16 +255,17 @@ rw-     ---     ---
 └──────────── 普通文件
 </code></pre>
 <p><strong>只允许密钥登陆：</strong></p>
-<pre class="notranslate"><code class="notranslate">cat &gt; /etc/ssh/sshd_config.d/00-00-key-only.conf &lt;&lt;'EOF'
-PubkeyAuthentication yes
-PasswordAuthentication no
-KbdInteractiveAuthentication no
-AuthenticationMethods publickey
+<pre class="notranslate"><code class="notranslate"># 在配置文件末尾添加，仅作用于 root
+cat &gt;&gt; /etc/ssh/sshd_config &lt;&lt;'EOF'
+
+Match User root
+    PubkeyAuthentication yes
+    PasswordAuthentication no
+    KbdInteractiveAuthentication no
+    AuthenticationMethods publickey
 EOF
 
-chmod 644 /etc/ssh/sshd_config.d/00-00-key-only.conf
-
-# 检查配置，通过后平滑重载
+# 检查配置，通过后平滑重载 SSH
 /usr/sbin/sshd -t &amp;&amp; systemctl reload ssh.service
 </code></pre></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
