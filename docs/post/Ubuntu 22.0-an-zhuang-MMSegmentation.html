@@ -249,7 +249,7 @@ ModuleNotFoundError: No module named 'mmcv._ext'</p>
     # <span class="pl-s1">处理每个模型</span>
     <span class="pl-k">for</span> <span class="pl-s1">model_config</span> <span class="pl-s1">in</span> <span class="pl-c1">MODEL_CONFIGS</span>:
         <span class="pl-s1">try</span>:
-            <span class="pl-en">print</span>(<span class="pl-s1">f</span><span class="pl-s">"\n{'='*50}"</span>)
+            <span class="pl-s1">print</span>(<span class="pl-s1">f</span><span class="pl-s">"\n{'='*50}"</span>)
             <span class="pl-en">print</span>(<span class="pl-s1">f</span><span class="pl-s">"Processing with {model_config['name'].upper()} model"</span>)
             <span class="pl-en">print</span>(<span class="pl-s1">f</span><span class="pl-s">"{'='*50}"</span>)
             
@@ -257,12 +257,12 @@ ModuleNotFoundError: No module named 'mmcv._ext'</p>
             
             <span class="pl-en">print</span>(<span class="pl-s1">f</span><span class="pl-s">"\nCompleted processing with {model_config['name']} model"</span>)
             
-        <span class="pl-s1">except</span> <span class="pl-s1">Exception</span> <span class="pl-s1">as</span> <span class="pl-s1">e</span>:
-            <span class="pl-s1">print</span>(<span class="pl-s1">f</span><span class="pl-s">"\nError processing {model_config['name']} model: {str(e)}"</span>)
-            <span class="pl-k">continue</span>
+        <span class="pl-s1">except</span> <span class="pl-smi">Exception</span> <span class="pl-s1">as</span> <span class="pl-ent">e</span>:
+            <span class="pl-en">print</span>(<span class="pl-s1">f</span><span class="pl-s">"\nError processing {model_config['name']} model: {str(e)}"</span>)
+            <span class="pl-s1">continue</span>
 
 <span class="pl-k">if</span> <span class="pl-s1">__name__</span> <span class="pl-c1">==</span> <span class="pl-c1">'__main__'</span>:
-    <span class="pl-s1">main</span>()</pre></div>
+    <span class="pl-en">main</span>()</pre></div>
 <p>在进行预测时默认带有<strong>类别标签</strong>，去除如下：</p>
 <div class="highlight highlight-source-c"><pre class="notranslate"><span class="pl-en">show_result_pyplot</span>(<span class="pl-s1">model</span>, <span class="pl-s1">img_path</span>, <span class="pl-s1">result</span>, <span class="pl-s1">show</span><span class="pl-c1">=</span><span class="pl-s1">False</span>, <span class="pl-s1">out_file</span><span class="pl-c1">=</span><span class="pl-s1">output_path</span>, <span class="pl-s1">opacity</span><span class="pl-c1">=</span><span class="pl-c1">1</span>,<span class="pl-s1">with_labels</span><span class="pl-c1">=</span><span class="pl-s1">False</span>)</pre></div>
 <p><strong>with_labels=False,   # 不显示标签</strong></p>
